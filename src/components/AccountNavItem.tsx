@@ -6,7 +6,6 @@ import Link from "next/link";
 
 import useAuth from "@/hooks/useAuth";
 import { getNameInitials } from "@/utils/string";
-import AccountPopover from "./radix/AccountPopover";
 import NavItem from "@ui/NavItem";
 
 import { ReactNode } from "react";
@@ -61,7 +60,6 @@ const AccountNavItem = () => {
               <Link href="/">
                 <HiOutlineEllipsisHorizontal className="w-6 h-6" />
               </Link>
-              <AccountPopover />
             </div>
           </div>
         </div>

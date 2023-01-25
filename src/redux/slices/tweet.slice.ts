@@ -162,12 +162,16 @@ export function newTweet(data) {
 }
 // ----------------------------------------------------------------------
 
-export function updateTweet(id, data) {
+interface UpdateProps {
+  silent?: boolean;
+}
+
+export function updateTweet(id, data, props?: UpdateProps) {
   return async (dispatch) => {
     try {
       const response = await axios.patch(`/tweet/${id}`, data);
       dispatch(slice.actions.onUpdateTweet(response.data));
-      dispatch(setNotice({ message: "Tweet updated." }));
+      if (!props?.silent) dispatch(setNotice({ message: "Tweet updated." }));
     } catch (error) {
       dispatch(slice.actions.hasError(error));
       dispatch(setNotice({ message: error, variant: "error" }));
@@ -177,10 +181,23 @@ export function updateTweet(id, data) {
 
 // ----------------------------------------------------------------------
 
-export function trashTweet(tweetID) {
+export function toggleTweetLike(id) {
   return async (dispatch) => {
     try {
-      await axios.delete(`/tweet/${tweetID}/trash`);
+      const response = await axios.patch(`/tweet/${id}/like`);
+      dispatch(slice.actions.onUpdateTweet(response.data));
+    } catch (error) {
+      dispatch(slice.actions.hasError(error));
+      dispatch(setNotice({ message: error, variant: "error" }));
+    }
+  };
+}
+// ----------------------------------------------------------------------
+
+export function draftTweet(tweetID) {
+  return async (dispatch) => {
+    try {
+      await axios.patch(`/tweet/${tweetID}/draft`);
       dispatch(slice.actions.onDeleteTweet(tweetID));
     } catch (error) {
       dispatch(slice.actions.hasError(error));
@@ -207,6 +224,7 @@ export function deleteTweet(tweetID) {
     try {
       await axios.delete(`/tweet/${tweetID}`);
       dispatch(slice.actions.onDeleteTweet(tweetID));
+      dispatch(setNotice({ message: "Tweet deleted!", variant: "error" }));
     } catch (error) {
       dispatch(slice.actions.hasError(error));
       dispatch(setNotice({ message: error, variant: "error" }));

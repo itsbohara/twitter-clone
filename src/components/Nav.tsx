@@ -50,15 +50,10 @@ const items: NavLinkItem[] = [
     text: "Bookmarks",
     icon: <HiOutlineBookmark className="w-6 h-6" />,
   },
-  {
-    href: "/profile",
-    text: "Profile",
-    icon: <HiOutlineUser className="w-6 h-6" />,
-  },
 ];
 
 const Nav = () => {
-  const { isAuthenticated } = useAuth();
+  const { isAuthenticated, user } = useAuth();
 
   return (
     <header className="hidden sm:flex w-24 xl:col-span-2">
@@ -86,6 +81,16 @@ const Nav = () => {
           })}
           {isAuthenticated && (
             <>
+              <NavItem
+                href={`/${user?.username ?? "profile"}`}
+                width="inline"
+                size="default"
+              >
+                <HiOutlineUser className="w-6 h-6" />
+                <div className="hidden xl:inline-flex flex-none text-lg font-medium">
+                  Profile
+                </div>
+              </NavItem>
               <MoreNavPopoverMenu />
               <TweetDialog />
             </>

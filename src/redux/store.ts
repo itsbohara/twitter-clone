@@ -2,14 +2,13 @@ import { configureStore, ThunkAction, Action } from "@reduxjs/toolkit";
 
 // to handle app update notifications
 import noticeReducer from "./slices/notice";
-// import noteReducer from "modules/note/note.slice";
+import TweetReducer from "./slices/tweet.slice";
 import profileReducer from "./slices/profile.slice";
 
 export const store = configureStore({
   reducer: {
-    // collection: 'collectionReducer',
     notice: noticeReducer,
-    // notes: noteReducer,
+    tweet: TweetReducer,
     profile: profileReducer,
   },
 });

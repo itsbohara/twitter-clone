@@ -9,6 +9,7 @@ interface Props {
   children: ReactNode;
   button?: boolean;
   onClick?: void;
+  variant?: "danger" | "info";
 }
 
 const NavItemStyles = cva("items-center gap-x-4 text-slate-900 my-1", {
@@ -23,6 +24,10 @@ const NavItemStyles = cva("items-center gap-x-4 text-slate-900 my-1", {
       small: "py-0 [&_div:last-child]:text-sm my-0",
       large: "",
     },
+    variant: {
+      danger: "danger text-red-500",
+      info: "",
+    },
   },
   defaultVariants: {
     width: "inline",
@@ -30,10 +35,18 @@ const NavItemStyles = cva("items-center gap-x-4 text-slate-900 my-1", {
   },
 });
 
-const NavItem = ({ href, children, width, size, button, onClick }: Props) => {
+const NavItem = ({
+  href,
+  children,
+  width,
+  size,
+  button,
+  onClick,
+  variant,
+}: Props) => {
   if (button) {
     return (
-      <div className={NavItemStyles({ width, size })}>
+      <div className={NavItemStyles({ width, size, variant })}>
         <div
           className="flex items-center flex-row gap-x-4 px-4 py-3 hover:bg-slate-100 cursor-pointer"
           onClick={onClick!}
@@ -44,7 +57,7 @@ const NavItem = ({ href, children, width, size, button, onClick }: Props) => {
     );
   }
   return (
-    <Link className={NavItemStyles({ width, size })} href={href!}>
+    <Link className={NavItemStyles({ width, size, variant })} href={href!}>
       <div className="flex items-center flex-row gap-x-4 px-4 py-3 hover:bg-slate-100">
         {children}
       </div>

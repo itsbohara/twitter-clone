@@ -7,9 +7,9 @@ const UserCard = ({
 }: {
 	name: string;
 	username: string;
-	description: string;
-	following: string;
-	followers: string;
+	description?: string;
+	following?: string;
+	followers?: string;
 }) => (
 	<>
 		<div className="mb-2">
@@ -19,11 +19,11 @@ const UserCard = ({
 		<div className="text-sm mb-2">{description}</div>
 		<div className="flex gap-x-4">
 			<div className="flex gap-x-1">
-				<div className="text-sm font-bold leading-none">{following}</div>
+				<div className="text-sm font-bold leading-none">{following ?? 0}</div>
 				<div className="text-sm text-slate-500 leading-none">Following</div>
 			</div>
 			<div className="flex gap-x-1">
-				<div className="text-sm font-bold leading-none">{followers}</div>
+				<div className="text-sm font-bold leading-none">{followers ?? 0}</div>
 				<div className="text-sm text-slate-500 leading-none">Followers</div>
 			</div>
 		</div>

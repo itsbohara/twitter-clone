@@ -63,6 +63,7 @@ type AuthContextType = AuthState & {
   login: (email, password) => Promise<void>;
   logout: () => void;
   register: (name, email, password) => Promise<void>;
+  fetchCurrentUser: () => Promise<void>;
 };
 
 const AuthContext = createContext<AuthContextType>({
@@ -71,6 +72,7 @@ const AuthContext = createContext<AuthContextType>({
   login: () => Promise.resolve(),
   logout: () => Promise.resolve(),
   register: () => Promise.resolve(),
+  fetchCurrentUser: () => Promise.resolve(),
 });
 
 // ----------------------------------------------------------------------
@@ -168,6 +170,7 @@ function AuthProvider({ children }) {
         login,
         logout,
         register,
+        fetchCurrentUser: fetchLoggedUser,
       }}
     >
       {children}

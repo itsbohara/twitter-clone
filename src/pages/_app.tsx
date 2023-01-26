@@ -15,6 +15,7 @@ import GuestGuard from "../guards/GuestGuard";
 import AuthGuard from "../guards/AuthGuard";
 import useAuth from "../hooks/useAuth";
 import { SiTwitter } from "react-icons/si";
+import UsernameChooseDialog from "../components/modals/UsernameChooseDialog";
 
 const myFont = localFont({
   src: "../../fonts/Mona-Sans.woff2",
@@ -47,7 +48,7 @@ function TwitterCloneAppBoot({ Component, pageProps }) {
   const { pathname, push } = useRouter();
   const guestRoute = authRoutes.includes(pathname) ?? false;
 
-  const { isAuthenticated, isInitialized } = useAuth();
+  const { isAuthenticated, isInitialized, user } = useAuth();
 
   if (!isInitialized) {
     return (
@@ -69,6 +70,7 @@ function TwitterCloneAppBoot({ Component, pageProps }) {
 
   return (
     <AuthGuard>
+      {!user?.username && <UsernameChooseDialog open={open} />}
       <Component {...pageProps} />;
     </AuthGuard>
   );

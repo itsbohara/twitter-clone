@@ -7,15 +7,14 @@ const http = axios.create({
   baseURL: `${SERVER}/api`,
 });
 
-console.log(process.env.NODE_ENV);
-
 http.interceptors.response.use(
   (response) => response,
   (error: AxiosError) => {
-    const errRes = error.response && error.response?.data;
+    const errRes: any = error.response && error.response?.data;
+
     return Promise.reject(
       errRes?.["message"] ||
-        errRes?.["errors"][0]["message"] ||
+        errRes?.error?.message ||
         "Server Failure!" ||
         "Something went wrong"
     );

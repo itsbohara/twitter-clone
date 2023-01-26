@@ -22,6 +22,7 @@ export default function Notifications() {
         <main className="col-span-5 w-full border-x border-slate-200">
           <Header title="Notifications" />
           <NotificationTabs />
+          
         </main>
         <aside className="col-span-3 hidden xl:flex flex-col w-[350px]">
           <div className="sticky top-0">

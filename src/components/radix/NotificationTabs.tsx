@@ -2,10 +2,11 @@ import * as TabsPrimitive from "@radix-ui/react-tabs";
 import cx from "classnames";
 import TweetForm from "@ui/TweetForm";
 import Feed from "@ui/Feed";
+import AllNotifications from "@/sections/notifications/AllNotifications";
 
 const NotificationTabs = () => (
   <TabsPrimitive.Root className="TabsRoot" defaultValue="tab1">
-    <TabsPrimitive.List className="TabsList flex w-full bg-white border-b border-b-slate-200">
+    <TabsPrimitive.List className="TabsList justify-around flex w-full bg-white border-b border-b-slate-200">
       <TabsPrimitive.Trigger
         value="tab1"
         className={cx(
@@ -53,8 +54,7 @@ const NotificationTabs = () => (
       </TabsPrimitive.Trigger>
     </TabsPrimitive.List>
     <TabsPrimitive.Content value="tab1" className="TabsContent ">
-      {/* <Feed /> */}
-      All Notifications
+      <AllNotifications />
     </TabsPrimitive.Content>
     <TabsPrimitive.Content value="tab2" className="TabsContent ">
       Notifications from verified only

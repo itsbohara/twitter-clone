@@ -4,6 +4,8 @@ import { ReactNode, useState, useEffect } from "react";
 import { Suspense } from "react";
 import axios from "@/client/axios";
 import { getNameInitials } from "../../utils/string";
+import { useAppDispatch, useAppSelector } from "../../hooks/useApp";
+import { getProfileTweets } from "@/redux/slices/profile.slice";
 
 interface PostItem {
   name: string;
@@ -39,68 +41,54 @@ const items = [
 ];
 
 const UserTweets = ({ username }) => {
+  const dispatch = useAppDispatch();
   const [loading, setLoading] = useState(true);
-  const [tweets, setTweets] = useState([]);
+  const { tweets } = useAppSelector((state) => state.profile);
   useEffect(() => {
     const getTweets = async () => {
-      const response = await axios.get(`/tweets/u/${username}`);
-      setTweets(response.data);
+      dispatch(getProfileTweets(username));
       setLoading(false);
     };
     getTweets();
+    return () => setLoading(true);
   }, [username]);
   if (loading) return <Loading />;
+
   return (
-    <Suspense fallback={<Loading />}>
-      <ul className="[&_p:last-child]:text-slate-500 [&_p:first-child]:text-lg divide-y divide-slate-200">
-        {tweets.map(
-          (
-            {
-              owner: {
-                name,
-                username,
-                count: { following, followers },
-                profile,
-              },
-              id,
-              content,
-              createdAt: date,
-              image,
-              description,
-              viewCount: views,
-              likeCount: likes,
-              replyCount,
-              retweetCount,
-            },
-            i
-          ) => (
-            <li
-              key={`tweet-${i}`}
-              className="p-4 hover:bg-[#00000008] cursor-pointer"
-            >
-              <Post
-                id={id}
-                name={name}
-                username={username}
-                content={content}
-                date={date}
-                src={profile}
-                initials={getNameInitials(name)}
-                description={description}
-                followers={followers}
-                following={following}
-                likes={likes}
-                views={views}
-                retweetCount={retweetCount}
-                replyCount={replyCount}
-              >
-                {image}
-              </Post>
-            </li>
-          )
-        )}
-      </ul>
-    </Suspense>
+    <ul className="[&_p:last-child]:text-slate-500 [&_p:first-child]:text-lg divide-y divide-slate-200">
+      {tweets.allIds.map((tweetID, i) => {
+        const {
+          id,
+          content,
+          attachments,
+          owner,
+          createdAt: date,
+          viewCount: views,
+          likeCount: likes,
+          replyCount,
+          retweetCount,
+        } = tweets.byId[tweetID];
+
+        return (
+          <li
+            key={`tweet-${id}`}
+            className="p-4 hover:bg-[#00000008] cursor-pointer"
+          >
+            <Post
+              id={id}
+              user={owner}
+              content={content}
+              attachments={attachments}
+              date={date}
+              likes={likes}
+              views={views}
+              retweetCount={retweetCount}
+              replyCount={replyCount}
+            />
+          </li>
+        );
+      })}
+    </ul>
   );
 };
 

@@ -44,13 +44,13 @@ const AccountNavItem = () => {
             <div className="flex items-center gap-x-3 flex-1 ">
               <div className="flex flex-1 xl:flex-none justify-center xl:justify-start">
                 <Avatar
-                  src="https://pbs.twimg.com/profile_images/1489998205236527108/q2REh8nW_400x400.jpg"
+                  src={user?.profile}
                   alt={user?.name}
                   initials={getNameInitials(user?.name)}
                 />
               </div>
-              <div className="hidden xl:flex flex-col ">
-                <p className="text-base font-semibold">{user?.name}</p>
+              <div className="hidden xl:flex flex-col">
+                <p className="text-base font-semibold truncate">{user?.name}</p>
                 <p className="text-sm text-slate-600 font-medium">
                   @{user?.username}
                 </p>

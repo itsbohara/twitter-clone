@@ -7,7 +7,7 @@ interface Props {
   size?: "default" | "small" | "large";
   center?: boolean;
   href?: string;
-  onClick?: void;
+  onClick?: () => void;
   [key: string]: any;
 }
 

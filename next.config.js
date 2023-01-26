@@ -4,6 +4,10 @@ const nextConfig = {
   async rewrites() {
     return [
       {
+        source: "/cdn/:path*/",
+        destination: "http://localhost:9425/cdn/:path*/",
+      },
+      {
         // source: "/api/(.*)",
         source: "/api/:path*/",
         destination: "http://localhost:9425/api/:path*/",
@@ -11,7 +15,7 @@ const nextConfig = {
     ];
   },
   images: {
-    domains: ["pbs.twimg.com", "images.unsplash.com"],
+    domains: ["localhost", "pbs.twimg.com", "images.unsplash.com"],
   },
 };
 

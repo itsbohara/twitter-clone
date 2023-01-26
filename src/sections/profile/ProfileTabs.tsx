@@ -38,7 +38,7 @@ const ProfileTabs = ({ username }) => (
         </div>
       </TabsPrimitive.Trigger>
       <TabsPrimitive.Trigger
-        value="mediaTab"
+        value="media"
         className={cx(
           "TabsTrigger group hover:bg-slate-100",
           "radix-state-active:bg-red-500 focus-visible:radix-state-active:border-b-transparent radix-state-inactive:bg-green-500 dark:radix-state-active:border-b-gray-100 dark:radix-state-active:bg-gray-900 focus-visible:dark:radix-state-active:border-b-transparent dark:radix-state-inactive:bg-gray-800",
@@ -74,7 +74,7 @@ const ProfileTabs = ({ username }) => (
     <TabsPrimitive.Content value="tab2" className="TabsContent ">
       tweets & replies tab
     </TabsPrimitive.Content>
-    <TabsPrimitive.Content value="tab3" className="TabsContent ">
+    <TabsPrimitive.Content value="media" className="TabsContent ">
       media tab
     </TabsPrimitive.Content>
     <TabsPrimitive.Content value="likesTab" className="TabsContent ">

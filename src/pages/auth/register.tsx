@@ -5,15 +5,16 @@ import { useState } from "react";
 
 import { SiTwitter } from "react-icons/si";
 import Button from "../../components/Button";
+import useAuth from "../../hooks/useAuth";
 
 export default function Register() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const { register } = useAuth();
   async function handleRegister(e) {
     e.preventDefault();
-    console.log("register here ???");
-    console.log(email, password);
+    register(name, email, password);
   }
   return (
     <>

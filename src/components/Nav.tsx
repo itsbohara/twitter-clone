@@ -58,7 +58,7 @@ const Nav = () => {
   return (
     <header className="hidden sm:flex w-24 xl:col-span-2">
       <div className="flex flex-1 xl:w-60 flex-col fixed h-full">
-        <div className="flex flex-col flex-1">
+        <div className="flex flex-col flex-1 max-xl:items-center">
           <NavItem href="/" width="inline" size="default">
             <SiTwitter className="w-6 h-6" />
           </NavItem>

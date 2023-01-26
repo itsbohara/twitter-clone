@@ -25,6 +25,7 @@ interface AccordionItem {
   size: "small" | "default" | "large";
   icon?: ReactNode;
   click?: void;
+  variant?: "danger" | "info";
 }
 
 const TweetDropdownMenu = ({ username, tweetID, tweetByMe }) => {
@@ -40,6 +41,7 @@ const TweetDropdownMenu = ({ username, tweetID, tweetByMe }) => {
             width: "full",
             size: "small",
             icon: <RiDeleteBinLine className="w-4 h-4" />,
+            variant: "danger",
           },
         ]
       : [
@@ -121,21 +123,32 @@ const TweetDropdownMenu = ({ username, tweetID, tweetByMe }) => {
             "bg-white border border-slate-200"
           )}
         >
-          {items.map(({ href, text, width, size, icon, click }, i) => (
+          {items.map(({ href, text, width, size, icon, click, variant }, i) => (
             <DropdownMenuPrimitive.Item
               key={`header-${i}`}
               // value={`item-${i + 1}`}
               className="focus:outline-none overflow-hidden"
             >
               {click ? (
-                <NavItem button onClick={click} width={width} size={size}>
+                <NavItem
+                  button
+                  onClick={click}
+                  width={width}
+                  size={size}
+                  variant={variant}
+                >
                   {icon}
                   <div className="inline-flex flex-none text-lg font-medium">
                     {text}
                   </div>
                 </NavItem>
               ) : (
-                <NavItem href={href} width={width} size={size}>
+                <NavItem
+                  href={href}
+                  width={width}
+                  size={size}
+                  variant={variant}
+                >
                   {icon}
                   <div className="inline-flex flex-none text-lg font-medium">
                     {text}

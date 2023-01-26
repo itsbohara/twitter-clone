@@ -1,6 +1,6 @@
 import { ReactNode, useEffect, useState } from "react";
 import TweetDropdownMenu from "@rd/DropdownMenu";
-import HoverCardDemo from "@rd/HoverCard";
+import ProfileHoverCard from "@rd/ProfileHoverCard";
 import useAuth from "../hooks/useAuth";
 import { useAppDispatch } from "../hooks/useApp";
 import { toggleTweetLike, updateTweet } from "../redux/slices/tweet.slice";
@@ -16,18 +16,25 @@ import {
 import axios from "@/client/axios";
 import useOnScreen from "@/hooks/useOnScreen";
 import { RiBarChartLine } from "react-icons/ri";
+import Image from "next/image";
+
+interface PostOwner {
+  name: string;
+  username: string;
+  profile: string;
+  count: {
+    followers: string;
+    following: string;
+  };
+  bio: string;
+}
 
 interface Props {
   id: string;
   content: string;
-  name: string;
-  username: string;
+  attachments?: any[];
   date: string;
-  src: string;
-  initials: string;
-  followers: string;
-  following: string;
-  description: string;
+  user: PostOwner;
   children?: ReactNode;
   [key: string]: any;
 }
@@ -35,23 +42,23 @@ interface Props {
 const Post = ({
   id,
   content,
-  name,
-  username,
+  attachments = [],
   date,
+  user,
   children,
-  src,
-  initials,
-  followers,
-  following,
-  description,
   ...props
 }: Props) => {
   const [postVisible, postRef] = useOnScreen();
-  const { user } = useAuth();
+  const { user: CurrentUser } = useAuth();
   const dispatch = useAppDispatch();
   const [likedByMe, setLikedByMe] = useState(false);
+  const [likeCount, setLikeCount] = useState(props.likes ?? 0);
 
-  const handleLikeClick = () => dispatch(toggleTweetLike(id));
+  const handleLikeClick = async () => {
+    // var a = await dispatch(toggleTweetLike(id));
+    const res = await axios.patch(`/tweet/${id}/like`);
+    setLikeCount(res.data?.likes ?? 0);
+  };
 
   useEffect(() => {
     if (!id) return;
@@ -60,7 +67,7 @@ const Post = ({
       setLikedByMe(res.data?.liked);
     };
     checkLike();
-  }, []);
+  }, [likeCount]);
   useEffect(() => {
     if (postVisible && id) {
       dispatch(
@@ -73,18 +80,24 @@ const Post = ({
     }
   }, [postVisible]);
 
+  const {
+    name,
+    username,
+    profile,
+    bio,
+    count: { followers, following },
+  } = user;
+
   return (
     <div className="flex flex-1 gap-x-4" ref={postRef}>
       <div className="flex-shrink-0">
-        <HoverCardDemo
-          profile={src}
+        <ProfileHoverCard
+          profile={profile}
           alt={name}
-          initials={initials}
           name={name}
           username={username}
           following={following}
           followers={followers}
-          description={description}
         />
       </div>
       <div className="flex flex-col flex-1">
@@ -98,16 +111,31 @@ const Post = ({
             <TweetDropdownMenu
               username={username}
               tweetID={id}
-              tweetByMe={user?.username === username}
+              tweetByMe={CurrentUser?.username === username}
             />
           </div>
         </div>
         <div className="text-sm text-slate-900">{content}</div>
-        {children}
+        {attachments.length > 0 && (
+          <div className="w-full relative -z-10 h-80 mb-4">
+            {attachments.map((item, i) => (
+              <Image
+                key={`attachment-${i}-${item?.id}`}
+                fill={true}
+                style={{ objectFit: "cover" }}
+                className="rounded-3xl"
+                src={`http://localhost:9425${item?.url ?? ""}`}
+                // src={`${item?.url}`}
+                alt="Tweet attachment"
+              />
+            ))}
+          </div>
+        )}
         <div>
           <ul className="flex items-stretch mt-4 gap-x-10 xl:gap-x-14 text-xs text-slate-700 [&_li:first-child]:hidden [&_li:first-child]:lg:flex [&_li]:flex [&_li]:items-center [&_li]:gap-x-2 [&_li:xl]:gap-x-3 ">
             <li>
-              <HiOutlineChartBarSquare className="w-5 h-5" />
+              {/* <HiOutlineChartBarSquare className="w-5 h-5" /> */}
+              <RiBarChartLine className="w-5 h-5" />
               {props?.views ?? 0}
             </li>
             <li>
@@ -118,7 +146,10 @@ const Post = ({
               <HiOutlineArrowPath className="w-5 h-5" />
               {props?.retweetCount ?? 0}
             </li>
-            <li onClick={handleLikeClick} className="hover:text-[#f91880]">
+            <li
+              onClick={handleLikeClick}
+              className="hover:text-[#f91880] cursor-pointer"
+            >
               <div className="relative">
                 <div className="absolute rounded-full m-[-8px] hover:bg-[#f9188033] top-0 bottom-0 left-0 right-0"></div>
                 {likedByMe ? (
@@ -127,12 +158,9 @@ const Post = ({
                   <HiOutlineHeart className="w-5 h-5" />
                 )}
               </div>
-              {props?.likes ?? 0}
+              {likeCount}
             </li>
-            <li>
-              <RiBarChartLine className="w-5 h-5" />
-              {props?.views ?? 0}
-            </li>
+
             <li>
               <HiArrowUpTray className="w-5 h-5" />
             </li>

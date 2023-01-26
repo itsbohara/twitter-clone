@@ -17,6 +17,7 @@ import axios from "@/client/axios";
 import useOnScreen from "@/hooks/useOnScreen";
 import { RiBarChartLine } from "react-icons/ri";
 import Image from "next/image";
+import { timeAgo } from "../utils/date";
 
 interface PostOwner {
   name: string;
@@ -105,7 +106,7 @@ const Post = ({
           <div className="flex flex-1 gap-x-1 text-sm">
             <span className="text-slate-900 font-bold">{name}</span>
             <span className="text-slate-600 font-medium">@{username}</span>·
-            <span className="text-slate-600 font-medium">{date}</span>
+            <span className="text-slate-600 font-medium">{timeAgo(date)}</span>
           </div>
           <div className="">
             <TweetDropdownMenu

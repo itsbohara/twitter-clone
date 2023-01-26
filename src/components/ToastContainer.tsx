@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import * as Toast from "@radix-ui/react-toast";
 import { capitalize } from "../utils/string";
 
-import { MdOutlineCancel } from "react-icons/md";
+import { FaTimes } from "react-icons/fa";
 import uuidv4 from "../utils/uuid";
 import useIsMountedRef from "../hooks/useIsMountedRef";
 
@@ -67,8 +67,8 @@ export default function ToastContainer() {
           asChild
           altText="Toast Action btn"
         >
-          <button className="Button small green">
-            <MdOutlineCancel />
+          <button className="Button small p-1.5 hover:bg-[#18a6f950]">
+            <FaTimes />
           </button>
           {/* <button className="Button small green">Undo</button> */}
         </Toast.Action>

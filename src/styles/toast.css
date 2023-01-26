@@ -150,6 +150,12 @@
   background-color: red;
 }
 .ToastRoot.error .ToastTitle,
-.ToastRoot.error button {
+.ToastRoot.error button,
+.ToastRoot.info .ToastTitle,
+.ToastRoot.info button {
   color: #f1f1f1 !important;
+}
+
+.ToastRoot.info {
+  background-color: #18a6f9;
 }

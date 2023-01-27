@@ -89,7 +89,7 @@ export default function Login() {
             </Button>
           </form>
           <p className="mt-5">
-            Don't have an account?{" "}
+            Don&apos;t have an account?
             <Link href="/auth/register" className="text-[#1da1f2]">
               Sign up
             </Link>

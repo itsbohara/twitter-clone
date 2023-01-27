@@ -1,14 +1,14 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { toast, TypeOptions } from "react-toastify";
+// import { toast, TypeOptions } from "react-toastify";
 type noticeInput = {
   type: "notification";
   message: string;
-  variant: TypeOptions;
+  variant: any;
 };
 
 interface State {
   message?: string;
-  variant?: TypeOptions;
+  variant?: any;
   preventDuplicate: boolean;
 }
 
@@ -20,7 +20,7 @@ const initialState: State = {
 
 interface NoticePayload {
   message: string | any;
-  variant?: TypeOptions;
+  variant?: any;
   preventDuplicate?: boolean;
 }
 // handle client level error

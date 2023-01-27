@@ -13,7 +13,7 @@ import { cva } from "class-variance-authority";
 import { useState, useRef } from "react";
 import useAuth from "@/hooks/useAuth";
 import { useAppDispatch } from "@/hooks/useApp";
-import { newTweet } from "@/redux/slices/tweet.slice";
+import { newTweet, newTweetReply } from "@/redux/slices/tweet.slice";
 import { setInfoNotice } from "@/redux/slices/notice";
 import Image from "next/image";
 import { MdOutlineCancel } from "react-icons/md";
@@ -32,7 +32,13 @@ const TweetFormStyles = cva("flex flex-1 gap-x-3 relative", {
   },
 });
 
-const TweetReplyForm = ({ width }: { width: "default" | "full" }) => {
+const TweetReplyForm = ({
+  tweetID,
+  width,
+}: {
+  tweetID: string;
+  width: "default" | "full";
+}) => {
   const fileRef = useRef<HTMLInputElement>();
   const { user } = useAuth();
   const dispatch = useAppDispatch();
@@ -53,7 +59,7 @@ const TweetReplyForm = ({ width }: { width: "default" | "full" }) => {
       attachments.push(uploadedImage.data?.id);
     }
 
-    // await dispatch(newTweet({ content, attachments }));
+    await dispatch(newTweetReply(tweetID, { content, attachments }));
     resetForm();
   }
   function resetForm() {

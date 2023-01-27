@@ -131,22 +131,22 @@ const TweetForm = ({ width }: { width: "default" | "full" }) => {
               <RiImage2Line className="w-5 h-5 text-[#1d9bf0]" />
               <span className="sr-only">Image</span>
             </button>
-            <button onClick={noFeature} className="relative">
+            <button onClick={noFeature} className="relative text-slate-400">
               <div className="absolute m-[-8px] rounded-full hover:bg-[#18a6f920] left-0 right-0 top-0 bottom-0"></div>
               <RiFileGifLine className="w-5 h-5" />
               <span className="sr-only">Gif</span>
             </button>
-            <button onClick={noFeature} className="relative">
+            <button onClick={noFeature} className="relative text-slate-400">
               <div className="absolute m-[-8px] rounded-full hover:bg-[#18a6f920] left-0 right-0 top-0 bottom-0"></div>
               <RiChatPollLine className="w-5 h-5" />
               <span className="sr-only">Poll</span>
             </button>
-            <button onClick={noFeature} className="relative">
+            <button onClick={noFeature} className="relative text-slate-400">
               <div className="absolute m-[-8px] rounded-full hover:bg-[#18a6f920] left-0 right-0 top-0 bottom-0"></div>
               <RiEmotionLine className="w-5 h-5" />
               <span className="sr-only">Emoji</span>
             </button>
-            <button onClick={noFeature} className="relative">
+            <button onClick={noFeature} className="relative text-slate-400">
               <div className="absolute m-[-8px] rounded-full hover:bg-[#18a6f920] left-0 right-0 top-0 bottom-0"></div>
               <RiMapPin2Line className="w-5 h-5" />
               <span className="sr-only">Tag location</span>

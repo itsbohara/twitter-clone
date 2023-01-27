@@ -148,7 +148,7 @@ function AuthProvider({ children }) {
       var response = await http.get("/account/me");
       return response.data?.currentUser;
     } catch (error) {
-      console.error("auth error");
+      throw new Error("Failed to get current user!");
     }
   };
 

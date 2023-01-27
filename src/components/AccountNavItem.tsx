@@ -36,6 +36,8 @@ const items: NavLinkItem[] = [
 const AccountNavItem = () => {
   const { user } = useAuth();
 
+  if (!user) return <></>; // no data patch
+
   return (
     <PopoverPrimitive.Root>
       <PopoverPrimitive.Trigger asChild>

@@ -52,6 +52,7 @@ export default function TweetPage() {
   useEffect(() => {
     if (!tweet) return;
     setLikeCount(tweet?.likeCount);
+    setLikedByMe(tweet?.liked ?? false);
   }, [tweet]);
 
   const handleBackClick = () => back();
@@ -97,16 +98,21 @@ export default function TweetPage() {
                 <div className="my-3">
                   <span className="text-2xl fodnt-bold">{tweet?.content}</span>
                   {/* attachment */}
-                  <div className="w-full relative -z-10 h-80 my-2">
-                    <Image
-                      key={`attachment`}
-                      fill={true}
-                      style={{ objectFit: "cover" }}
-                      className="rounded-3xl"
-                      src={`https://images.unsplash.com/photo-1674718320543-a7c80472059b`}
-                      alt="Tweet attachment"
-                    />
-                  </div>
+                  {tweet?.attachments?.length > 0 && (
+                    <div className="w-full relative -z-10 h-80 mb-4 my-2">
+                      {tweet?.attachments.map((item, i) => (
+                        <Image
+                          key={`attachment-${i}-${item?.id}`}
+                          fill={true}
+                          style={{ objectFit: "cover" }}
+                          className="rounded-3xl"
+                          src={`http://localhost:9425${item?.url ?? ""}`}
+                          // src={`${item?.url}`}
+                          alt="Tweet attachment"
+                        />
+                      ))}
+                    </div>
+                  )}
                 </div>
                 <div className="flex gap-x-1 text-slate-500 text-sm">
                   <time className="">{timeAgo(tweet?.createdAt)}</time>
@@ -160,7 +166,7 @@ export default function TweetPage() {
                     <div className="relative">
                       <div className="absolute rounded-full m-[-8px] hover:bg-[#f9188033] top-0 bottom-0 left-0 right-0"></div>
                       {likedByMe ? (
-                        <HiHeart className="w-6 h-6" />
+                        <HiHeart className="w-6 h-6 text-red-500" />
                       ) : (
                         <HiOutlineHeart className="w-6 h-6" />
                       )}

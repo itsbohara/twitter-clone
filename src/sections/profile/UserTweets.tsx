@@ -69,6 +69,7 @@ const UserTweets = ({ username }) => {
           likeCount: likes,
           replyCount,
           retweetCount,
+          liked,
         } = tweets.byId[tweetID];
 
         return (
@@ -79,6 +80,7 @@ const UserTweets = ({ username }) => {
               content={content}
               attachments={attachments}
               date={date}
+              liked={liked ?? false}
               likes={likes}
               views={views}
               retweetCount={retweetCount}

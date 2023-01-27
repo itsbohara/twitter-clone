@@ -54,24 +54,18 @@ const Post = ({
   const [postVisible, postRef] = useOnScreen();
   const { user: CurrentUser } = useAuth();
   const dispatch = useAppDispatch();
-  const [likedByMe, setLikedByMe] = useState(false);
+  const [likedByMe, setLikedByMe] = useState(props.liked ?? false);
   const [likeCount, setLikeCount] = useState(props.likes ?? 0);
 
   const handleLikeClick = async () => {
     // var a = await dispatch(toggleTweetLike(id));
+    setLikedByMe(!likedByMe);
     const res = await axios.patch(`/tweet/${id}/like`);
     setLikeCount(res.data?.likes ?? 0);
   };
 
   useEffect(() => {
-    if (!id) return;
-    const checkLike = async () => {
-      const res = await axios.get(`/tweet/${id}/likedByMe`);
-      setLikedByMe(res.data?.liked);
-    };
-    checkLike();
-  }, [likeCount]);
-  useEffect(() => {
+    return;
     if (postVisible && id) {
       dispatch(
         updateTweet(
@@ -128,7 +122,7 @@ const Post = ({
           </div>
           <div className="text-sm text-slate-900">{content}</div>
           {attachments.length > 0 && (
-            <div className="w-full relative -z-10 h-80 mb-4">
+            <div className="w-full relative -z-10 h-80 my-2">
               {attachments.map((item, i) => (
                 <Image
                   key={`attachment-${i}-${item?.id}`}
@@ -158,13 +152,16 @@ const Post = ({
                 {props?.retweetCount ?? 0}
               </li>
               <li
-                onClick={handleLikeClick}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  handleLikeClick();
+                }}
                 className="hover:text-[#f91880] cursor-pointer"
               >
                 <div className="relative">
                   <div className="absolute rounded-full m-[-8px] hover:bg-[#f9188033] top-0 bottom-0 left-0 right-0"></div>
                   {likedByMe ? (
-                    <HiHeart className="w-5 h-5" />
+                    <HiHeart className="w-5 h-5 text-red-500" />
                   ) : (
                     <HiOutlineHeart className="w-5 h-5" />
                   )}

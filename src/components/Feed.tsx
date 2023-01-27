@@ -52,6 +52,7 @@ const Feed = () => {
           likeCount: likes,
           replyCount,
           retweetCount,
+          liked,
         } = tweets.byId[tweetID];
 
         return (
@@ -64,6 +65,7 @@ const Feed = () => {
               date={date}
               user={owner}
               likes={likes}
+              liked={liked ?? false}
               views={views}
               retweetCount={retweetCount}
               replyCount={replyCount}

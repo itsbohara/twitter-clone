@@ -28,10 +28,13 @@ const ProfileHoverCard = ({
 }: Props) => {
   const initials = getNameInitials(name ?? "");
   const { user } = useAuth();
+  const onProfileClick = (e) => e.stopPropagation();
+
   return (
     <HoverCardPrimitive.Root>
       <HoverCardPrimitive.Trigger asChild>
         <Link
+          onClick={onProfileClick}
           className="ImageTrigger inline-flex h-12 w-12 items-center justify-center rounded-full overflow-hidden bg-white"
           href={`/${username}`}
         >

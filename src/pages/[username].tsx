@@ -77,7 +77,7 @@ export default function ProfilePage() {
           {/* Profile Nav Header */}
           <div className="sticky bg-white/75 z-10 backdrop-blur-md top-0">
             <div className="flex items-center px-4 py-3 gap-x-2">
-              <div className="px-3 py-1 mx-1">
+              <div className="pr-3 py-1 mx-1">
                 <Link
                   href="/"
                   className="text-2xl font-medium rounded-full hover:text-blue-300"

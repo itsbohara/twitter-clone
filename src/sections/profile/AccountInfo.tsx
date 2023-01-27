@@ -81,7 +81,7 @@ export default function AccountInfo({ user, refreshProfile }) {
             </div>
           </div>
 
-          <div className="p-4 pb-1 w-full flex flex-col gap-y-2">
+          <div className="py-4 pb-1 w-full flex flex-col gap-y-2">
             <ProfileUserInfo
               name={user?.name}
               username={user?.username}

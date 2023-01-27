@@ -15,15 +15,17 @@ type IDSeparatedData = {
 export type TweetState = {
   isLoading: boolean;
   tweets: IDSeparatedData;
-  activeTweet?: string | any;
-  // tweetReplies?: IDSeparatedData;
   error: string | null;
+  //active tweet
+  activeTweet?: any;
+  tweetReplies: IDSeparatedData;
 };
 
 const initialState: TweetState = {
   isLoading: true,
   error: null,
   tweets: { byId: {}, allIds: [] },
+  tweetReplies: { byId: {}, allIds: [] },
 };
 
 const slice = createSlice({
@@ -70,6 +72,30 @@ const slice = createSlice({
     onUpdateTweet(state, action) {
       const tweet = action.payload;
       state.tweets.byId[tweet.id] = tweet;
+    },
+
+    /// tweet replies
+
+    // GET TWEET REPLIES
+    getTweetRepliesSuccess(state, action) {
+      const replies = action.payload;
+
+      state.tweetReplies.byId = objFromArray(replies);
+      state.tweetReplies.allIds = Object.keys(state.tweetReplies.byId);
+    },
+
+    // ON NEW TWEET REPLY
+    onNewTweetReply(state, action) {
+      const newTweetReply = action.payload;
+
+      state.tweetReplies.byId[newTweetReply.id] = newTweetReply;
+      state.tweetReplies.allIds.unshift(newTweetReply.id);
+    },
+
+    onDeleteTweetReply(state, action) {
+      const tweetID = action.payload;
+      state.tweetReplies.byId = omit(state.tweetReplies.byId, [tweetID]);
+      state.tweetReplies.allIds = pull(state.tweetReplies.allIds, tweetID);
     },
   },
 });
@@ -144,15 +170,57 @@ export function toggleTweetLike(id) {
 }
 // ----------------------------------------------------------------------
 
-export function deleteTweet(tweetID) {
+interface DeleteProps {
+  reply: boolean;
+}
+
+export function deleteTweet(tweetID, props?: DeleteProps) {
   return async (dispatch) => {
     try {
       await axios.delete(`/tweet/${tweetID}`);
-      dispatch(slice.actions.onDeleteTweet(tweetID));
-      dispatch(setNotice({ message: "Tweet deleted!", variant: "error" }));
+      if (props?.reply) {
+        dispatch(slice.actions.onDeleteTweetReply(tweetID));
+        dispatch(
+          setNotice({ message: "Tweet reply deleted!", variant: "error" })
+        );
+      } else {
+        dispatch(slice.actions.onDeleteTweet(tweetID));
+        dispatch(setNotice({ message: "Tweet deleted!", variant: "error" }));
+      }
     } catch (error) {
       dispatch(slice.actions.hasError(error));
       dispatch(setNotice({ message: error, variant: "error" }));
+    }
+  };
+}
+
+// =================================
+// ========= TWEET REPLY ===========
+// =================================
+
+export function getTweetReplies(tweetID) {
+  return async (dispatch, getState) => {
+    dispatch(slice.actions.startLoading());
+    try {
+      const response = await axios.get(`/tweet/${tweetID}/replies`);
+      dispatch(slice.actions.getTweetRepliesSuccess(response.data));
+    } catch (error) {
+      dispatch(slice.actions.hasError(error));
+    }
+    dispatch(slice.actions.stopLoading());
+  };
+}
+
+// ----------------------------------------------------------------------
+
+export function newTweetReply(tweetID, data) {
+  return async (dispatch, getState) => {
+    try {
+      const response = await axios.post(`/tweet/${tweetID}/reply`, data);
+      dispatch(slice.actions.onNewTweetReply(response.data));
+      return response.data["id"];
+    } catch (error) {
+      dispatch(slice.actions.hasError(error));
     }
   };
 }

@@ -19,10 +19,12 @@ import {
   HiOutlineHeart,
 } from "react-icons/hi2";
 import { setInfoNotice } from "@/redux/slices/notice";
-import { useAppDispatch } from "../../../hooks/useApp";
+import { useAppDispatch, useAppSelector } from "../../../hooks/useApp";
 import TweetDropdownMenu from "@ui/radix/DropdownMenu";
 import Image from "next/image";
 import TweetReplyForm from "@/sections/tweet/TweetReplyForm";
+import { getTweetReplies } from "../../../redux/slices/tweet.slice";
+import TweetReply from "@/sections/tweet/TweetReply";
 export default function TweetPage() {
   const dispatch = useAppDispatch();
   const { pathname, query, back } = useRouter();
@@ -35,6 +37,8 @@ export default function TweetPage() {
 
   const [likedByMe, setLikedByMe] = useState(false);
   const [likeCount, setLikeCount] = useState(0);
+  const { tweetReplies: replies } = useAppSelector((state) => state.tweet);
+  const [replyLoading, setReplyLoading] = useState(true);
 
   useEffect(() => {
     const fetchTweet = async () => {
@@ -53,6 +57,11 @@ export default function TweetPage() {
     if (!tweet) return;
     setLikeCount(tweet?.likeCount);
     setLikedByMe(tweet?.liked ?? false);
+    const fetchReplies = async () => {
+      await dispatch(getTweetReplies(tweet.id));
+      setReplyLoading(false);
+    };
+    fetchReplies();
   }, [tweet]);
 
   const handleBackClick = () => back();
@@ -127,7 +136,8 @@ export default function TweetPage() {
                 <div className="flex gap-x-4 mt-2 py-3 font-semibold text-sm border-y border-slate-200">
                   <div className="flex gap-x-[2px]">
                     {tweet?.replyCount}
-                    <span className="font-normal text-slate-500">Retweets</span>
+                    {/* <span className="font-normal text-slate-500">Retweets</span> */}
+                    <span className="font-normal text-slate-500">Replies</span>
                   </div>
                   <div className="flex gap-x-[2px]">
                     {tweet?.retweetCount}
@@ -183,15 +193,23 @@ export default function TweetPage() {
                   </div>
                 </div>
               </div>
-              <div className="replay-form px-4 pb-2">
-                <TweetReplyForm width="full" />
-              </div>
-              <div className="flex flex-col">
-                <TweetReply owner={tweet?.owner} />
-                <TweetReply owner={tweet?.owner} />
-                <TweetReply owner={tweet?.owner} />
-                <TweetReply owner={tweet?.owner} />
-              </div>
+
+              {replyLoading && <Loader />}
+              {!replyLoading && (
+                <>
+                  <div className="replay-form px-4 pb-2">
+                    <TweetReplyForm
+                      tweetID={tweetID?.toString()!}
+                      width="full"
+                    />
+                  </div>
+                  <div className="flex flex-col">
+                    {replies?.allIds.map((tweetID) => (
+                      <TweetReply key={tweetID} tweet={replies.byId[tweetID]} />
+                    ))}
+                  </div>
+                </>
+              )}
             </>
           )}
           {notFound && <PageNotFound />}
@@ -224,8 +242,8 @@ function TweetOwner({ owner }) {
         />
       </div>
       <div className="flex flex-col flex-1">
-        <p className="text-base font-semibold truncate">{user?.name}</p>
-        <p className="text-sm text-slate-600 font-medium">@{user?.username}</p>
+        <p className="text-base font-semibold truncate">{name}</p>
+        <p className="text-sm text-slate-600 font-medium">@{username}</p>
       </div>
       <div className="flex">
         <TweetDropdownMenu
@@ -233,115 +251,6 @@ function TweetOwner({ owner }) {
           tweetID={"id"}
           tweetByOwner={user?.username === username}
         />
-      </div>
-    </div>
-  );
-}
-
-function TweetReply({ owner }) {
-  const dispatch = useAppDispatch();
-  const noFeature = () =>
-    dispatch(setInfoNotice({ message: "Feature not implemented!" }));
-
-  const {
-    name,
-    username,
-    profile,
-    bio,
-    count: { followers, following },
-  } = owner;
-
-  return (
-    <div className="flex items-start px-4 py-2 hover:bg-[#00000008] cursor-pointer border-t border-slate-200">
-      <div className="flex mr-3">
-        <ProfileHoverCard
-          profile={profile}
-          alt={name}
-          name={name}
-          username={username}
-          following={following}
-          followers={followers}
-        />
-      </div>
-      <div className="flex flex-col flex-1">
-        <div className="flex flex-1">
-          <div className="flex flex-1 gap-x-1 text-sm">
-            <span className="text-slate-900 font-bold">{name}</span>
-            <span className="text-slate-600 font-medium">@{username}</span>·
-            <span className="text-slate-600 font-medium">
-              Time
-              {/* {timeAgo(date)} */}
-            </span>
-          </div>
-          <div className="flex">
-            <TweetDropdownMenu
-              username={username}
-              tweetID={"id"}
-              tweetByOwner={true}
-            />
-          </div>
-        </div>
-
-        <div className="text-sm text-slate-500">
-          Replying to <span className="text-blue-500">@mahi</span>
-        </div>
-        <div className="text-sm text-slate-900">contet ehreer </div>
-
-        {/* attachments */}
-        <div className="w-full relative -z-10 h-80 my-2">
-          <Image
-            key={`attachment`}
-            fill={true}
-            style={{ objectFit: "cover" }}
-            className="rounded-3xl"
-            src={`https://images.unsplash.com/photo-1674718320543-a7c80472059b`}
-            alt="Tweet attachment"
-          />
-        </div>
-
-        <div className="flex justify-around mt-2 py-1 font-semibold text-slate-500 text-xs">
-          <div
-            className="flex items-center gap-x-2 hover:text-[#1d9bf0] cursor-pointer"
-            onClick={noFeature}
-          >
-            <div className="relative">
-              <div className="absolute rounded-full m-[-8px] hover:bg-[#18a6f920] top-0 bottom-0 left-0 right-0"></div>
-              <HiOutlineChatBubbleOvalLeft className="w-5 h-5" />
-            </div>
-            <span>0</span>
-          </div>
-          <div
-            className="flex gap-x-2 hover:text-[#1d9bf0] cursor-pointer"
-            onClick={noFeature}
-          >
-            <div className="relative">
-              <div className="absolute rounded-full m-[-8px] hover:bg-[#18a6f920] top-0 bottom-0 left-0 right-0"></div>
-              <HiOutlineArrowPath className="w-5 h-5" />
-            </div>
-            <span>0</span>
-          </div>
-          <div
-            className="flex gap-x-2 hover:text-[#f91880] cursor-pointer"
-            onClick={noFeature}
-          >
-            <div className="relative">
-              <div className="absolute rounded-full m-[-8px] hover:bg-[#f9188033] top-0 bottom-0 left-0 right-0"></div>
-
-              <HiOutlineHeart className="w-5 h-5" />
-            </div>
-            <span>0</span>
-          </div>
-          <div
-            className="flex gap-x-2 hover:text-[#1d9bf0] cursor-pointer"
-            onClick={noFeature}
-          >
-            <div className="relative">
-              <div className="absolute rounded-full m-[-8px] hover:bg-[#18a6f920] top-0 bottom-0 left-0 right-0"></div>
-              <HiArrowUpTray className="w-5 h-5" />
-            </div>
-            {0}
-          </div>
-        </div>
       </div>
     </div>
   );

@@ -28,9 +28,18 @@ interface AccordionItem {
   variant?: "danger" | "info";
 }
 
-const TweetDropdownMenu = ({ username, tweetID, tweetByOwner }) => {
+const TweetDropdownMenu = ({
+  username,
+  tweetID,
+  tweetByOwner,
+  isReply = false,
+}: {
+  isReply?: boolean;
+  [key: string]: any;
+}) => {
   const dispath = useAppDispatch();
-  const handleTweetDelete = () => dispath(deleteTweet(tweetID));
+  const handleTweetDelete = () =>
+    dispath(deleteTweet(tweetID, { reply: isReply }));
 
   const items: AccordionItem[] | any = [
     ...(tweetByOwner

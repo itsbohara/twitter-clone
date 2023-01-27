@@ -12,7 +12,7 @@ const ProfileTabs = ({ username }) => (
         className={cx(
           "TabsTrigger group hover:bg-slate-100",
           "radix-state-active:bg-red-500 focus-visible:radix-state-active:border-b-transparent radix-state-inactive:bg-green-500 dark:radix-state-active:border-b-gray-100 dark:radix-state-active:bg-gray-900 focus-visible:dark:radix-state-active:border-b-transparent dark:radix-state-inactive:bg-gray-800",
-          "px-6 font-semibold text-slate-500",
+          "px-6 max-md:px-4 font-semibold text-slate-500",
           "focus:radix-state-active:border-b-red",
           "focus:z-10 focus:outline-none focus-visible:ring focus-visible:ring-purple-500 focus-visible:ring-opacity-75"
         )}
@@ -27,7 +27,7 @@ const ProfileTabs = ({ username }) => (
         className={cx(
           "TabsTrigger group hover:bg-slate-100",
           "radix-state-active:bg-red-500 focus-visible:radix-state-active:border-b-transparent radix-state-inactive:bg-green-500 dark:radix-state-active:border-b-gray-100 dark:radix-state-active:bg-gray-900 focus-visible:dark:radix-state-active:border-b-transparent dark:radix-state-inactive:bg-gray-800",
-          "px-6 font-semibold text-slate-500",
+          "px-6 max-md:px-4 font-semibold text-slate-500",
           "focus:radix-state-active:border-b-red",
           "focus:z-10 focus:outline-none focus-visible:ring focus-visible:ring-purple-500 focus-visible:ring-opacity-75"
         )}
@@ -42,7 +42,7 @@ const ProfileTabs = ({ username }) => (
         className={cx(
           "TabsTrigger group hover:bg-slate-100",
           "radix-state-active:bg-red-500 focus-visible:radix-state-active:border-b-transparent radix-state-inactive:bg-green-500 dark:radix-state-active:border-b-gray-100 dark:radix-state-active:bg-gray-900 focus-visible:dark:radix-state-active:border-b-transparent dark:radix-state-inactive:bg-gray-800",
-          "px-6 font-semibold text-slate-500",
+          "px-6 max-md:px-4 font-semibold text-slate-500",
           "focus:radix-state-active:border-b-red",
           "focus:z-10 focus:outline-none focus-visible:ring focus-visible:ring-purple-500 focus-visible:ring-opacity-75"
         )}
@@ -57,7 +57,7 @@ const ProfileTabs = ({ username }) => (
         className={cx(
           "TabsTrigger group hover:bg-slate-100",
           "radix-state-active:bg-red-500 focus-visible:radix-state-active:border-b-transparent radix-state-inactive:bg-green-500 dark:radix-state-active:border-b-gray-100 dark:radix-state-active:bg-gray-900 focus-visible:dark:radix-state-active:border-b-transparent dark:radix-state-inactive:bg-gray-800",
-          "px-6 font-semibold text-slate-500",
+          "px-6 max-md:px-4 font-semibold text-slate-500",
           "focus:radix-state-active:border-b-red",
           "focus:z-10 focus:outline-none focus-visible:ring focus-visible:ring-purple-500 focus-visible:ring-opacity-75"
         )}

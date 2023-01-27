@@ -9,7 +9,7 @@ const Header = ({ title }: { title: string }) => {
   const { isMobile } = useScreenWidth();
 
   const { push } = useRouter();
-  const { logout } = useAuth();
+  const { logout, isAuthenticated } = useAuth();
   function handleLogout() {
     logout();
     push("/auth/login");
@@ -23,7 +23,8 @@ const Header = ({ title }: { title: string }) => {
           {/* <Text variant="large/bold">Home</Text> */}
           <h2 className="text-lg font-bold">{title}</h2>
         </div>
-        {isMobile && (
+        {/* TODO : remove this from header section */}
+        {isMobile && isAuthenticated && (
           <button
             onClick={handleLogout}
             className="IconButton p-2 hover:bg-red-200 flex rounded-full"

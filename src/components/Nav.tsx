@@ -56,7 +56,11 @@ const Nav = () => {
   const { isAuthenticated, user } = useAuth();
 
   return (
-    <header className="hidden sm:flex w-24 xl:col-span-2">
+    <header
+      className={`hidden sm:flex w-24 xl:col-span-2 ${
+        !isAuthenticated ? "max-lg:justify-end" : ""
+      }`}
+    >
       <div className="flex flex-1 xl:w-60 flex-col fixed h-full">
         <div className="flex flex-col flex-1 max-xl:items-center">
           <NavItem href="/" width="inline" size="default">

@@ -5,13 +5,22 @@ import Header from "@ui/Header";
 import Button from "../components/Button";
 import Link from "next/link";
 import Footer from "@ui/Footer";
+import TwitterAuth from "./home/TwitterAuth";
+import useScreenWidth from "../hooks/useScreenWidth";
 export default function GuestHome() {
+  const { isDesktop } = useScreenWidth();
   return (
     <>
       <main className="col-span-5 w-full border-x border-slate-200">
         <div className="px-4">
           <Search />
         </div>
+
+        {isDesktop && (
+          <div className="px-4 pb-2">
+            <TwitterAuth />
+          </div>
+        )}
 
         <Panel title="Trends for you " href="/">
           <PanelItemTrends
@@ -38,43 +47,15 @@ export default function GuestHome() {
         <Header title="Sports" />
       </main>
 
-      <aside className="col-span-3 hidden xl:flex flex-col w-[350px]">
-        <div className="sticky top-0">
-          <div className="new-to-panel mt-3 flex flex-col gap-y-2">
-            <h2 className="text-xl font-bold">Welcome to Twitter Clone</h2>
-            <Button href="/auth/login" intent="outline" center>
-              <span>Login</span>
-            </Button>
+      {!isDesktop && (
+        <aside className="col-span-3 hidden xl:flex flex-col w-[350px]">
+          <div className="sticky top-0">
+
+            <TwitterAuth />
+            <Footer />
           </div>
-
-          <hr className="mt-4" />
-
-          <div className="new-to-panel mt-3 flex flex-col gap-y-2">
-            <h2 className="text-xl font-bold">New to Twitter Clone?</h2>
-            <p className="text-xs text-slate-700 font-medium">
-              Sign up now to get your own personalized timeline!
-            </p>
-
-            <Button href="/auth/register" center>
-              <span>Create account</span>
-            </Button>
-
-            <p className="text-xs text-slate-700 font-medium">
-              By signing up, you agree to the
-              <Link href="/legal/terms" className="text-[#1da1f2]">
-                &nbsp;Terms of Service &nbsp;
-              </Link>
-              and
-              <Link href="/legal/privacy" className="text-[#1da1f2]">
-                {" "}
-                Privacy Policy
-              </Link>
-              , including Cookie Use.
-            </p>
-          </div>
-          <Footer />
-        </div>
-      </aside>
+        </aside>
+      )}
     </>
   );
 }

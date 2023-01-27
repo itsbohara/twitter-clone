@@ -106,8 +106,8 @@ const Post = ({
         <div className="flex flex-col flex-1">
           <div className="flex flex-1">
             <div className="flex flex-1 gap-x-1 text-sm">
-              <span className="text-slate-900 font-bold">{name}</span>
-              <span className="text-slate-600 font-medium">@{username}</span>·
+              <span className="text-slate-900 font-bold truncate">{name}</span>
+              <span className="text-slate-600 font-medium truncate">@{username}</span>·
               <span className="text-slate-600 font-medium">
                 {timeAgo(date)}
               </span>

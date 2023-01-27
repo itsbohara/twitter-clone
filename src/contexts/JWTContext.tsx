@@ -130,22 +130,12 @@ function AuthProvider({ children }) {
   const onLoginSuccess = ({ _token: accessToken }) => setSession(accessToken);
 
   const register = async (name, email, password) => {
-    const response = await http.post("/account/register", {
+    const res = await http.post("/account/register", {
       email,
       password,
       name,
-      // firstName,
-      // lastName,
     });
-    const { accessToken, user } = response.data;
-
-    window.localStorage.setItem("accessToken", accessToken);
-    dispatch({
-      type: "REGISTER",
-      payload: {
-        user,
-      },
-    });
+    return res.data;
   };
 
   const logout = () => {

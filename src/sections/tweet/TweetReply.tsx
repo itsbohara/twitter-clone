@@ -7,6 +7,7 @@ import Image from "next/image";
 import { useState } from "react";
 import http from "@/client/axios";
 import useAuth from "../../hooks/useAuth";
+import { relativeCDNUrl } from "../../utils/url";
 import {
   HiArrowUpTray,
   HiHeart,
@@ -83,8 +84,7 @@ export default function TweetReply({ tweet }) {
                 fill={true}
                 style={{ objectFit: "cover" }}
                 className="rounded-3xl"
-                src={`http://localhost:9425${item?.url ?? ""}`}
-                // src={`${item?.url}`}
+                src={relativeCDNUrl(item?.url)}
                 alt="Tweet attachment"
               />
             ))}

@@ -25,6 +25,7 @@ import Image from "next/image";
 import TweetReplyForm from "@/sections/tweet/TweetReplyForm";
 import { getTweetReplies } from "../../../redux/slices/tweet.slice";
 import TweetReply from "@/sections/tweet/TweetReply";
+import { relativeCDNUrl } from '../../../utils/url';
 export default function TweetPage() {
   const dispatch = useAppDispatch();
   const { pathname, query, back } = useRouter();
@@ -115,8 +116,7 @@ export default function TweetPage() {
                           fill={true}
                           style={{ objectFit: "cover" }}
                           className="rounded-3xl"
-                          src={`http://localhost:9425${item?.url ?? ""}`}
-                          // src={`${item?.url}`}
+                          src={relativeCDNUrl(item?.url)}
                           alt="Tweet attachment"
                         />
                       ))}

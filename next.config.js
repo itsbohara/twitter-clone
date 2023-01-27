@@ -15,7 +15,12 @@ const nextConfig = {
     ];
   },
   images: {
-    domains: ["localhost", "pbs.twimg.com", "images.unsplash.com"],
+    domains: [
+      "localhost",
+      "pbs.twimg.com",
+      "images.unsplash.com",
+      "twitter-clone-api.itsbohara.com",
+    ],
   },
 };
 

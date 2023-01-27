@@ -19,6 +19,7 @@ import { RiBarChartLine } from "react-icons/ri";
 import Image from "next/image";
 import { timeAgo } from "../utils/date";
 import { useRouter } from "next/router";
+import { relativeCDNUrl } from "@/utils/url";
 
 interface PostOwner {
   name: string;
@@ -65,7 +66,7 @@ const Post = ({
   };
 
   useEffect(() => {
-    return;
+    // tweet view count by seen time
     if (postVisible && id) {
       dispatch(
         updateTweet(
@@ -132,8 +133,7 @@ const Post = ({
                   fill={true}
                   style={{ objectFit: "cover" }}
                   className="rounded-3xl"
-                  src={`http://localhost:9425${item?.url ?? ""}`}
-                  // src={`${item?.url}`}
+                  src={relativeCDNUrl(item?.url)}
                   alt="Tweet attachment"
                 />
               ))}

@@ -7,7 +7,7 @@ import axios from "@/client/axios";
 
 const UsernameChooseDialog = ({ open: ShouldOpen }) => {
   const [open, setOpen] = useState(ShouldOpen);
-  const { user } = useAuth();
+  const { user, fetchCurrentUser } = useAuth();
   function handleOnClose(open) {
     if (!open && !user?.username) return;
     setOpen(false);
@@ -16,7 +16,8 @@ const UsernameChooseDialog = ({ open: ShouldOpen }) => {
   async function handleSave(e) {
     e.preventDefault();
     await axios.patch("/account/me", { username });
-    window.location.reload();
+    await fetchCurrentUser();
+    // window.location.reload();
   }
 
   return (
@@ -45,6 +46,7 @@ const UsernameChooseDialog = ({ open: ShouldOpen }) => {
             autoComplete="off"
           >
             <input
+              autoFocus
               type="text"
               required
               placeholder="Username"

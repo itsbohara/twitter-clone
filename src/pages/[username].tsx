@@ -16,7 +16,7 @@ import Link from "next/link";
 const noRoutes = ["/bookmarks/", "/explore/", "/messages/"];
 
 export default function ProfilePage() {
-  const { query, asPath, push } = useRouter();
+  const { query, asPath, push, back } = useRouter();
 
   const { user: currentUser, fetchCurrentUser } = useAuth();
   const username = query["username"];
@@ -63,6 +63,9 @@ export default function ProfilePage() {
       setNotFound(true);
     }
   }
+
+  const handleBackClick = () => back();
+
   return (
     <>
       <Head>
@@ -78,12 +81,12 @@ export default function ProfilePage() {
           <div className="sticky bg-white/75 z-10 backdrop-blur-md top-0">
             <div className="flex items-center px-4 py-3 gap-x-2">
               <div className="pr-3 py-1 mx-1">
-                <Link
-                  href="/"
+                <div
                   className="text-2xl font-medium rounded-full hover:text-blue-300"
+                  onClick={handleBackClick}
                 >
                   <IoMdArrowBack />
-                </Link>
+                </div>
               </div>
               <h2 className="text-lg font-bold">{`${
                 user?.name ?? "Profile"

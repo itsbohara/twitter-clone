@@ -11,6 +11,7 @@ import { delay } from "../utils/delay";
 import http from "../client/axios";
 import { IoMdArrowBack } from "react-icons/io";
 import Link from "next/link";
+import Loader from "@ui/Loader";
 
 // for 404 page
 const noRoutes = ["/bookmarks/", "/explore/", "/messages/"];
@@ -94,7 +95,7 @@ export default function ProfilePage() {
             </div>
           </div>
 
-          {loading && <p className="text-center">Loading...</p>}
+          {loading && <Loader />}
           {notFound && (
             <div className="flex flex-col gap-1 items-center">
               <h2>This account doesn’t exist</h2>

@@ -8,6 +8,7 @@ interface Props {
   center?: boolean;
   href?: string;
   onClick?: () => void;
+  disabled?: boolean;
   [key: string]: any;
 }
 
@@ -47,6 +48,7 @@ const Button = ({
   center,
   href,
   onClick,
+  disabled,
   ...props
 }: Props) =>
   href ? (
@@ -57,6 +59,7 @@ const Button = ({
     <button
       className={ButtonStyles({ intent, size, center })}
       onClick={onClick!}
+      disabled={disabled}
     >
       {children}
     </button>

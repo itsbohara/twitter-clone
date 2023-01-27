@@ -14,22 +14,31 @@ export default function Login() {
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
   const { login } = useAuth();
   async function handleLogin(e) {
     e.preventDefault();
+    setLoading(true);
     try {
       await login(email, password);
     } catch (error) {
       dispatch(setErrorNotice({ message: error }));
     }
+    setLoading(false);
   }
   return (
     <>
-      <div className=" pt-6 m-auto">
-        <NavItem href="/home" width="inline" size="default">
-          <SiTwitter className="w-6 h-6" />{" "}
-          <h6 className="text-md font-semibold">Twitter Clone</h6>
-        </NavItem>
+      <Head>
+        <title>Log in to Twitter | Twitter Clone</title>
+      </Head>
+      <div className="pt-6 m-auto w-5/6">
+        <div className="flex justify-center mb-4">
+          <NavItem href="/home" width="inline" size="default">
+            <SiTwitter className="w-6 h-6" />
+            <h6 className="text-md font-semibold">Twitter Clone</h6>
+          </NavItem>
+        </div>
+
         <div className="card max-w-md m-auto">
           <h6 className="text-lg font-semibold">Login to Continue</h6>
           <form
@@ -54,8 +63,25 @@ export default function Login() {
               onChange={(e) => setPassword(e.target.value)}
             />
             <div className="flex flex-col mt-2 mb-6">
-              <Button intent="primary" center>
-                <span>Login</span>
+              <Button intent="primary" center disabled={loading}>
+                <div className="flex items-center">
+                  {loading && (
+                    <svg
+                      fill="none"
+                      className="h-6 w-6 animate-spin text-white"
+                      viewBox="0 0 32 32"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        clip-rule="evenodd"
+                        d="M15.165 8.53a.5.5 0 01-.404.58A7 7 0 1023 16a.5.5 0 011 0 8 8 0 11-9.416-7.874.5.5 0 01.58.404z"
+                        fill="currentColor"
+                        fill-rule="evenodd"
+                      />
+                    </svg>
+                  )}
+                  <span>Login</span>
+                </div>
               </Button>
             </div>
             <Button href="/auth/reset-password" intent="outline" center>

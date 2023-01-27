@@ -26,9 +26,8 @@ const ProfileUserInfo = ({
         <div className="text-sm text-slate-500 font-[400]">@{username}</div>
       </div>
       <p className="text-sm leading-tight">
-        Twitter Clone
         {description}
-        <br />
+        {description && <br />}
         User @unofficial <b>Twitter.</b>
       </p>
       <div className="flex gap-x-2 text-slate-500">

@@ -18,11 +18,16 @@ export default function Register() {
   }
   return (
     <>
-      <div className=" pt-6 m-auto">
-        <NavItem href="/home" width="inline" size="default">
-          <SiTwitter className="w-6 h-6" />{" "}
-          <h6 className="text-md font-semibold">Twitter Clone</h6>
-        </NavItem>
+      <Head>
+        <title>Sign up for Twitter | Twitter Clone</title>
+      </Head>
+      <div className=" pt-6 m-auto w-5/6">
+        <div className="flex justify-center mb-4">
+          <NavItem href="/home" width="inline" size="default">
+            <SiTwitter className="w-6 h-6" />{" "}
+            <h6 className="text-md font-semibold">Twitter Clone</h6>
+          </NavItem>
+        </div>
         <div className="card max-w-md m-auto">
           <h6 className="text-lg font-semibold">Create your account</h6>
           <form

@@ -21,6 +21,7 @@ const Header = ({ title }: { title: string }) => {
 
 function UserAvatar() {
   const { user } = useAuth();
+  if (!user) return <></>; // no data patch
   return (
     <>
       <HeaderProfileAvatar

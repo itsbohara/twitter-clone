@@ -40,9 +40,10 @@ const TweetDropdownMenu = ({
   [key: string]: any;
 }) => {
   const dispath = useAppDispatch();
-  const handleTweetDelete = async () => {
+  const handleTweetDelete = async (e) => {
+    e?.stopPropagation();
     await dispath(deleteTweet(tweetID, { reply: isReply }));
-    postDeleteFunc!();
+    postDeleteFunc?.();
   };
   const items: AccordionItem[] | any = [
     ...(tweetByOwner

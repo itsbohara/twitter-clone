@@ -83,7 +83,7 @@ export default function ProfilePage() {
             <div className="flex items-center px-4 py-3 gap-x-2">
               <div className="pr-3 py-1 mx-1">
                 <div
-                  className="text-2xl font-medium rounded-full hover:text-blue-300"
+                  className="text-2xl font-medium rounded-full cursor-pointer hover:text-blue-300"
                   onClick={handleBackClick}
                 >
                   <IoMdArrowBack />

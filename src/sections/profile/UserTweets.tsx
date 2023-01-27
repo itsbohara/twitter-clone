@@ -6,6 +6,8 @@ import axios from "@/client/axios";
 import { getNameInitials } from "../../utils/string";
 import { useAppDispatch, useAppSelector } from "../../hooks/useApp";
 import { getProfileTweets } from "@/redux/slices/profile.slice";
+import Loader from "../../components/Loader";
+import { useRouter } from "next/router";
 
 interface PostItem {
   name: string;
@@ -52,7 +54,7 @@ const UserTweets = ({ username }) => {
     getTweets();
     return () => setLoading(true);
   }, [username]);
-  if (loading) return <Loading />;
+  if (loading) return <Loader />;
 
   return (
     <ul className="[&_p:last-child]:text-slate-500 [&_p:first-child]:text-lg divide-y divide-slate-200">
@@ -70,10 +72,7 @@ const UserTweets = ({ username }) => {
         } = tweets.byId[tweetID];
 
         return (
-          <li
-            key={`tweet-${id}`}
-            className="p-4 hover:bg-[#00000008] cursor-pointer"
-          >
+          <li key={`tweet-${id}`}>
             <Post
               id={id}
               user={owner}
@@ -93,7 +92,3 @@ const UserTweets = ({ username }) => {
 };
 
 export default UserTweets;
-
-function Loading() {
-  return <h2>Loading...</h2>;
-}

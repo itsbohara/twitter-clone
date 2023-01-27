@@ -7,6 +7,7 @@ import { useAppSelector } from "../hooks/useApp";
 import { getTweets } from "../redux/slices/tweet.slice";
 import { getNameInitials } from "../utils/string";
 import { getProfileTweets } from "../redux/slices/profile.slice";
+import Loader from "./Loader";
 
 interface PostItem {
   name: string;
@@ -36,7 +37,7 @@ const Feed = () => {
     fetchTweets();
   }, []);
 
-  if (loading) return <Loading />;
+  if (loading) return <Loader />;
 
   return (
     <ul className="[&_p:last-child]:text-slate-500 [&_p:first-child]:text-lg divide-y divide-slate-200">
@@ -54,7 +55,7 @@ const Feed = () => {
         } = tweets.byId[tweetID];
 
         return (
-          <li key={`tweet-${id}`} className="p-4">
+          <li key={`tweet-${id}`}>
             <Post
               key={`tweet-${id}`}
               id={id}

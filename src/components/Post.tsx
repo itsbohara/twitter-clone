@@ -18,6 +18,7 @@ import useOnScreen from "@/hooks/useOnScreen";
 import { RiBarChartLine } from "react-icons/ri";
 import Image from "next/image";
 import { timeAgo } from "../utils/date";
+import { useRouter } from "next/router";
 
 interface PostOwner {
   name: string;
@@ -49,6 +50,7 @@ const Post = ({
   children,
   ...props
 }: Props) => {
+  const router = useRouter();
   const [postVisible, postRef] = useOnScreen();
   const { user: CurrentUser } = useAuth();
   const dispatch = useAppDispatch();
@@ -89,83 +91,96 @@ const Post = ({
     count: { followers, following },
   } = user;
 
-  return (
-    <div className="flex flex-1 gap-x-4" ref={postRef}>
-      <div className="flex-shrink-0">
-        <ProfileHoverCard
-          profile={profile}
-          alt={name}
-          name={name}
-          username={username}
-          following={following}
-          followers={followers}
-        />
-      </div>
-      <div className="flex flex-col flex-1">
-        <div className="flex flex-1">
-          <div className="flex flex-1 gap-x-1 text-sm">
-            <span className="text-slate-900 font-bold">{name}</span>
-            <span className="text-slate-600 font-medium">@{username}</span>·
-            <span className="text-slate-600 font-medium">{timeAgo(date)}</span>
-          </div>
-          <div className="">
-            <TweetDropdownMenu
-              username={username}
-              tweetID={id}
-              tweetByMe={CurrentUser?.username === username}
-            />
-          </div>
-        </div>
-        <div className="text-sm text-slate-900">{content}</div>
-        {attachments.length > 0 && (
-          <div className="w-full relative -z-10 h-80 mb-4">
-            {attachments.map((item, i) => (
-              <Image
-                key={`attachment-${i}-${item?.id}`}
-                fill={true}
-                style={{ objectFit: "cover" }}
-                className="rounded-3xl"
-                src={`http://localhost:9425${item?.url ?? ""}`}
-                // src={`${item?.url}`}
-                alt="Tweet attachment"
-              />
-            ))}
-          </div>
-        )}
-        <div>
-          <ul className="flex items-stretch mt-4 gap-x-10 xl:gap-x-14 text-xs text-slate-700 [&_li:first-child]:hidden [&_li:first-child]:lg:flex [&_li]:flex [&_li]:items-center [&_li]:gap-x-2 [&_li:xl]:gap-x-3 ">
-            <li>
-              {/* <HiOutlineChartBarSquare className="w-5 h-5" /> */}
-              <RiBarChartLine className="w-5 h-5" />
-              {props?.views ?? 0}
-            </li>
-            <li>
-              <HiOutlineChatBubbleOvalLeft className="w-5 h-5" />
-              {props?.replyCount ?? 0}
-            </li>
-            <li>
-              <HiOutlineArrowPath className="w-5 h-5" />
-              {props?.retweetCount ?? 0}
-            </li>
-            <li
-              onClick={handleLikeClick}
-              className="hover:text-[#f91880] cursor-pointer"
-            >
-              <div className="relative">
-                <div className="absolute rounded-full m-[-8px] hover:bg-[#f9188033] top-0 bottom-0 left-0 right-0"></div>
-                {likedByMe ? (
-                  <HiHeart className="w-5 h-5" />
-                ) : (
-                  <HiOutlineHeart className="w-5 h-5" />
-                )}
-              </div>
-              {likeCount}
-            </li>
+  const openTweetPage = () => router.push(`/${username}/status/${id}`);
 
-            <li>
-              <HiArrowUpTray className="w-5 h-5" />
-            </li>
-          </ul>
+  return (
+    <div
+      className="p-4 hover:bg-[#00000008] cursor-pointer"
+      onClick={openTweetPage}
+    >
+      <div
+        className="flex flex-1 gap-x-4"
+        ref={postRef}
+        onClick={() => console.log("hey there ")}
+      >
+        <div className="flex-shrink-0">
+          <ProfileHoverCard
+            profile={profile}
+            alt={name}
+            name={name}
+            username={username}
+            following={following}
+            followers={followers}
+          />
+        </div>
+        <div className="flex flex-col flex-1">
+          <div className="flex flex-1">
+            <div className="flex flex-1 gap-x-1 text-sm">
+              <span className="text-slate-900 font-bold">{name}</span>
+              <span className="text-slate-600 font-medium">@{username}</span>·
+              <span className="text-slate-600 font-medium">
+                {timeAgo(date)}
+              </span>
+            </div>
+            <div className="">
+              <TweetDropdownMenu
+                username={username}
+                tweetID={id}
+                tweetByMe={CurrentUser?.username === username}
+              />
+            </div>
+          </div>
+          <div className="text-sm text-slate-900">{content}</div>
+          {attachments.length > 0 && (
+            <div className="w-full relative -z-10 h-80 mb-4">
+              {attachments.map((item, i) => (
+                <Image
+                  key={`attachment-${i}-${item?.id}`}
+                  fill={true}
+                  style={{ objectFit: "cover" }}
+                  className="rounded-3xl"
+                  src={`http://localhost:9425${item?.url ?? ""}`}
+                  // src={`${item?.url}`}
+                  alt="Tweet attachment"
+                />
+              ))}
+            </div>
+          )}
+          <div>
+            <ul className="flex items-stretch mt-4 gap-x-10 xl:gap-x-14 text-xs text-slate-700 [&_li:first-child]:hidden [&_li:first-child]:lg:flex [&_li]:flex [&_li]:items-center [&_li]:gap-x-2 [&_li:xl]:gap-x-3 ">
+              <li>
+                {/* <HiOutlineChartBarSquare className="w-5 h-5" /> */}
+                <RiBarChartLine className="w-5 h-5" />
+                {props?.views ?? 0}
+              </li>
+              <li>
+                <HiOutlineChatBubbleOvalLeft className="w-5 h-5" />
+                {props?.replyCount ?? 0}
+              </li>
+              <li>
+                <HiOutlineArrowPath className="w-5 h-5" />
+                {props?.retweetCount ?? 0}
+              </li>
+              <li
+                onClick={handleLikeClick}
+                className="hover:text-[#f91880] cursor-pointer"
+              >
+                <div className="relative">
+                  <div className="absolute rounded-full m-[-8px] hover:bg-[#f9188033] top-0 bottom-0 left-0 right-0"></div>
+                  {likedByMe ? (
+                    <HiHeart className="w-5 h-5" />
+                  ) : (
+                    <HiOutlineHeart className="w-5 h-5" />
+                  )}
+                </div>
+                {likeCount}
+              </li>
+
+              <li>
+                <HiArrowUpTray className="w-5 h-5" />
+              </li>
+            </ul>
+          </div>
         </div>
       </div>
     </div>

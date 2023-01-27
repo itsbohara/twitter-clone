@@ -6,15 +6,26 @@ import { useState } from "react";
 import { SiTwitter } from "react-icons/si";
 import Button from "../../components/Button";
 import useAuth from "../../hooks/useAuth";
+import { useRouter } from "next/router";
+import { useAppDispatch } from "../../hooks/useApp";
+import { setErrorNotice, setNotice } from "@/redux/slices/notice";
 
 export default function Register() {
+  const dispatch = useAppDispatch();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const { register } = useAuth();
+  const router = useRouter();
   async function handleRegister(e) {
     e.preventDefault();
-    register(name, email, password);
+    try {
+      const registerRes = await register(name, email, password);
+      dispatch(setNotice({ message: registerRes["message"] }));
+      router.push("/auth/login");
+    } catch (error) {
+      dispatch(setErrorNotice({ message: error ?? "Failed to Sign Up" }));
+    }
   }
   return (
     <>

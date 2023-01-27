@@ -16,6 +16,7 @@ import AuthGuard from "../guards/AuthGuard";
 import useAuth from "../hooks/useAuth";
 import { SiTwitter } from "react-icons/si";
 import UsernameChooseDialog from "../components/modals/UsernameChooseDialog";
+import Loader from "../components/Loader";
 
 const myFont = localFont({
   src: "../../fonts/Mona-Sans.woff2",
@@ -53,8 +54,8 @@ function TwitterCloneAppBoot({ Component, pageProps }) {
   if (!isInitialized) {
     return (
       <div className="flex flex-col justify-center text-center min-h-screen">
-        <SiTwitter className="mx-auto text-[#1da1f2] mb-4 w-10 h-10" />
-        <p>Loading .... </p>
+        <SiTwitter className="mx-auto text-[#1da1f2] mb-4 w-12 h-12" />
+        <Loader />
       </div>
     );
   }
@@ -70,7 +71,7 @@ function TwitterCloneAppBoot({ Component, pageProps }) {
 
   return (
     <AuthGuard>
-      {!user?.username && <UsernameChooseDialog open={open} />}
+      {!user?.username && <UsernameChooseDialog open={true} />}
       <Component {...pageProps} />;
     </AuthGuard>
   );

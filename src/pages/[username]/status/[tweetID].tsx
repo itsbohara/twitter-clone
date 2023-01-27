@@ -103,7 +103,7 @@ export default function TweetPage() {
           {!loading && !notFound && (
             <>
               <div className="flex flex-col p-4">
-                <TweetOwner owner={tweet?.owner} />
+                <TweetOwner owner={tweet?.owner} tweetID={tweet?.id} />
                 <div className="my-3">
                   <span className="text-2xl fodnt-bold">{tweet?.content}</span>
                   {/* attachment */}
@@ -219,7 +219,7 @@ export default function TweetPage() {
   );
 }
 
-function TweetOwner({ owner }) {
+function TweetOwner({ owner, tweetID }) {
   const { user } = useAuth();
   const {
     name,
@@ -228,6 +228,10 @@ function TweetOwner({ owner }) {
     bio,
     count: { followers, following },
   } = owner;
+
+  const { back } = useRouter();
+
+  const onTweetDeleted = () => back();
 
   return (
     <div className="flex items-center">
@@ -248,8 +252,9 @@ function TweetOwner({ owner }) {
       <div className="flex">
         <TweetDropdownMenu
           username={username}
-          tweetID={"id"}
+          tweetID={tweetID}
           tweetByOwner={user?.username === username}
+          postDeleteFunc={onTweetDeleted}
         />
       </div>
     </div>

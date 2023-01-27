@@ -98,11 +98,7 @@ const Post = ({
       className="p-4 hover:bg-[#00000008] cursor-pointer"
       onClick={openTweetPage}
     >
-      <div
-        className="flex flex-1 gap-x-4"
-        ref={postRef}
-        onClick={() => console.log("hey there ")}
-      >
+      <div className="flex flex-1 gap-x-4" ref={postRef}>
         <div className="flex-shrink-0">
           <ProfileHoverCard
             profile={profile}

@@ -28,12 +28,12 @@ interface AccordionItem {
   variant?: "danger" | "info";
 }
 
-const TweetDropdownMenu = ({ username, tweetID, tweetByMe }) => {
+const TweetDropdownMenu = ({ username, tweetID, tweetByOwner }) => {
   const dispath = useAppDispatch();
   const handleTweetDelete = () => dispath(deleteTweet(tweetID));
 
   const items: AccordionItem[] | any = [
-    ...(tweetByMe
+    ...(tweetByOwner
       ? [
           {
             click: handleTweetDelete,
@@ -89,7 +89,7 @@ const TweetDropdownMenu = ({ username, tweetID, tweetByMe }) => {
       size: "small",
       icon: <HiCodeBracket className="w-4 h-4" />,
     },
-    ...(tweetByMe
+    ...(tweetByOwner
       ? []
       : [
           {

@@ -231,7 +231,7 @@ function TweetOwner({ owner }) {
         <TweetDropdownMenu
           username={username}
           tweetID={"id"}
-          tweetByMe={true}
+          tweetByOwner={user?.username === username}
         />
       </div>
     </div>
@@ -277,7 +277,7 @@ function TweetReply({ owner }) {
             <TweetDropdownMenu
               username={username}
               tweetID={"id"}
-              tweetByMe={true}
+              tweetByOwner={true}
             />
           </div>
         </div>

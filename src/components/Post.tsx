@@ -116,7 +116,7 @@ const Post = ({
               <TweetDropdownMenu
                 username={username}
                 tweetID={id}
-                tweetByMe={CurrentUser?.username === username}
+                tweetByOwner={CurrentUser?.username === username}
               />
             </div>
           </div>

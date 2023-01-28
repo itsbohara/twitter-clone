@@ -3,8 +3,6 @@ import PropTypes from "prop-types";
 // utils
 import http from "@/client/axios";
 import { isValidToken, setSession } from "@/utils/jwt";
-// import _mock from "_mock/_mock";
-import { delay } from "@/utils/delay";
 
 // ----------------------------------------------------------------------
 
@@ -89,11 +87,12 @@ function AuthProvider({ children }) {
       try {
         const accessToken = window.localStorage.getItem("accessToken");
         if (accessToken && isValidToken(accessToken)) {
-          setSession(accessToken);
-          const user = await getCurrentUser();
+          const userRes = await fetch("/api/user");
+          const { authenticated, user } = await userRes.json();
+          authenticated && setSession(user?.token);
           dispatch({
             type: "INITIALIZE",
-            payload: { isAuthenticated: true, user: user },
+            payload: { isAuthenticated: authenticated, user },
           });
         } else {
           dispatch({
@@ -115,19 +114,27 @@ function AuthProvider({ children }) {
 
   const fetchLoggedUser = async () => {
     const user = await getCurrentUser();
+    dispatchLoginUser(user);
+  };
+
+  const dispatchLoginUser = (user) =>
     dispatch({
       type: "LOGIN",
       payload: { isAuthenticated: true, user },
     });
-  };
 
   const login = async (email, password) => {
-    const response = await http.post("/account/login", { email, password });
-    onLoginSuccess(response.data);
-    await fetchLoggedUser();
+    // THE old way
+    // const response = await http.post("/account/login", { email, password });
+    const loginRes = await fetch("/api/login", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email, password }),
+    });
+    const { token, data: user } = await loginRes.json();
+    setSession(token);
+    dispatchLoginUser(user);
   };
-
-  const onLoginSuccess = ({ _token: accessToken }) => setSession(accessToken);
 
   const register = async (name, email, password) => {
     const res = await http.post("/account/register", {
@@ -141,6 +148,7 @@ function AuthProvider({ children }) {
   const logout = () => {
     setSession(null);
     dispatch({ type: "LOGOUT" });
+    fetch("/api/logout");
   };
 
   const getCurrentUser = async () => {

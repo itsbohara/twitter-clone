@@ -8,6 +8,7 @@ import Login from "@/pages/auth/login";
 import { useRouter } from "next/router";
 
 import { SiTwitter } from "react-icons/si";
+import AppLoading from "../components/AppLoading";
 // ----------------------------------------------------------------------
 
 AuthGuard.propTypes = {
@@ -19,26 +20,18 @@ export default function AuthGuard({ children }) {
   const { pathname, push } = useRouter();
   const [requestedLocation, setRequestedLocation] = useState<any>(null);
 
-  if (!isInitialized) {
-    return (
-      <div className="flex flex-col justify-center text-center min-h-screen">
-        <SiTwitter className="mx-auto text-[#1da1f2] mb-4 w-10 h-10" />
-        <p>Loading .... </p>
-      </div>
-    );
-  }
+  if (!isInitialized) return <AppLoading />;
 
   if (!isAuthenticated) {
     if (pathname !== requestedLocation) {
       setRequestedLocation(pathname);
     }
-    // return <AuthPage />;
     return <Login />;
   }
 
   if (requestedLocation && pathname !== requestedLocation) {
     console.warn("push ");
-    
+
     // setRequestedLocation(null);
     // push(requestedLocation);
     // return <></>;

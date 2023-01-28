@@ -76,7 +76,7 @@ const TweetForm = ({ width }: { width: "default" | "full" }) => {
       <Avatar
         src={user?.profile}
         alt={user?.name}
-        initials={getNameInitials(user?.name)}
+        initials={getNameInitials(user!.name)}
       />
       <form
         className="flex flex-col flex-1 gap-y-4"

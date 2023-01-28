@@ -60,7 +60,7 @@ function TwitterCloneAppBoot({ Component, pageProps }) {
       </GuestGuard>
     );
   }
-  if (guestRoute && isAuthenticated && pathname != "/") push("/");
+  // if (guestRoute && isAuthenticated && pathname != "/") push("/");
 
   return (
     <AuthGuard>

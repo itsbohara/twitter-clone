@@ -8,6 +8,7 @@ import Button from "../../components/Button";
 import useAuth from "@/hooks/useAuth";
 import { useAppDispatch } from "@/hooks/useApp";
 import { setErrorNotice } from "@/redux/slices/notice";
+import { useRouter } from "next/router";
 
 export default function Login() {
   const dispatch = useAppDispatch();
@@ -16,11 +17,13 @@ export default function Login() {
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const { login } = useAuth();
+  const { push } = useRouter();
   async function handleLogin(e) {
     e.preventDefault();
     setLoading(true);
     try {
       await login(email, password);
+      push("/");
     } catch (error) {
       dispatch(setErrorNotice({ message: error }));
     }

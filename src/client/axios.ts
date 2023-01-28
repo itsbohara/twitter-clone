@@ -1,11 +1,14 @@
 import axios, { AxiosError } from "axios";
 
 // ----------------------------------------------------------------------
-const SERVER =
-  process.env.NODE_ENV === "development" ? "" : process.env.API_SERVER;
+
+export const SERVER = "https://twitter-clone-api.itsbohara.com";
+// export const SERVER = process.env.API_SERVER;
+// export const SERVER = process.env.DEV_API_SERVER;
+// const SERVER =
+//   process.env.NODE_ENV === "development" ? "" : process.env.API_SERVER;
 const http = axios.create({
-  // baseURL: `${SERVER}/api`,
-  baseURL: `https://twitter-clone-api.itsbohara.com/api`,
+  baseURL: `${SERVER}/api`,
 });
 
 http.interceptors.response.use(
@@ -14,10 +17,7 @@ http.interceptors.response.use(
     const errRes: any = error.response && error.response?.data;
 
     return Promise.reject(
-      errRes?.["message"] ||
-        errRes?.error?.message ||
-        "Server Failure!" ||
-        "Something went wrong"
+      errRes?.["message"] || errRes?.error?.message || "Server Failure!"
     );
   }
 );

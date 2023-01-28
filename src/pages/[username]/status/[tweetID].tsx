@@ -75,7 +75,7 @@ export default function TweetPage({ data, failed }) {
   const handleBackClick = () => back();
 
   const handleLikeClick = async () => {
-    if (!isAuthenticated) return dispatch(setInfoNotice({ message: "Login/Sign Up to Like Tweet" }));
+    if (!isAuthenticated) return dispatch(setInfoNotice({ message: "Login/Sign Up to Like a Tweet" }));
 
     setLikedByMe(!likedByMe);
     const res = await http.patch(`/tweet/${tweet?.id}/like`);

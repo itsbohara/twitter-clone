@@ -8,17 +8,25 @@ import { getNameInitials } from "../../utils/string";
 import ProfileAvatar from "@ui/radix/ProfileAvatar";
 import http from "../../client/axios";
 import EditProfileDialog from "../../components/modals/EditProfileDialog";
+import { useAppDispatch } from "../../hooks/useApp";
+import { setInfoNotice } from "@/redux/slices/notice";
 
 export default function AccountInfo({ user, refreshProfile }) {
-  const { user: currentUser } = useAuth();
-  const isMe = user?.username === currentUser.username;
+  const { user: currentUser, isAuthenticated } = useAuth();
+  const isMe = user?.username === currentUser?.username;
 
   const { following, followers } = user?.count;
   const [isFollowing, setIsFollowing] = useState(
     user?.following ? true : false
   );
 
+  const dispatch = useAppDispatch();
+
   async function toggleFollowing() {
+    if (!isAuthenticated)
+      return dispatch(
+        setInfoNotice({ message: "Login/Sign Up to Like Tweet" })
+      );
     if (isFollowing) {
       // unfollow
       await http.delete(`/follow/${user?.id}`);

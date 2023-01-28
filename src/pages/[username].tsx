@@ -16,10 +16,10 @@ import Loader from "@ui/Loader";
 // for 404 page
 const noRoutes = ["/bookmarks/", "/explore/", "/messages/"];
 
-export default function ProfilePage() {
+export default function ProfilePage({ data, resType }) {
   const { query, asPath, push, back } = useRouter();
 
-  const { user: currentUser, fetchCurrentUser } = useAuth();
+  const { user: currentUser, fetchCurrentUser, isAuthenticated } = useAuth();
   const username = query["username"];
 
   const [loading, setLoading] = useState(true);
@@ -32,6 +32,12 @@ export default function ProfilePage() {
   }, [asPath]);
 
   useEffect(() => {
+    if (resType === "SUCCESS" || resType === "NOT_FOUND") {
+      setLoading(false);
+      resType === "SUCCESS" && setUser(data);
+      resType === "NOT_FOUND" && setNotFound(true);
+      return;
+    }
     const isMe = currentUser?.username === username;
     const fetchUserProfile = async () => {
       if (!isMe) {
@@ -112,4 +118,19 @@ export default function ProfilePage() {
       </div>
     </>
   );
+}
+
+export async function getServerSideProps({ req, res, params }) {
+  let resType = "SUCCESS";
+  let data = null;
+  // fetch user info
+  try {
+    const userRes = await http.get(`/profile/${params?.username}`);
+    data = userRes.data;
+  } catch (error) {
+    resType = "NOT_FOUND";
+  }
+
+  // Pass data to the page via props
+  return { props: { data, resType } };
 }

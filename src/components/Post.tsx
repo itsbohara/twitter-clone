@@ -20,6 +20,7 @@ import Image from "next/image";
 import { timeAgo } from "../utils/date";
 import { useRouter } from "next/router";
 import { relativeCDNUrl } from "@/utils/url";
+import { setInfoNotice } from "@/redux/slices/notice";
 
 interface PostOwner {
   name: string;
@@ -53,12 +54,16 @@ const Post = ({
 }: Props) => {
   const router = useRouter();
   const [postVisible, postRef] = useOnScreen();
-  const { user: CurrentUser } = useAuth();
+  const { user: CurrentUser, isAuthenticated } = useAuth();
   const dispatch = useAppDispatch();
   const [likedByMe, setLikedByMe] = useState(props.liked ?? false);
   const [likeCount, setLikeCount] = useState(props.likes ?? 0);
 
   const handleLikeClick = async () => {
+    if (!isAuthenticated)
+      return dispatch(
+        setInfoNotice({ message: "Login/Sign Up to Like a Tweet" })
+      );
     // var a = await dispatch(toggleTweetLike(id));
     setLikedByMe(!likedByMe);
     const res = await axios.patch(`/tweet/${id}/like`);
@@ -66,6 +71,7 @@ const Post = ({
   };
 
   useEffect(() => {
+    if (!isAuthenticated) return;
     // tweet view count by seen time
     if (postVisible && id) {
       dispatch(

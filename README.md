@@ -27,15 +27,15 @@ bun run dev
 
 ### Project Structure
 
-_`client`_ - axios api client
-_`components`_ - shared components used across the app
-_`contexts`_ - context providers
-_`guards`_ - route guards
-_`hooks`_ - shared hooks
-_`redux`_ - global app store
-_`sections`_ - part of pages, composition of components
-_`pages`_ - main app pages
-_`utils`_ - shared utility functions
+- _`client`_ - axios api client
+- _`components`_ - shared components used across - the app
+- _`contexts`_ - context providers
+- _`guards`_ - route guards
+- _`hooks`_ - shared hooks
+- _`redux`_ - global app store
+- _`sections`_ - part of pages, composition of components
+- _`pages`_ - main app pages
+- _`utils`_ - shared utility functions
 
 ### Backend Server
 

@@ -139,7 +139,7 @@ const Post = ({
                   fill={true}
                   style={{ objectFit: "cover" }}
                   className="rounded-3xl"
-                  src={relativeCDNUrl(item?.url)}
+                  src={relativeCDNUrl(item?.path)}
                   alt="Tweet attachment"
                 />
               ))}

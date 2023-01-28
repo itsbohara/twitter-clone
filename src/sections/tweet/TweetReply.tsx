@@ -17,7 +17,7 @@ import {
 } from "react-icons/hi2";
 
 export default function TweetReply({ tweet }) {
-  const { user } = useAuth();
+  const { user, isAuthenticated } = useAuth();
   const dispatch = useAppDispatch();
   const noFeature = () =>
     dispatch(setInfoNotice({ message: "Feature not implemented!" }));
@@ -34,6 +34,10 @@ export default function TweetReply({ tweet }) {
   } = tweet.owner;
 
   const handleLikeClick = async () => {
+    if (!isAuthenticated)
+      return dispatch(
+        setInfoNotice({ message: "Login/Sign Up to Like a Tweet Reply" })
+      );
     setLikedByMe(!likedByMe);
     const res = await http.patch(`/tweet/${tweet?.id}/like`);
     setLikeCount(res.data?.likes ?? 0);
@@ -84,7 +88,7 @@ export default function TweetReply({ tweet }) {
                 fill={true}
                 style={{ objectFit: "cover" }}
                 className="rounded-3xl"
-                src={relativeCDNUrl(item?.url)}
+                src={relativeCDNUrl(item?.path)}
                 alt="Tweet attachment"
               />
             ))}

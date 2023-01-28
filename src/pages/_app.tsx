@@ -17,6 +17,7 @@ import useAuth from "../hooks/useAuth";
 import { SiTwitter } from "react-icons/si";
 import UsernameChooseDialog from "../components/modals/UsernameChooseDialog";
 import Loader from "../components/Loader";
+import AppLoading from "../components/AppLoading";
 
 const myFont = localFont({
   src: "../../fonts/Mona-Sans.woff2",
@@ -50,16 +51,7 @@ function TwitterCloneAppBoot({ Component, pageProps }) {
   // const guestRoute = authRoutes.includes(pathname) ?? false;
   const guestRoute = true; // demo
 
-  const { isAuthenticated, isInitialized, user } = useAuth();
-
-  if (!isInitialized) {
-    return (
-      <div className="flex flex-col justify-center text-center min-h-screen">
-        <SiTwitter className="mx-auto text-[#1da1f2] mb-4 w-12 h-12" />
-        <Loader />
-      </div>
-    );
-  }
+  const { isAuthenticated, user } = useAuth();
 
   if (guestRoute && !isAuthenticated) {
     return (

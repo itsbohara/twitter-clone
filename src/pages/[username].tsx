@@ -12,6 +12,7 @@ import http from "../client/axios";
 import { IoMdArrowBack } from "react-icons/io";
 import Link from "next/link";
 import Loader from "@ui/Loader";
+import AppLoading from "@ui/AppLoading";
 
 // for 404 page
 const noRoutes = ["/bookmarks/", "/explore/", "/messages/"];
@@ -19,13 +20,18 @@ const noRoutes = ["/bookmarks/", "/explore/", "/messages/"];
 export default function ProfilePage({ data, resType }) {
   const { query, asPath, push, back } = useRouter();
 
-  const { user: currentUser, fetchCurrentUser, isAuthenticated } = useAuth();
+  const {
+    user: currentUser,
+    fetchCurrentUser,
+    isAuthenticated,
+    isInitialized,
+  } = useAuth();
   const username = query["username"];
 
   const [loading, setLoading] = useState(true);
 
   const [user, setUser] = useState<any>(null);
-  const [notFound, setNotFound] = useState(false);
+  const [notFound, setNotFound] = useState(resType === "NOT_FOUND");
 
   useEffect(() => {
     if (noRoutes.indexOf(asPath) !== -1) push("/404");
@@ -73,49 +79,53 @@ export default function ProfilePage({ data, resType }) {
 
   const handleBackClick = () => back();
 
+  const title = data?.name ? `${data?.name} (@${data?.username})` : "Profile";
+
   return (
     <>
       <Head>
-        <title>
-          {user?.name ? `${user?.name} (@${user?.username})` : "Profile"} |
-          Twitter Clone
-        </title>
+        <title>{`${title} | Twitter Clone`}</title>
+        {!notFound && <meta name="description" content={`${data?.bio}`} />}
       </Head>
-      <div className="min-h-screen flex max-w-7xl mx-auto xl:grid xl:grid-cols-10 gap-5">
-        <Nav />
-        <main className="col-span-5 border-x border-slate-200 flex-1 w-full flex-col">
-          {/* Profile Nav Header */}
-          <div className="sticky bg-white/75 z-10 backdrop-blur-md top-0">
-            <div className="flex items-center px-4 py-3 gap-x-2">
-              <div className="pr-3 py-1 mx-1">
-                <div
-                  className="text-2xl font-medium rounded-full cursor-pointer hover:text-blue-300"
-                  onClick={handleBackClick}
-                >
-                  <IoMdArrowBack />
-                </div>
-              </div>
-              <h2 className="text-lg font-bold">{`${
-                user?.name ?? "Profile"
-              }`}</h2>
-            </div>
-          </div>
 
-          {loading && <Loader />}
-          {notFound && (
-            <div className="flex flex-col gap-1 items-center">
-              <h2>This account doesn’t exist</h2>
-              <p>Try searching for another.</p>
+      {!isInitialized && <AppLoading />}
+      {isInitialized && (
+        <div className="min-h-screen flex max-w-7xl mx-auto xl:grid xl:grid-cols-10 gap-5">
+          <Nav />
+          <main className="col-span-5 border-x border-slate-200 flex-1 w-full flex-col">
+            {/* Profile Nav Header */}
+            <div className="sticky bg-white/75 z-10 backdrop-blur-md top-0">
+              <div className="flex items-center px-4 py-3 gap-x-2">
+                <div className="pr-3 py-1 mx-1">
+                  <div
+                    className="text-2xl font-medium rounded-full cursor-pointer hover:text-blue-300"
+                    onClick={handleBackClick}
+                  >
+                    <IoMdArrowBack />
+                  </div>
+                </div>
+                <h2 className="text-lg font-bold">{`${
+                  user?.name ?? "Profile"
+                }`}</h2>
+              </div>
             </div>
-          )}
-          {!loading && !notFound && (
-            <>
-              <AccountInfo user={user} refreshProfile={getUserProfile} />
-              <ProfileTabs username={username} />
-            </>
-          )}
-        </main>
-      </div>
+
+            {loading && <Loader />}
+            {notFound && (
+              <div className="flex flex-col gap-1 items-center">
+                <h2>This account doesn’t exist</h2>
+                <p>Try searching for another.</p>
+              </div>
+            )}
+            {!loading && !notFound && (
+              <>
+                <AccountInfo user={user} refreshProfile={getUserProfile} />
+                <ProfileTabs username={username} />
+              </>
+            )}
+          </main>
+        </div>
+      )}
     </>
   );
 }

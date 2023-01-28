@@ -26,14 +26,15 @@ import TweetReplyForm from "@/sections/tweet/TweetReplyForm";
 import { getTweetReplies } from "../../../redux/slices/tweet.slice";
 import TweetReply from "@/sections/tweet/TweetReply";
 import { relativeCDNUrl } from "../../../utils/url";
-export default function TweetPage({ data, failed }) {
+import AppLoading from "@ui/AppLoading";
+export default function TweetPage({ data, resType }) {
   const dispatch = useAppDispatch();
-  const { isAuthenticated } = useAuth();
+  const { isAuthenticated, isInitialized } = useAuth();
   const { pathname, query, back } = useRouter();
   const { tweetID, username } = query;
   const [loading, setLoading] = useState(true);
-  const [notFound, setNotFound] = useState(false);
-  const [tweet, setTweet] = useState<any>({});
+  const [notFound, setNotFound] = useState(resType === "NOT_FOUND");
+  const [tweet, setTweet] = useState<any>(null);
 
   // tweet meta
 
@@ -45,9 +46,11 @@ export default function TweetPage({ data, failed }) {
   useEffect(() => {
     if (!tweetID) return; // first load UI fix
     // do not fetch again if data is already fetched at server side
-    if (!failed) {
-      setTweet(data);
+    if (resType === "SUCCESS" || resType === "NOT_FOUND") {
       setLoading(false);
+      resType === "SUCCESS" && setTweet(data);
+      resType === "NOT_FOUND" && setNotFound(true);
+      return;
     }
     const fetchTweet = async () => {
       try {
@@ -63,6 +66,7 @@ export default function TweetPage({ data, failed }) {
 
   useEffect(() => {
     if (!tweet) return;
+
     setLikeCount(tweet?.likeCount);
     setLikedByMe(tweet?.liked ?? false);
     const fetchReplies = async () => {
@@ -75,7 +79,10 @@ export default function TweetPage({ data, failed }) {
   const handleBackClick = () => back();
 
   const handleLikeClick = async () => {
-    if (!isAuthenticated) return dispatch(setInfoNotice({ message: "Login/Sign Up to Like a Tweet" }));
+    if (!isAuthenticated)
+      return dispatch(
+        setInfoNotice({ message: "Login/Sign Up to Like a Tweet" })
+      );
 
     setLikedByMe(!likedByMe);
     const res = await http.patch(`/tweet/${tweet?.id}/like`);
@@ -85,144 +92,159 @@ export default function TweetPage({ data, failed }) {
   const noFeature = () =>
     dispatch(setInfoNotice({ message: "Feature not implemented!" }));
 
+  const title = notFound ? "Tweet" : `${data?.owner?.username} on Twitter`;
   return (
     <>
       <Head>
-        <title>
-          {notFound ? "Tweet" : `${username} on Twitter `} | Twitter Clone
-        </title>
+        <title>{`${title} | Twitter Clone`}</title>
+        {!notFound && (
+          <meta
+            name="description"
+            content={`${data?.owner?.username}'s Tweet : ${data?.content}`}
+          />
+        )}
       </Head>
 
-      <div className="min-h-screen flex max-w-7xl mx-auto xl:grid xl:grid-cols-10 gap-5">
-        <Nav />
-        <main className="col-span-5 border-x border-slate-200 flex-1 w-full flex-col">
-          <div className="sticky bg-white/75 z-10 backdrop-blur-md top-0">
-            <div className="flex items-center px-4 py-3 gap-x-2">
-              <div className="pr-3 py-1 mx-1">
-                <div
-                  className="text-2xl font-medium rounded-full hover:text-blue-300 cursor-pointer"
-                  onClick={handleBackClick}
-                >
-                  <IoMdArrowBack />
+      {!isInitialized && <AppLoading />}
+      {isInitialized && (
+        <div className="min-h-screen flex max-w-7xl mx-auto xl:grid xl:grid-cols-10 gap-5">
+          <Nav />
+          <main className="col-span-5 border-x border-slate-200 flex-1 w-full flex-col">
+            <div className="sticky bg-white/75 z-10 backdrop-blur-md top-0">
+              <div className="flex items-center px-4 py-3 gap-x-2">
+                <div className="pr-3 py-1 mx-1">
+                  <div
+                    className="text-2xl font-medium rounded-full hover:text-blue-300 cursor-pointer"
+                    onClick={handleBackClick}
+                  >
+                    <IoMdArrowBack />
+                  </div>
                 </div>
+                <h2 className="text-lg font-bold">Tweet</h2>
               </div>
-              <h2 className="text-lg font-bold">Tweet</h2>
             </div>
-          </div>
-          {loading && <Loader />}
-          {!loading && !notFound && (
-            <>
-              <div className="flex flex-col p-4">
-                <TweetOwner owner={tweet?.owner} tweetID={tweet?.id} />
-                <div className="my-3">
-                  <span className="text-2xl fodnt-bold">{tweet?.content}</span>
-                  {/* attachment */}
-                  {tweet?.attachments?.length > 0 && (
-                    <div className="w-full relative -z-10 h-80 mb-4 my-2">
-                      {tweet?.attachments.map((item, i) => (
-                        <Image
-                          key={`attachment-${i}-${item?.id}`}
-                          fill={true}
-                          style={{ objectFit: "cover" }}
-                          className="rounded-3xl"
-                          src={relativeCDNUrl(item?.url)}
-                          alt="Tweet attachment"
+            {loading && <Loader />}
+            {!loading && !notFound && (
+              <>
+                <div className="flex flex-col p-4">
+                  <TweetOwner owner={tweet?.owner} tweetID={tweet?.id} />
+                  <div className="my-3">
+                    <span className="text-2xl fodnt-bold">
+                      {tweet?.content}
+                    </span>
+                    {/* attachment */}
+                    {tweet?.attachments?.length > 0 && (
+                      <div className="w-full relative -z-10 h-80 mb-4 my-2">
+                        {tweet?.attachments.map((item, i) => (
+                          <Image
+                            key={`attachment-${i}-${item?.id}`}
+                            fill={true}
+                            style={{ objectFit: "cover" }}
+                            className="rounded-3xl"
+                            src={relativeCDNUrl(item?.path)}
+                            alt="Tweet attachment"
+                          />
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                  <div className="flex gap-x-1 text-slate-500 text-sm">
+                    <time className="">{timeAgo(tweet?.createdAt)}</time>
+                    <div>
+                      .
+                      <span className="text-black font-semibold mx-1">
+                        {tweet?.viewCount}
+                      </span>
+                      Views
+                    </div>
+                  </div>
+                  <div className="flex gap-x-4 mt-2 py-3 font-semibold text-sm border-y border-slate-200">
+                    <div className="flex gap-x-[2px]">
+                      {tweet?.replyCount}
+                      {/* <span className="font-normal text-slate-500">Retweets</span> */}
+                      <span className="font-normal text-slate-500">
+                        Replies
+                      </span>
+                    </div>
+                    <div className="flex gap-x-[2px]">
+                      {tweet?.retweetCount}
+                      <span className="font-normal text-slate-500">
+                        Quote Retweets
+                      </span>
+                    </div>
+                    <div className="flex gap-x-[2px]">
+                      {likeCount}
+                      <span className="font-normal text-slate-500">Likes</span>
+                    </div>
+                  </div>
+                  <div className="flex justify-around py-3 font-semibold text-slate-500 text-sm border-b border-slate-200">
+                    <div
+                      className=" hover:text-[#1d9bf0] cursor-pointer"
+                      onClick={noFeature}
+                    >
+                      <div className="relative">
+                        <div className="absolute rounded-full m-[-8px] hover:bg-[#18a6f920] top-0 bottom-0 left-0 right-0"></div>
+                        <HiOutlineChatBubbleOvalLeft className="w-6 h-6" />
+                      </div>
+                    </div>
+                    <div
+                      className=" hover:text-[#1d9bf0] cursor-pointer"
+                      onClick={noFeature}
+                    >
+                      <div className="relative">
+                        <div className="absolute rounded-full m-[-8px] hover:bg-[#18a6f920] top-0 bottom-0 left-0 right-0"></div>
+                        <HiOutlineArrowPath className="w-6 h-6" />
+                      </div>
+                    </div>
+                    <div
+                      className=" hover:text-[#f91880] cursor-pointer"
+                      onClick={handleLikeClick}
+                    >
+                      <div className="relative">
+                        <div className="absolute rounded-full m-[-8px] hover:bg-[#f9188033] top-0 bottom-0 left-0 right-0"></div>
+                        {likedByMe ? (
+                          <HiHeart className="w-6 h-6 text-red-500" />
+                        ) : (
+                          <HiOutlineHeart className="w-6 h-6" />
+                        )}
+                      </div>
+                    </div>
+                    <div
+                      className=" hover:text-[#1d9bf0] cursor-pointer"
+                      onClick={noFeature}
+                    >
+                      <div className="relative">
+                        <div className="absolute rounded-full m-[-8px] hover:bg-[#18a6f920] top-0 bottom-0 left-0 right-0"></div>
+                        <HiArrowUpTray className="w-6 h-6" />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {replyLoading && <Loader />}
+                {!replyLoading && (
+                  <>
+                    {isAuthenticated && (
+                      <div className="replay-form px-4 pb-2">
+                        <TweetReplyForm tweetID={tweet?.id} width="full" />
+                      </div>
+                    )}
+                    <div className="flex flex-col">
+                      {replies?.allIds.map((tweetID) => (
+                        <TweetReply
+                          key={tweetID}
+                          tweet={replies.byId[tweetID]}
                         />
                       ))}
                     </div>
-                  )}
-                </div>
-                <div className="flex gap-x-1 text-slate-500 text-sm">
-                  <time className="">{timeAgo(tweet?.createdAt)}</time>
-                  <div>
-                    .
-                    <span className="text-black font-semibold mx-1">
-                      {tweet?.viewCount}
-                    </span>
-                    Views
-                  </div>
-                </div>
-                <div className="flex gap-x-4 mt-2 py-3 font-semibold text-sm border-y border-slate-200">
-                  <div className="flex gap-x-[2px]">
-                    {tweet?.replyCount}
-                    {/* <span className="font-normal text-slate-500">Retweets</span> */}
-                    <span className="font-normal text-slate-500">Replies</span>
-                  </div>
-                  <div className="flex gap-x-[2px]">
-                    {tweet?.retweetCount}
-                    <span className="font-normal text-slate-500">
-                      Quote Retweets
-                    </span>
-                  </div>
-                  <div className="flex gap-x-[2px]">
-                    {likeCount}
-                    <span className="font-normal text-slate-500">Likes</span>
-                  </div>
-                </div>
-                <div className="flex justify-around py-3 font-semibold text-slate-500 text-sm border-b border-slate-200">
-                  <div
-                    className=" hover:text-[#1d9bf0] cursor-pointer"
-                    onClick={noFeature}
-                  >
-                    <div className="relative">
-                      <div className="absolute rounded-full m-[-8px] hover:bg-[#18a6f920] top-0 bottom-0 left-0 right-0"></div>
-                      <HiOutlineChatBubbleOvalLeft className="w-6 h-6" />
-                    </div>
-                  </div>
-                  <div
-                    className=" hover:text-[#1d9bf0] cursor-pointer"
-                    onClick={noFeature}
-                  >
-                    <div className="relative">
-                      <div className="absolute rounded-full m-[-8px] hover:bg-[#18a6f920] top-0 bottom-0 left-0 right-0"></div>
-                      <HiOutlineArrowPath className="w-6 h-6" />
-                    </div>
-                  </div>
-                  <div
-                    className=" hover:text-[#f91880] cursor-pointer"
-                    onClick={handleLikeClick}
-                  >
-                    <div className="relative">
-                      <div className="absolute rounded-full m-[-8px] hover:bg-[#f9188033] top-0 bottom-0 left-0 right-0"></div>
-                      {likedByMe ? (
-                        <HiHeart className="w-6 h-6 text-red-500" />
-                      ) : (
-                        <HiOutlineHeart className="w-6 h-6" />
-                      )}
-                    </div>
-                  </div>
-                  <div
-                    className=" hover:text-[#1d9bf0] cursor-pointer"
-                    onClick={noFeature}
-                  >
-                    <div className="relative">
-                      <div className="absolute rounded-full m-[-8px] hover:bg-[#18a6f920] top-0 bottom-0 left-0 right-0"></div>
-                      <HiArrowUpTray className="w-6 h-6" />
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              {replyLoading && <Loader />}
-              {!replyLoading && (
-                <>
-                  {isAuthenticated && (
-                    <div className="replay-form px-4 pb-2">
-                      <TweetReplyForm tweetID={tweet?.id} width="full" />
-                    </div>
-                  )}
-                  <div className="flex flex-col">
-                    {replies?.allIds.map((tweetID) => (
-                      <TweetReply key={tweetID} tweet={replies.byId[tweetID]} />
-                    ))}
-                  </div>
-                </>
-              )}
-            </>
-          )}
-          {notFound && <PageNotFound />}
-        </main>
-      </div>
+                  </>
+                )}
+              </>
+            )}
+            {notFound && <PageNotFound />}
+          </main>
+        </div>
+      )}
     </>
   );
 }
@@ -283,18 +305,17 @@ export async function getServerSideProps({ req, res, params }) {
     "public, s-maxage=10, stale-while-revalidate=59"
   );
 
+  let resType = "SUCCESS";
+  let data = null;
   // Fetch tweet data from API
   const { tweetID } = params;
-  let failed = false;
-  let data;
   try {
     const tweetRes = await http.get(`/tweet/${tweetID}`);
     data = tweetRes.data;
   } catch (error) {
-    console.log("server rror ", error);
-    failed = true;
+    resType = "NOT_FOUND";
   }
 
   // Pass data to the page via props
-  return { props: { data, failed } };
+  return { props: { data, resType } };
 }

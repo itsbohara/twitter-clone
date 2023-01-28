@@ -84,7 +84,6 @@ const TweetForm = ({ width }: { width: "default" | "full" }) => {
       >
         <div className="flex flex-col flex-1">
           <input
-            autoFocus
             type="textarea"
             placeholder="What's up?"
             className="w-full px-4 py-3 text-xl border-slate-200 placeholder:text-slate-600 focus:outline-none"

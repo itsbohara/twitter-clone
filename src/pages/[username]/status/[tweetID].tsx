@@ -25,9 +25,10 @@ import Image from "next/image";
 import TweetReplyForm from "@/sections/tweet/TweetReplyForm";
 import { getTweetReplies } from "../../../redux/slices/tweet.slice";
 import TweetReply from "@/sections/tweet/TweetReply";
-import { relativeCDNUrl } from '../../../utils/url';
-export default function TweetPage() {
+import { relativeCDNUrl } from "../../../utils/url";
+export default function TweetPage({ data, failed }) {
   const dispatch = useAppDispatch();
+  const { isAuthenticated } = useAuth();
   const { pathname, query, back } = useRouter();
   const { tweetID, username } = query;
   const [loading, setLoading] = useState(true);
@@ -42,6 +43,12 @@ export default function TweetPage() {
   const [replyLoading, setReplyLoading] = useState(true);
 
   useEffect(() => {
+    if (!tweetID) return; // first load UI fix
+    // do not fetch again if data is already fetched at server side
+    if (!failed) {
+      setTweet(data);
+      setLoading(false);
+    }
     const fetchTweet = async () => {
       try {
         const res = await http.get(`/tweet/${tweetID}`);
@@ -52,7 +59,7 @@ export default function TweetPage() {
       setLoading(false);
     };
     fetchTweet();
-  }, []);
+  }, [tweetID]);
 
   useEffect(() => {
     if (!tweet) return;
@@ -68,6 +75,8 @@ export default function TweetPage() {
   const handleBackClick = () => back();
 
   const handleLikeClick = async () => {
+    if (!isAuthenticated) return dispatch(setInfoNotice({ message: "Login/Sign Up to Like Tweet" }));
+
     setLikedByMe(!likedByMe);
     const res = await http.patch(`/tweet/${tweet?.id}/like`);
     setLikeCount(res.data?.likes ?? 0);
@@ -197,12 +206,11 @@ export default function TweetPage() {
               {replyLoading && <Loader />}
               {!replyLoading && (
                 <>
-                  <div className="replay-form px-4 pb-2">
-                    <TweetReplyForm
-                      tweetID={tweetID?.toString()!}
-                      width="full"
-                    />
-                  </div>
+                  {isAuthenticated && (
+                    <div className="replay-form px-4 pb-2">
+                      <TweetReplyForm tweetID={tweet?.id} width="full" />
+                    </div>
+                  )}
                   <div className="flex flex-col">
                     {replies?.allIds.map((tweetID) => (
                       <TweetReply key={tweetID} tweet={replies.byId[tweetID]} />
@@ -259,4 +267,34 @@ function TweetOwner({ owner, tweetID }) {
       </div>
     </div>
   );
+}
+
+// pre-render at build time
+// export async function getStaticProps({ params }) {
+//   return {
+//     props: {  }, // will be passed to the page component as props
+//   };
+// }
+
+// // This gets called on every request
+export async function getServerSideProps({ req, res, params }) {
+  res.setHeader(
+    "Cache-Control",
+    "public, s-maxage=10, stale-while-revalidate=59"
+  );
+
+  // Fetch tweet data from API
+  const { tweetID } = params;
+  let failed = false;
+  let data;
+  try {
+    const tweetRes = await http.get(`/tweet/${tweetID}`);
+    data = tweetRes.data;
+  } catch (error) {
+    console.log("server rror ", error);
+    failed = true;
+  }
+
+  // Pass data to the page via props
+  return { props: { data, failed } };
 }

@@ -47,7 +47,8 @@ const authRoutes = [
 
 function TwitterCloneAppBoot({ Component, pageProps }) {
   const { pathname, push } = useRouter();
-  const guestRoute = authRoutes.includes(pathname) ?? false;
+  // const guestRoute = authRoutes.includes(pathname) ?? false;
+  const guestRoute = true; // demo
 
   const { isAuthenticated, isInitialized, user } = useAuth();
 

@@ -8,10 +8,11 @@ Twitter clone web app using Next.Js / React.Js / Tailwind & Radix UI.
 - ✅ like, reply to tweet
 - ✅ search/follow/unfollow user
 - ✅ user profile, update profile
+- ✅ follow, tweet like/reply notification
 
-## Checklist
+## TODO
 
-- [ ] like, follow notification
+- [ ] tweet notification
 - [ ] tweet retweet, quote retweet
 - [ ] tweet tags
 

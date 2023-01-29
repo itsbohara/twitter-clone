@@ -39,6 +39,16 @@ const items: NavLinkItem[] = [
     href: "/notifications",
     text: "Notifications",
     icon: <HiOutlineBell className="w-6 h-6" />,
+    // icon: (
+    //   <>
+    //     <div className="relative">
+    //       <HiOutlineBell className="w-6 h-6" />
+    //       <div className="absolute inline-flex items-center justify-center w-6 h-6 text-xs font-bold text-white bg-red-500 border-2 border-white rounded-full -top-2 -right-2 dark:border-gray-900">
+    //         20
+    //       </div>
+    //     </div>
+    //   </>
+    // ),
   },
   {
     href: "/messages",

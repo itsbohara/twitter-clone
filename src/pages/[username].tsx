@@ -13,6 +13,8 @@ import { IoMdArrowBack } from "react-icons/io";
 import Link from "next/link";
 import Loader from "@ui/Loader";
 import AppLoading from "@ui/AppLoading";
+import { withIronSessionSsr } from "iron-session/next";
+import { sessionOptions } from "@/lib/session";
 
 // for 404 page
 const noRoutes = ["/bookmarks/", "/explore/", "/messages/"];
@@ -130,17 +132,24 @@ export default function ProfilePage({ data, resType }) {
   );
 }
 
-export async function getServerSideProps({ req, res, params }) {
-  let resType = "SUCCESS";
-  let data = null;
-  // fetch user info
-  try {
-    const userRes = await http.get(`/profile/${params?.username}`);
-    data = userRes.data;
-  } catch (error) {
-    resType = "NOT_FOUND";
-  }
+export const getServerSideProps = withIronSessionSsr(
+  async ({ req, res, params }) => {
+    let resType = "SUCCESS";
+    let data = null;
+    // fetch user info
+    try {
+      const userRes = await http.get(`/profile/${params?.username}`, {
+        headers: {
+          Authorization: `Bearer ${req.session.user?.token}`,
+        },
+      });
+      data = userRes.data;
+    } catch (error) {
+      resType = "NOT_FOUND";
+    }
 
-  // Pass data to the page via props
-  return { props: { data, resType } };
-}
+    // Pass data to the page via props
+    return { props: { data, resType } };
+  },
+  sessionOptions
+);

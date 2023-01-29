@@ -54,7 +54,6 @@ const NotificationTabs = () => (
       </TabsPrimitive.Trigger>
     </TabsPrimitive.List>
     <TabsPrimitive.Content value="tab1" className="TabsContent ">
-      <h2 className="text-xl font-bold p-4">Under Construction!</h2>
       <AllNotifications />
     </TabsPrimitive.Content>
     <TabsPrimitive.Content value="tab2" className="TabsContent ">

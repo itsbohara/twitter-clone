@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 // utils
 import http from "@/client/axios";
 import { isValidToken, setSession } from "@/utils/jwt";
+import axios, { AxiosError } from "axios";
 
 // ----------------------------------------------------------------------
 
@@ -126,14 +127,18 @@ function AuthProvider({ children }) {
   const login = async (email, password) => {
     // THE old way
     // const response = await http.post("/account/login", { email, password });
-    const loginRes = await fetch("/api/login", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ email, password }),
-    });
-    const { token, data: user } = await loginRes.json();
-    setSession(token);
-    dispatchLoginUser(user);
+    try {
+      const loginRes = await axios.post("/api/login", { email, password });
+      const { token, data: user } = loginRes.data;
+      setSession(token);
+      dispatchLoginUser(user);
+    } catch (error) {
+      if (error instanceof AxiosError) {
+        throw new Error(error.response?.data?.message ?? error.message);
+      }
+
+      throw new Error("Something went wrong");
+    }
   };
 
   const register = async (name, email, password) => {

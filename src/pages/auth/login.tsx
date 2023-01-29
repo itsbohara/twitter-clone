@@ -24,8 +24,8 @@ export default function Login() {
     try {
       await login(email, password);
       push("/");
-    } catch (error) {
-      dispatch(setErrorNotice({ message: error }));
+    } catch (error: any) {
+      dispatch(setErrorNotice({ message: error?.message ?? error }));
     }
     setLoading(false);
   }

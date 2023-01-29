@@ -7,6 +7,7 @@ import Link from "next/link";
 import Footer from "@ui/Footer";
 import TwitterAuth from "./home/TwitterAuth";
 import useScreenWidth from "../hooks/useScreenWidth";
+import Feed from '../components/Feed';
 export default function GuestHome() {
   const { isDesktop } = useScreenWidth();
   return (
@@ -42,6 +43,9 @@ export default function GuestHome() {
           />
           <PanelItemTrends title="Vercel" category="Development" stat="27.5K" />
         </Panel>
+
+        <Header title="What’s happening" />
+        <Feed />
 
         <Header title="Entertainment" />
         <Header title="Sports" />

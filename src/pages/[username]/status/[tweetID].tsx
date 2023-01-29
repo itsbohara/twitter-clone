@@ -43,6 +43,8 @@ export default function TweetPage({ data, resType }) {
   const { tweetReplies: replies } = useAppSelector((state) => state.tweet);
   const [replyLoading, setReplyLoading] = useState(true);
 
+  const [tweetReplyFocus, setTweetReplyFocus] = useState(false);
+
   useEffect(() => {
     if (!tweetID) return; // first load UI fix
     // do not fetch again if data is already fetched at server side
@@ -180,7 +182,7 @@ export default function TweetPage({ data, resType }) {
                   <div className="flex justify-around py-3 font-semibold text-slate-500 text-sm border-b border-slate-200">
                     <div
                       className=" hover:text-[#1d9bf0] cursor-pointer"
-                      onClick={noFeature}
+                      onClick={() => setTweetReplyFocus(true)}
                     >
                       <div className="relative">
                         <div className="absolute rounded-full m-[-8px] hover:bg-[#18a6f920] top-0 bottom-0 left-0 right-0"></div>
@@ -225,8 +227,13 @@ export default function TweetPage({ data, resType }) {
                 {!replyLoading && (
                   <>
                     {isAuthenticated && (
-                      <div className="replay-form px-4 pb-2">
-                        <TweetReplyForm tweetID={tweet?.id} width="full" />
+                      <div className="replay-form px-4 pb-2 relative">
+                        <TweetReplyForm
+                          tweetID={tweet?.id}
+                          width="full"
+                          inputFocus={tweetReplyFocus}
+                          onInputBlur={() => setTweetReplyFocus(false)}
+                        />
                       </div>
                     )}
                     <div className="flex flex-col">

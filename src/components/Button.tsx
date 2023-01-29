@@ -1,5 +1,6 @@
 import { cva } from "class-variance-authority";
 import Link from "next/link";
+import { MouseEventHandler } from "react";
 
 interface Props {
   children: React.ReactNode;
@@ -7,7 +8,7 @@ interface Props {
   size?: "default" | "small" | "large";
   center?: boolean;
   href?: string;
-  onClick?: () => void;
+  onClick?: MouseEventHandler<HTMLButtonElement>;
   disabled?: boolean;
   [key: string]: any;
 }

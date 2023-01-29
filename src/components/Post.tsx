@@ -153,7 +153,13 @@ const Post = ({
                 {props?.views ?? 0}
               </li>
               <li>
-                <HiOutlineChatBubbleOvalLeft className="w-5 h-5" />
+                <div className=" hover:text-[#1d9bf0] cursor-pointer">
+                  <div className="relative">
+                    <div className="absolute rounded-full m-[-8px] hover:bg-[#18a6f920] top-0 bottom-0 left-0 right-0"></div>
+
+                    <HiOutlineChatBubbleOvalLeft className="w-5 h-5" />
+                  </div>
+                </div>
                 {props?.replyCount ?? 0}
               </li>
               <li>

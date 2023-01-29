@@ -26,11 +26,9 @@ const Feed = () => {
   const dispatch = useAppDispatch();
   const [loading, setLoading] = useState(true);
   const { tweets } = useAppSelector((state) => state.tweet);
-  // const { tweets } = useAppSelector((state) => state.profile);
   //
   useEffect(() => {
     const fetchTweets = async () => {
-      // await dispatch(getProfileTweets("mahi"));
       await dispatch(getTweets());
       setLoading(false);
     };

@@ -13,7 +13,7 @@ export default function TwitterAuth() {
 
       <hr className="mt-4" />
       <div className="new-to-panel mt-3 flex flex-col gap-y-2">
-        <h2 className="text-xl font-bold">New to Twitter Clone?</h2>
+        <h2 className="text-xl font-bold">New to Twitter?</h2>
         <p className="text-xs text-slate-700 font-medium">
           Sign up now to get your own personalized timeline!
         </p>

@@ -8,7 +8,9 @@ import { useAppDispatch } from "../../hooks/useApp";
 import { setNotice } from "@/redux/slices/notice";
 import ProfileAvatar from "@ui/radix/ProfileAvatar";
 import { getNameInitials } from "@/utils/string";
-import { RiEditCircleLine } from "react-icons/ri";
+import { BsCamera } from "react-icons/bs";
+import Image from "next/image";
+import { relativeCDNUrl } from "../../utils/url";
 
 const EditProfileDialog = () => {
   const [open, setOpen] = useState(false);
@@ -22,15 +24,19 @@ const EditProfileDialog = () => {
   const [bio, setBio] = useState(user?.bio ?? "");
   const [location, setLocation] = useState(user?.location ?? "");
   const [url, setUrl] = useState(user?.url ?? "");
+  const [profileUrl, setProfileUrl] = useState(user?.profile);
+  const [coverUrl, setCoverUrl] = useState(user?.profileCover);
 
   const dispath = useAppDispatch();
 
   const fileRef = useRef<HTMLInputElement>(null);
+  const coverFileRef = useRef<HTMLInputElement>(null);
   const [profile, setProfile] = useState<File | null>(null);
+  const [cover, setCover] = useState<File | null>(null);
   async function handleSave() {
     // e.preventDefault();
     // check for profile to upload
-    let profileImage;
+    let profileImage, profileCover;
     if (profile) {
       const body = new FormData();
       body.append("file", profile);
@@ -38,12 +44,19 @@ const EditProfileDialog = () => {
       // profileImage = uploadedImage.data?.path; // TODO : media id
       profileImage = uploadedImage.data?.path;
     }
+    if (cover) {
+      const body = new FormData();
+      body.append("file", cover);
+      const uploadedImage = await http.put("/tweet/media", body);
+      profileCover = uploadedImage.data?.path;
+    }
     await http.patch("/account/me", {
       name,
       bio,
       location,
       url,
       profile: profileImage ?? user?.profile,
+      profileCover: profileCover ?? user?.profileCover,
     });
     await fetchCurrentUser();
     dispath(setNotice({ message: "Profile updated" }));
@@ -51,6 +64,16 @@ const EditProfileDialog = () => {
   }
 
   const handleProfileChoose = () => fileRef.current?.click();
+  const handleCoverChoose = () => coverFileRef.current?.click();
+
+  function onCoverChange(file) {
+    setCover(file);
+    setCoverUrl(URL.createObjectURL(file));
+  }
+  function onProfileChange(file) {
+    setProfile(file);
+    setProfileUrl(URL.createObjectURL(file));
+  }
 
   return (
     <Dialog.Root open={open} onOpenChange={handleOpenChange}>
@@ -82,28 +105,64 @@ const EditProfileDialog = () => {
             // onSubmit={handleSave}
             autoComplete="off"
           >
-            <div className="md rounded-full relative avatar border-4 border-white mb-4 flex items-center justify-center">
-              <ProfileAvatar
-                src={profile ? URL.createObjectURL(profile) : user?.profile}
-                alt={user?.name}
-                initials={getNameInitials(user?.name)}
-              />
-              <div className="absolute bottom-2">
-                <button
-                  onClick={handleProfileChoose}
-                  type="button"
-                  className="absolute z-10 rounded-full m-[-8px] bg-[#0f141910] hover:bg-[#0f141960] top-0 bottom-0 left-0 right-0"
-                ></button>
-                <RiEditCircleLine className="relative w-6 h-6 text-white" />
+            <div className="h-36 xs:h-44 sm:h-48">
+              <div className="w-full h-36 xs:h-44 sm:h-48 absolute left-0 right-0 bg-cover bg-no-repeat bg-center">
+                <input
+                  ref={coverFileRef as any}
+                  type="file"
+                  name="cover"
+                  accept="image/*"
+                  className="hidden"
+                  onChange={(e) => onCoverChange(e.target.files![0])}
+                />
+                {coverUrl ? (
+                  <Image
+                    fill={true}
+                    style={{ objectFit: "cover" }}
+                    src={relativeCDNUrl(coverUrl)}
+                    alt={""}
+                  />
+                ) : (
+                  <div className="h-full bg-slate-500 dark:bg-slate-600" />
+                )}
+                <div className="absolute left-1/2 top-1/2 -translate-y-1/2 -translate-x-1/2 flex">
+                  <button
+                    title="Change Cover"
+                    type="button"
+                    onClick={handleCoverChoose}
+                    className="p-2 z-10 rounded-full bg-[#0f141967] hover:bg-[#526d8844]"
+                  >
+                    <BsCamera className="relative w-6 h-6 text-white" />
+                  </button>
+                </div>
               </div>
-              <input
-                ref={fileRef as any}
-                type="file"
-                name="image"
-                accept="image/*"
-                className="hidden"
-                onChange={(e) => setProfile(e.target.files![0])}
-              />
+            </div>
+            <div className="h-20 relative">
+              <div className="absolute bottom-0 md rounded-full avatar border-4 border-white mb-4 flex items-center justify-center">
+                <ProfileAvatar
+                  src={profile ? URL.createObjectURL(profile) : user?.profile}
+                  alt={user?.name}
+                  initials={getNameInitials(user?.name)}
+                />
+                <div className="absolute left-1/2 top-1/2 -translate-y-1/2 -translate-x-1/2  flex">
+                  <button
+                    title="Change Profile"
+                    type="button"
+                    onClick={handleProfileChoose}
+                    className="p-2 z-10 rounded-full bg-[#0f141967] hover:bg-[#526d8844]"
+                  >
+                    <BsCamera className="relative w-6 h-6 text-white" />
+                  </button>
+                </div>
+                <input
+                  ref={fileRef as any}
+                  type="file"
+                  name="image"
+                  accept="image/*"
+                  className="hidden"
+                  onChange={(e) => onProfileChange(e.target.files![0])}
+                />
+              </div>
             </div>
 
             <div className="relative z-0 mb-3 w-full group">

@@ -113,7 +113,13 @@ const Post = ({
         <div className="flex flex-col flex-1">
           <div className="flex flex-1">
             <div className="flex flex-1 gap-x-1 text-sm">
-              <span className="text-slate-900 font-bold truncate">{name}</span>
+              <span className="flex text-slate-900 font-bold truncate">
+                {name}
+                <TwitterBlueCheck
+                  subscription={subscription}
+                  className="!mr-0 !h-[18px] !w-[18px]"
+                />
+              </span>
               <span className="text-slate-600 font-medium truncate">
                 @{username}
               </span>

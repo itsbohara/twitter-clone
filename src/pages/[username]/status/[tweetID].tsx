@@ -27,6 +27,7 @@ import { getTweetReplies } from "../../../redux/slices/tweet.slice";
 import TweetReply from "@/sections/tweet/TweetReply";
 import { relativeCDNUrl } from "../../../utils/url";
 import AppLoading from "@ui/AppLoading";
+import TwitterBlueCheck from "../../../components/TwitterBlueCheck";
 export default function TweetPage({ data, resType }) {
   const dispatch = useAppDispatch();
   const { isAuthenticated, isInitialized } = useAuth();
@@ -283,7 +284,13 @@ function TweetOwner({ owner, tweetID }) {
         />
       </div>
       <div className="flex flex-col flex-1">
-        <p className="text-base font-semibold truncate">{name}</p>
+        <p className="flex items-center text-base font-semibold truncate">
+          <span>{name}</span>
+          <TwitterBlueCheck
+            subscription={owner?.subscription}
+            className="!mr-0 !h-[18px] !w-[18px]"
+          />
+        </p>
         <p className="text-sm text-slate-600 font-medium">@{username}</p>
       </div>
       <div className="flex">

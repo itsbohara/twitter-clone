@@ -1,5 +1,9 @@
 import Link from "next/link";
 import { BiCalendar, BiLinkAlt } from "react-icons/bi";
+import TwitterBusinessBadge from "./badges/TwitterBusiness";
+import { AccountSubscription } from "../types/account";
+import TwitterBlue from "./badges/TwitterBlue";
+import TwitterBlueCheck from "./TwitterBlueCheck";
 
 const ProfileUserInfo = ({
   name,
@@ -8,6 +12,7 @@ const ProfileUserInfo = ({
   following,
   followers,
   joinedDate,
+  subscription,
 }: {
   name: string;
   username: string;
@@ -15,6 +20,7 @@ const ProfileUserInfo = ({
   following: string;
   followers: string;
   joinedDate: string;
+  subscription?: AccountSubscription;
 }) => {
   const _joined = new Date(joinedDate);
   const joinedMonth = _joined.toLocaleString("default", { month: "short" });
@@ -22,14 +28,13 @@ const ProfileUserInfo = ({
   return (
     <>
       <div className="my-2">
-        <div className="text-[20px] font-[800] leading-none">{name}</div>
+        <div className="flex text-[20px] font-[800] leading-none">
+          <span>{name}</span>
+          <TwitterBlueCheck subscription={subscription} />
+        </div>
         <div className="text-sm text-slate-500 font-[400]">@{username}</div>
       </div>
-      <p className="text-sm leading-tight">
-        {description}
-        {description && <br />}
-        User @unofficial <b>Twitter.</b>
-      </p>
+      <p className="text-sm leading-tight">{description}</p>
       <div className="flex gap-x-2 text-slate-500">
         <div className="my-2 flex gap-x-1 items-center">
           <BiLinkAlt className="w-4 h-4" />

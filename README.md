@@ -12,6 +12,7 @@ Twitter clone web app using Next.Js / React.Js / Tailwind & Radix UI.
 
 ## TODO
 
+- 🚧 twitter blue
 - [ ] tweet notification
 - [ ] tweet retweet, quote retweet
 - [ ] tweet tags

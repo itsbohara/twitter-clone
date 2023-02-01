@@ -35,7 +35,8 @@ const EditProfileDialog = () => {
       const body = new FormData();
       body.append("file", profile);
       const uploadedImage = await http.put("/tweet/media", body);
-      profileImage = uploadedImage.data?.url;
+      // profileImage = uploadedImage.data?.path; // TODO : media id
+      profileImage = uploadedImage.data?.path;
     }
     await http.patch("/account/me", {
       name,

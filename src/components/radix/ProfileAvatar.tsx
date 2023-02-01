@@ -1,4 +1,5 @@
 import * as AvatarPrimitive from "@radix-ui/react-avatar";
+import { relativeCDNUrl } from "../../utils/url";
 
 const ProfileAvatar = ({
   src,
@@ -12,7 +13,7 @@ const ProfileAvatar = ({
   <AvatarPrimitive.Root className="AvatarRoot inline-flex items-center justify-center overflow-hidden w-[130px] h-[130px] rounded-full bg-slate-900">
     <AvatarPrimitive.Image
       className="AvatarImage w-100 h-100 object-cover"
-      src={src}
+      src={relativeCDNUrl(src)}
       alt={alt}
     />
     <AvatarPrimitive.Fallback

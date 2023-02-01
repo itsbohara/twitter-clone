@@ -97,6 +97,7 @@ export default function AccountInfo({ user, refreshProfile }) {
               following={following}
               followers={followers}
               joinedDate={user?.createdAt}
+              subscription={user?.subscription}
             />
             {/* <div className="text-[13px] font-medium text-slate-500">
               Not followed by anyone you’re following

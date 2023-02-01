@@ -13,6 +13,7 @@ import { ReactNode } from "react";
 import { HiOutlineEllipsisHorizontal } from "react-icons/hi2";
 import { IoMdLogOut } from "react-icons/io";
 import { BsPersonPlus } from "react-icons/bs";
+import TwitterBlueCheck from "./TwitterBlueCheck";
 
 interface NavLinkItem {
   href: string;
@@ -52,7 +53,10 @@ const AccountNavItem = () => {
                 />
               </div>
               <div className="hidden xl:flex flex-col">
-                <p className="text-base font-semibold truncate">{user?.name}</p>
+                <span className="flex items-center text-base font-semibold truncate">
+                  <span>{user?.name}</span>
+                  <TwitterBlueCheck subscription={user?.subscription} />
+                </span>
                 <p className="text-sm text-slate-600 font-medium">
                   @{user?.username}
                 </p>

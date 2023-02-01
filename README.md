@@ -16,6 +16,8 @@ Twitter clone web app using Next.Js / React.Js / Tailwind & Radix UI.
 - [ ] tweet notification
 - [ ] tweet retweet, quote retweet
 - [ ] tweet tags
+- [ ] cover upload, profile/cover/tweet-image zoom view
+
 
 ## Getting Started
 

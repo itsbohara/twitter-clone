@@ -40,6 +40,7 @@ const items: NavLinkItem[] = [
     href: "/notifications",
     text: "Notifications",
     icon: <HiOutlineBell className="w-6 h-6" />,
+    //  TODO : notifications count badge
     // icon: (
     //   <>
     //     <div className="relative">

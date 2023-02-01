@@ -2,14 +2,16 @@ import Button from "@ui/Button";
 import useAuth from "@/hooks/useAuth";
 import cx from "classnames";
 import Avatar from "@rd/Avatar";
-import ProfileUserInfo from "@ui/ProfileUserInfo";
+import ProfileUserInfo from "@ui/profile/ProfileUserInfo";
 import { useEffect, useState } from "react";
 import { getNameInitials } from "../../utils/string";
-import ProfileAvatar from "@ui/radix/ProfileAvatar";
 import http from "../../client/axios";
 import EditProfileDialog from "../../components/modals/EditProfileDialog";
 import { useAppDispatch } from "../../hooks/useApp";
 import { setInfoNotice } from "@/redux/slices/notice";
+import UserProfileAvatar from "./UserProfileAvatar";
+import { relativeCDNUrl } from "../../utils/url";
+import UserProfileCover from "./UserProfileCover";
 
 export default function AccountInfo({ user, refreshProfile }) {
   const { user: currentUser, isAuthenticated } = useAuth();
@@ -42,33 +44,19 @@ export default function AccountInfo({ user, refreshProfile }) {
   return (
     <>
       <div>
-        <div
-          className="w-full bg-cover bg-no-repeat bg-center"
-          style={{
-            height: "200px",
-            backgroundImage:
-              "url(https://images.unsplash.com/photo-1630694093867-4b947d812bf0)",
-          }}
-        >
-          <img
-            className="opacity-0 w-full h-full"
-            src="https://images.unsplash.com/photo-1630694093867-4b947d812bf0"
-            alt="Profile Cover"
-          />
+        <div className="w-full h-36 xs:h-44 sm:h-48 bg-cover bg-no-repeat bg-center">
+          {user?.profileCover ? (
+            <UserProfileCover cover={user?.profileCover} name={user?.name} />
+          ) : (
+            <div className="h-full bg-slate-300 dark:bg-slate-600" />
+          )}
         </div>
         <div className="p-4">
           <div className="relative flex w-full">
             {/* <!-- Avatar --> */}
             <div className="flex justify-between flex-1">
               <div style={{ marginTop: "-6rem" }}>
-                <div className="md rounded-full relative avatar border-4 border-white">
-                  <ProfileAvatar
-                    src={user?.profile}
-                    alt={user?.name}
-                    initials={getNameInitials(user?.name)}
-                  />
-                  {/* <div className="absolute">Edit</div> */}
-                </div>
+                <UserProfileAvatar user={user} />
               </div>
             </div>
             {/* Profile Btns */}
@@ -90,15 +78,7 @@ export default function AccountInfo({ user, refreshProfile }) {
           </div>
 
           <div className="py-4 pb-1 w-full flex flex-col gap-y-2">
-            <ProfileUserInfo
-              name={user?.name}
-              username={user?.username}
-              description={user?.bio}
-              following={following}
-              followers={followers}
-              joinedDate={user?.createdAt}
-              subscription={user?.subscription}
-            />
+            <ProfileUserInfo user={user} />
             {/* <div className="text-[13px] font-medium text-slate-500">
               Not followed by anyone you’re following
             </div> */}

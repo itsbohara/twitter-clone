@@ -21,6 +21,8 @@ import { timeAgo } from "../utils/date";
 import { useRouter } from "next/router";
 import { relativeCDNUrl } from "@/utils/url";
 import { setInfoNotice } from "@/redux/slices/notice";
+import { AccountSubscription } from "../types/account";
+import TwitterBlueCheck from "./TwitterBlueCheck";
 
 interface PostOwner {
   name: string;
@@ -31,6 +33,7 @@ interface PostOwner {
     following: string;
   };
   bio: string;
+  subscription?: AccountSubscription;
 }
 
 interface Props {
@@ -90,6 +93,7 @@ const Post = ({
     profile,
     bio,
     count: { followers, following },
+    subscription,
   } = user;
 
   const openTweetPage = () => router.push(`/${username}/status/${id}`);

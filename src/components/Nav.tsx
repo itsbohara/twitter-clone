@@ -6,6 +6,7 @@ import AccountNavItem from "@ui/AccountNavItem";
 
 import { SiTwitter } from "react-icons/si";
 import useAuth from "../hooks/useAuth";
+import { useRouter } from "next/router";
 import {
   HiOutlineHome,
   HiHashtag,
@@ -64,7 +65,9 @@ const items: NavLinkItem[] = [
 
 const Nav = () => {
   const { isAuthenticated, user } = useAuth();
+  const { asPath, pathname } = useRouter();
 
+  const isPathActive = (path: String) => pathname === path;
   return (
     <header
       className={`hidden sm:flex w-24 xl:col-span-2 ${
@@ -78,6 +81,7 @@ const Nav = () => {
           </NavItem>
           {items.map(({ href, text, icon, guest }, i) => {
             if (!guest && !isAuthenticated) return;
+            const navActive = isPathActive(href);
             return (
               <div
                 key={`header-${i}`}
@@ -86,7 +90,11 @@ const Nav = () => {
               >
                 <NavItem href={href} width="inline" size="default">
                   {icon}
-                  <div className="hidden xl:inline-flex flex-none text-lg font-medium">
+                  <div
+                    className={`hidden xl:inline-flex flex-none text-lg ${
+                      navActive ? "font-bold" : "font-medium"
+                    }`}
+                  >
                     {text}
                   </div>
                 </NavItem>
@@ -101,7 +109,13 @@ const Nav = () => {
                 size="default"
               >
                 <HiOutlineUser className="w-6 h-6" />
-                <div className="hidden xl:inline-flex flex-none text-lg font-medium">
+                <div
+                  className={`hidden xl:inline-flex flex-none text-lg font-medium ${
+                    asPath.includes(user?.username)
+                      ? "font-bold"
+                      : "font-medium"
+                  }`}
+                >
                   Profile
                 </div>
               </NavItem>

@@ -137,8 +137,13 @@ export const getServerSideProps = withIronSessionSsr(
     let resType = "SUCCESS";
     let data = null;
     // fetch user info
+    // redirect to clean path on @
+    const username = params?.username?.toString()?.replace(/@/g, "");
+    if (params?.username?.indexOf("@") !== -1) {
+      return { redirect: { permanent: false, destination: `/${username}` } };
+    }
     try {
-      const userRes = await http.get(`/profile/${params?.username}`, {
+      const userRes = await http.get(`/profile/${username}`, {
         headers: {
           Authorization: `Bearer ${req.session.user?.token}`,
         },

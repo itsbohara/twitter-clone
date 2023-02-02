@@ -10,20 +10,19 @@ Full-Stack Twitter clone web app built with Next.Js / React.Js / Tailwind & Radi
 
 - ✅ Text/Image tweet - [!only-1-image]
 - ✅ like, reply to tweet
-- ✅ search/follow/unfollow user
+- ✅ search/follow/unfollow users
 - ✅ user profile, update profile
-- ✅ follow, tweet like/reply notification
-- ✅ twitter blue
-- ✅ cover upload, profile/cover/tweet-image zoom view
+- ✅ Notifications for follow, tweet like/reply
+- ✅ Twitter blue <img src="./public/twitter-blue.svg" height="15"> verification
+- ✅ profile cover upload, profile/cover/tweet-image zoom-imageViewer
 
 ## TODO
 
 - [ ] tweet notification
 - [ ] tweet retweet, quote retweet
 - [ ] tweet tags
-- [ ] tweet : multiple image upload
 
-## Getting Started
+## Getting Started ⚡️
 
 - Clone this repo:
 
@@ -38,8 +37,18 @@ To install the packages:
 ```bash
 bun install
 # or
+npm install
+```
+
+To run the development server:
+
+```bash
 bun run dev
 ```
+
+- 🔥 Use [bun](https://bun.sh) instead of `npm` for speed🚀
+
+Twitter clone will be live on `localhost:3000` and start experimenting the functionalities or begin adding yours 😉
 
 ### Project Structure
 
@@ -56,6 +65,7 @@ bun run dev
 ### Backend Server 🗄️
 
 I have used Node/Mongo/Express for backend server implementation.
+
 - Repo Link - https://github.com/mblearningprojects/twitter-clone-server
 
 ### Special Thanks

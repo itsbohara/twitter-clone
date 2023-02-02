@@ -33,7 +33,13 @@ const TweetFormStyles = cva("flex flex-1 gap-x-2", {
   },
 });
 
-const TweetForm = ({ width }: { width: "default" | "full" }) => {
+const TweetForm = ({
+  width,
+  onModalClose,
+}: {
+  width: "default" | "full";
+  onModalClose?: () => void;
+}) => {
   const fileRef = useRef<HTMLInputElement>();
   const { user } = useAuth();
   const dispatch = useAppDispatch();
@@ -58,6 +64,7 @@ const TweetForm = ({ width }: { width: "default" | "full" }) => {
     }
     await dispatch(newTweet({ content, attachments }));
     resetForm();
+    onModalClose?.();
   }
   function resetForm() {
     setContent("");
@@ -90,7 +97,7 @@ const TweetForm = ({ width }: { width: "default" | "full" }) => {
             <div className="flex flex-col flex-1">
               <input
                 type="textarea"
-                placeholder="What's up?"
+                placeholder="What's happening?"
                 className="w-full px-4 py-3 text-xl border-slate-200 placeholder:text-slate-600 focus:outline-none"
                 value={content}
                 onChange={(e) => setContent(e.target.value)}

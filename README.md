@@ -44,6 +44,8 @@ To run the development server:
 
 ```bash
 bun run dev
+# or
+npm run dev
 ```
 
 - 🔥 Use [bun](https://bun.sh) instead of `npm` for speed🚀

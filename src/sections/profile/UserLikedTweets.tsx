@@ -1,23 +1,29 @@
-import Image from "next/image";
-import Post from "@ui/Post";
-import { ReactNode, useState, useEffect } from "react";
-import { useAppDispatch, useAppSelector } from "../../hooks/useApp";
-import { getProfileTweets } from "@/redux/slices/profile.slice";
-import Loader from "../../components/Loader";
+import { useAppDispatch, useAppSelector } from "@/hooks/useApp";
+import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
+import http from "@/client/axios";
+import { getProfileTweets } from "../../redux/slices/profile.slice";
+import Loader from "../../components/Loader";
+import Post from "@ui/Post";
+import useAuth from "@/hooks/useAuth";
 
-const UserTweets = ({ username }) => {
+export default function UserLikedTweets() {
   const dispatch = useAppDispatch();
+  const { user } = useAuth();
   const [loading, setLoading] = useState(true);
-  const { tweets } = useAppSelector((state) => state.profile);
+  const { likes: tweets } = useAppSelector((state) => state.profile);
+  const {
+    query: { username },
+  } = useRouter();
+
   useEffect(() => {
-    const getTweets = async () => {
-      dispatch(getProfileTweets(username));
+    const getLikedTweets = async () => {
+      dispatch(getProfileTweets(username, { liked: true }));
       setLoading(false);
     };
-    getTweets();
+    getLikedTweets();
     return () => setLoading(true);
-  }, [username]);
+  }, []);
   if (loading) return <Loader />;
 
   return (
@@ -44,7 +50,7 @@ const UserTweets = ({ username }) => {
               content={content}
               attachments={attachments}
               date={date}
-              liked={liked ?? false}
+              liked={(username === user?.username || liked) ?? false}
               likes={likes}
               views={views}
               retweetCount={retweetCount}
@@ -55,6 +61,4 @@ const UserTweets = ({ username }) => {
       })}
     </ul>
   );
-};
-
-export default UserTweets;
+}

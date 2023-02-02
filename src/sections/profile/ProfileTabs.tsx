@@ -3,6 +3,7 @@ import cx from "classnames";
 import TweetForm from "@ui/TweetForm";
 import Feed from "@ui/Feed";
 import UserTweets from "./UserTweets";
+import UserLikedTweets from "./UserLikedTweets";
 
 const ProfileTabs = ({ username }) => (
   <TabsPrimitive.Root className="TabsRoot" defaultValue="tab1">
@@ -78,7 +79,7 @@ const ProfileTabs = ({ username }) => (
       media tab
     </TabsPrimitive.Content>
     <TabsPrimitive.Content value="likesTab" className="TabsContent ">
-      likes tab
+      <UserLikedTweets />
     </TabsPrimitive.Content>
   </TabsPrimitive.Root>
 );

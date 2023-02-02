@@ -64,14 +64,14 @@ const slice = createSlice({
     getRepliedTweetsSuccess(state, action) {
       const tweets = action.payload;
       state.tweetReplies.byId = objFromArray(tweets);
-      state.tweetReplies.allIds = Object.keys(state.tweets.byId);
+      state.tweetReplies.allIds = Object.keys(state.tweetReplies.byId);
     },
 
     // GET USER LIKED TWEETS
     getLikedTweetsSuccess(state, action) {
       const tweets = action.payload;
       state.likes.byId = objFromArray(tweets);
-      state.likes.allIds = Object.keys(state.tweets.byId);
+      state.likes.allIds = Object.keys(state.likes.byId);
     },
 
     // ON NEW TWEET
@@ -108,12 +108,24 @@ export const {
 
 // ----------------------------------------------------------------------
 
-export function getProfileTweets(username) {
+interface ProfileTweetProps {
+  liked?: boolean;
+  media?: boolean;
+  replies?: boolean;
+}
+
+export function getProfileTweets(username, props?: ProfileTweetProps) {
   return async (dispatch, getState) => {
     dispatch(slice.actions.startLoading());
     try {
-      const response = await axios.get(`/tweets/u/${username}`);
-      dispatch(slice.actions.getTweetsSuccess(response.data));
+      let response;
+      if (props?.liked) {
+        response = await axios.get(`/tweets/u/${username}/liked`);
+        dispatch(slice.actions.getLikedTweetsSuccess(response.data));
+      } else {
+        response = await axios.get(`/tweets/u/${username}`);
+        dispatch(slice.actions.getTweetsSuccess(response.data));
+      }
     } catch (error) {
       dispatch(slice.actions.hasError(error));
     }

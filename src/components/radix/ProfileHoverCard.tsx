@@ -15,7 +15,6 @@ const ProfileHoverCard = ({ user }: { user: User }) => {
     bio,
     profile,
     count: { followers, following },
-    subscription,
   } = user;
   const initials = getNameInitials(user?.name ?? "");
   const { user: CurrentUser } = useAuth();
@@ -46,7 +45,7 @@ const ProfileHoverCard = ({ user }: { user: User }) => {
           <div className="w-full flex flex-col gap-y-2">
             <div className="flex justify-between items-start">
               <Avatar src={profile} alt={name} initials={initials} />
-              {user?.username !== username && (
+              {CurrentUser?.username !== username && (
                 <div>
                   <Button intent="outline" size="default">
                     Following
@@ -54,14 +53,7 @@ const ProfileHoverCard = ({ user }: { user: User }) => {
                 </div>
               )}
             </div>
-            <UserCard
-              name={name}
-              username={username}
-              bio={bio}
-              following={following}
-              followers={followers}
-              subscription={subscription}
-            />
+            <UserCard user={user} />
           </div>
         </HoverCardPrimitive.Content>
       </HoverCardPrimitive.Portal>

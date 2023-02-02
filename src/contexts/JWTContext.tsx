@@ -4,14 +4,14 @@ import PropTypes from "prop-types";
 import http from "@/client/axios";
 import { isValidToken, setSession } from "@/utils/jwt";
 import axios, { AxiosError } from "axios";
-import { User } from "@/types/user";
+import { SessionUser } from "../types/user";
 
 // ----------------------------------------------------------------------
 
 interface AuthState {
   isAuthenticated: boolean;
   isInitialized: boolean;
-  user: User | null;
+  user: SessionUser | null;
 }
 
 const initialState: AuthState = {

@@ -49,7 +49,7 @@ export default function TweetReply({ tweet }) {
             <span className="flex items-center text-slate-900 font-bold">
               <span>{name}</span>
               <TwitterBlueCheck
-                subscription={tweet.owner?.subscription}
+                account={tweet.owner?.account}
                 className="!mr-0 !h-[18px] !w-[18px]"
               />
             </span>

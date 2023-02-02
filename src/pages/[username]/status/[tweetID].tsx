@@ -279,8 +279,7 @@ function TweetOwner({ owner, tweetID }) {
       <div className="flex flex-col flex-1">
         <p className="flex items-center text-base font-semibold truncate">
           <span>{name}</span>
-          <TwitterBlueCheck
-            subscription={owner?.subscription}
+          <TwitterBlueCheck account={owner?.account}
             className="!mr-0 !h-[18px] !w-[18px]"
           />
         </p>

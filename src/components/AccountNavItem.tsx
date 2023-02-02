@@ -55,7 +55,7 @@ const AccountNavItem = () => {
               <div className="hidden xl:flex flex-col">
                 <span className="flex items-center text-base font-semibold truncate">
                   <span>{user?.name}</span>
-                  <TwitterBlueCheck subscription={user?.subscription} />
+                  <TwitterBlueCheck account={user?.account} />
                 </span>
                 <p className="text-sm text-slate-600 font-medium">
                   @{user?.username}

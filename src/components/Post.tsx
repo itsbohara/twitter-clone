@@ -88,7 +88,7 @@ const Post = ({
     profile,
     bio,
     count: { followers, following },
-    subscription,
+    account,
   } = user;
 
   const openTweetPage = () => router.push(`/${username}/status/${id}`);
@@ -111,7 +111,7 @@ const Post = ({
               >
                 {name}
                 <TwitterBlueCheck
-                  subscription={subscription}
+                  account={account}
                   className="!mr-0 !h-[18px] !w-[18px]"
                 />
               </Link>

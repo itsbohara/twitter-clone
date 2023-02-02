@@ -31,9 +31,9 @@ export default function GetVerified() {
   async function handleVerify(e) {
     e.preventDefault();
     try {
-        await http.post("/account/confirm-password", { password });
-        await http.post("/account/get-verified", { accountType });
-        fetchCurrentUser();
+      await http.post("/account/confirm-password", { password });
+      await http.post("/account/get-verified", { accountType });
+      fetchCurrentUser();
       dispatch(
         setNotice({
           message: "Congrats 🎇, Now You're Blue verified ",
@@ -59,12 +59,12 @@ export default function GetVerified() {
         </NavItem>
       </DialogPrimitive.Trigger>
       <DialogPrimitive.Portal>
-        <DialogPrimitive.Overlay className="DialogOverlay bg-slate-900/50 fixed inset-0 z-30" />
-        <DialogPrimitive.Content className="DialogContent bg-white px-4 pt-4 pb-8 -translate-x-2/4 -translate-y-2/4 rounded-2xl shadow-xl fixed z-40 top-1/2 left-1/2 w-[90vw] max-w-lg max-h-[85vh] focus:outline-none">
+        <DialogPrimitive.Overlay className="bg-slate-900/50 fixed inset-0 z-30" />
+        <DialogPrimitive.Content className="bg-white px-4 pt-4 pb-8 -translate-x-2/4 -translate-y-2/4 rounded-2xl shadow-xl fixed z-40 top-1/2 left-1/2 w-[90vw] max-w-lg max-h-[85vh] focus:outline-none">
           <div className="flex items-center mb-4 gap-x-4">
             <DialogPrimitive.Close asChild className="">
               <button
-                className="IconButton p-2 hover:bg-slate-200 rounded-full"
+                className="p-2 hover:bg-slate-200 rounded-full"
                 aria-label="Close"
               >
                 <HiOutlineXMark className="h-5 w-5" />

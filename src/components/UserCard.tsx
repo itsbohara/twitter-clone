@@ -1,21 +1,14 @@
 import TwitterBlueCheck from "./TwitterBlueCheck";
-import { AccountSubscription } from "../types/user";
+import { User } from "../types/user";
 import Link from "next/link";
-const UserCard = ({
-  name,
-  username,
-  bio,
-  following,
-  followers,
-  subscription,
-}: {
-  name: string;
-  username: string;
-  bio?: string;
-  following?: number;
-  followers?: number;
-  subscription?: AccountSubscription;
-}) => {
+const UserCard = ({ user }: { user: User & { follows?: boolean } }) => {
+  const {
+    name,
+    username,
+    bio,
+    account,
+    count: { followers, following },
+  } = user;
   const bioAvailable = bio && bio?.trim() !== "";
   return (
     <>
@@ -25,7 +18,7 @@ const UserCard = ({
           className="flex items-center text-base font-semibold leading-none hover:underline"
         >
           <span>{name}</span>
-          <TwitterBlueCheck subscription={subscription} />
+          <TwitterBlueCheck account={account} />
         </Link>
         <div className="text-sm text-slate-500 font-medium">@{username}</div>
       </div>

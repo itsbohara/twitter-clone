@@ -1,17 +1,19 @@
 import { cva } from "class-variance-authority";
 import Link from "next/link";
-import { MouseEventHandler } from "react";
+import { ComponentPropsWithRef, forwardRef } from "react";
+import cx from "classnames";
 
-interface Props {
-  children: React.ReactNode;
+type ButtonProps = (
+  | ComponentPropsWithRef<"button">
+  | ComponentPropsWithRef<"a">
+) & {
+  className?: string;
   intent?: "primary" | "main" | "outline" | "disabled";
   size?: "default" | "small" | "large";
   center?: boolean;
   href?: string;
-  onClick?: MouseEventHandler<HTMLButtonElement>;
   disabled?: boolean;
-  [key: string]: any;
-}
+};
 
 const ButtonStyles = cva(
   "inline-flex items-center font-bold rounded-full border",
@@ -42,28 +44,32 @@ const ButtonStyles = cva(
   }
 );
 
-const Button = ({
-  children,
-  intent,
-  size,
-  center,
-  href,
-  onClick,
-  disabled,
-  ...props
-}: Props) =>
-  href ? (
-    <Link href={href} className={ButtonStyles({ intent, size, center })}>
-      {children}
-    </Link>
-  ) : (
-    <button
-      className={ButtonStyles({ intent, size, center })}
-      onClick={onClick!}
-      disabled={disabled}
-    >
-      {children}
-    </button>
-  );
+const Button = forwardRef<HTMLButtonElement | HTMLAnchorElement, ButtonProps>(
+  function Button(
+    { children, intent, size, center, href, disabled, className, ...props },
+    ref
+  ) {
+    if (href) {
+      return (
+        <Link
+          href={href}
+          className={ButtonStyles({ intent, size, center })}
+          {...(props as any)}
+        >
+          {children}
+        </Link>
+      );
+    }
+    return (
+      <button
+        className={cx(ButtonStyles({ intent, size, center }), className)}
+        disabled={disabled}
+        {...(props as any)}
+      >
+        {children}
+      </button>
+    );
+  }
+);
 
 export default Button;

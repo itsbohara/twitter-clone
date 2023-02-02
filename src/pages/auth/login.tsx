@@ -9,6 +9,7 @@ import useAuth from "@/hooks/useAuth";
 import { useAppDispatch } from "@/hooks/useApp";
 import { setErrorNotice } from "@/redux/slices/notice";
 import { useRouter } from "next/router";
+import LoginWithGoogleButton from "@ui/auth/LoginWithGoogle";
 
 export default function Login() {
   const dispatch = useAppDispatch();
@@ -90,6 +91,8 @@ export default function Login() {
             <Button href="/auth/reset-password" intent="outline" center>
               <span>Forgot password?</span>
             </Button>
+            <div className="h-2"></div>
+            <LoginWithGoogleButton onLogin={() => push("/")} />
           </form>
           <p className="mt-5">
             Don&apos;t have an account?&nbsp;

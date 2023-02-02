@@ -61,6 +61,7 @@ const reducer = (state, action) =>
 type AuthContextType = AuthState & {
   method: string;
   login: (email, password) => Promise<void>;
+  googleLogin: (token) => Promise<void>;
   logout: () => void;
   register: (name, email, password) => Promise<void>;
   fetchCurrentUser: () => Promise<void>;
@@ -70,6 +71,7 @@ const AuthContext = createContext<AuthContextType>({
   ...initialState,
   method: "jwt",
   login: () => Promise.resolve(),
+  googleLogin: () => Promise.resolve(),
   logout: () => Promise.resolve(),
   register: () => Promise.resolve(),
   fetchCurrentUser: () => Promise.resolve(),
@@ -142,6 +144,13 @@ function AuthProvider({ children }) {
     }
   };
 
+  const googleLogin = async (token) => {
+    const loginRes = await axios.post("/api/googleLogin", { token });
+    const { token: sessionToken, data: user } = loginRes.data;
+    setSession(sessionToken);
+    dispatchLoginUser(user);
+  };
+
   const register = async (name, email, password) => {
     const res = await http.post("/account/register", {
       email,
@@ -172,6 +181,7 @@ function AuthProvider({ children }) {
         ...state,
         method: "jwt",
         login,
+        googleLogin,
         logout,
         register,
         fetchCurrentUser: fetchLoggedUser,

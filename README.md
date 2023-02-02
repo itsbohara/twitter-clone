@@ -8,6 +8,7 @@ Full-Stack Twitter clone web app built with Next.Js / React.Js / Tailwind & Radi
 
 ## Features
 
+- 🚧 google/twitter login
 - ✅ Text/Image tweet - [!only-1-image]
 - ✅ like, reply to tweet
 - ✅ search/follow/unfollow users

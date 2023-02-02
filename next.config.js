@@ -19,6 +19,7 @@ const nextConfig = {
       "pbs.twimg.com",
       "images.unsplash.com",
       "twitter-clone-api.itsbohara.com",
+      "lh3.googleusercontent.com"
     ],
   },
 };

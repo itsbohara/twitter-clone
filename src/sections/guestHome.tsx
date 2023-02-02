@@ -7,7 +7,7 @@ import Link from "next/link";
 import Footer from "@ui/Footer";
 import TwitterAuth from "./home/TwitterAuth";
 import useScreenWidth from "../hooks/useScreenWidth";
-import Feed from '../components/Feed';
+import Feed from "../components/Feed";
 export default function GuestHome() {
   const { isDesktop } = useScreenWidth();
   return (
@@ -23,28 +23,7 @@ export default function GuestHome() {
           </div>
         )}
 
-        <Panel title="Trends for you " href="/">
-          <PanelItemTrends
-            title="Next JS"
-            category="Development"
-            stat="57.5K"
-          />
-          <PanelItemTrends
-            title="Next JS"
-            category="Development"
-            stat="57.5K"
-          />
-          <PanelItemTrends title="Figma" category="Design" stat="107.5K" />
-          <PanelItemTrends title="Webflow" category="Design" stat="127.5K" />
-          <PanelItemTrends
-            title="Tailwind CSS"
-            category="Development"
-            stat="87.5K"
-          />
-          <PanelItemTrends title="Vercel" category="Development" stat="27.5K" />
-        </Panel>
-
-        <Header title="What’s happening" />
+        <Header title="Happening on Twitter" />
         <Feed />
 
         <Header title="Entertainment" />
@@ -54,8 +33,36 @@ export default function GuestHome() {
       {!isDesktop && (
         <aside className="col-span-3 hidden xl:flex flex-col w-[350px]">
           <div className="sticky top-0">
-
             <TwitterAuth />
+            <Panel title="Trends for you " href="/">
+              <PanelItemTrends
+                title="Next JS"
+                category="Development"
+                stat="57.5K"
+              />
+              <PanelItemTrends
+                title="Next JS"
+                category="Development"
+                stat="57.5K"
+              />
+              <PanelItemTrends title="Figma" category="Design" stat="107.5K" />
+              <PanelItemTrends
+                title="Webflow"
+                category="Design"
+                stat="127.5K"
+              />
+              <PanelItemTrends
+                title="Tailwind CSS"
+                category="Development"
+                stat="87.5K"
+              />
+              <PanelItemTrends
+                title="Vercel"
+                category="Development"
+                stat="27.5K"
+              />
+            </Panel>
+
             <Footer />
           </div>
         </aside>

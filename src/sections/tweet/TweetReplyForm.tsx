@@ -106,7 +106,7 @@ const TweetReplyForm = ({
         <Avatar
           src={user?.profile}
           alt={user?.name}
-          initials={getNameInitials(user?.name)}
+          initials={getNameInitials(user!.name)}
         />
         <div className="flex flex-col flex-1 gap-y-4 relative">
           <form onSubmit={handleTweetReplySubmit}>

@@ -6,14 +6,14 @@ const Avatar = ({
   alt,
   initials,
 }: {
-  src: string;
-  alt: string;
-  initials: string;
+  src?: string;
+  alt?: string;
+  initials?: string;
 }) => (
   <AvatarPrimitive.Root className="AvatarRoot inline-flex items-center justify-center overflow-hidden w-12 h-12 rounded-full bg-slate-900">
     <AvatarPrimitive.Image
       className="AvatarImage w-100 h-100 object-cover"
-      src={relativeCDNUrl(src)}
+      src={relativeCDNUrl(src!) ?? ""}
       alt={alt}
     />
     <AvatarPrimitive.Fallback

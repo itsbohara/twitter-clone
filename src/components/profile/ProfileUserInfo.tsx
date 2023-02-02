@@ -1,9 +1,6 @@
 import Link from "next/link";
 import { BiCalendar, BiLinkAlt } from "react-icons/bi";
 import { IoLocationOutline } from "react-icons/io5";
-import TwitterBusinessBadge from "../badges/TwitterBusiness";
-import { AccountSubscription } from "../../types/account";
-import TwitterBlue from "../badges/TwitterBlue";
 import TwitterBlueCheck from "../TwitterBlueCheck";
 
 const ProfileUserInfo = ({ user }) => {

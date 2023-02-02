@@ -21,7 +21,7 @@ import { timeAgo } from "../utils/date";
 import { useRouter } from "next/router";
 import { relativeCDNUrl } from "@/utils/url";
 import { setInfoNotice } from "@/redux/slices/notice";
-import ReTweetDropdownMenu from "@/sections/tweet/ReTweetMenu";
+// import ReTweetDropdownMenu from "@/sections/tweet/ReTweetMenu";
 import { AccountSubscription, User } from "../types/user";
 import TwitterBlueCheck from "./TwitterBlueCheck";
 import Link from "next/link";
@@ -164,11 +164,11 @@ const Post = ({
                 {tweetProps?.replyCount ?? 0}
               </li>
               <li>
-                <ReTweetDropdownMenu
+                {/* <ReTweetDropdownMenu
                   tweetID={id}
                   count={tweetProps?.retweetCount ?? 0}
-                />
-                {/* <HiOutlineArrowPath className="w-5 h-5" /> */}
+                /> */}
+                <HiOutlineArrowPath className="w-5 h-5" />
               </li>
               <li
                 onClick={(e) => {

@@ -1,22 +1,19 @@
 export function objFromArray(array, key = "id") {
   return array.reduce((accumulator, current) => {
-    accumulator[current[key]] = current;
+    // ensure value is not null
+    if (current && current[key]) accumulator[current[key]] = current;
     return accumulator;
   }, {});
 }
 
 export function keyArrayFromArray(array, key = "id") {
   return array.reduce((accumulator, current) => {
-    accumulator.push(current[key]);
+    if (current && current[key]) accumulator.push(current[key]);
     return accumulator;
   }, []);
 }
 
 export function iterateObject(obj, withKey?: boolean) {
-  //     const array =
-  //     Object.entries(board.columns).forEach(([key, data]) =>
-  //         !isExistsInColumnOrder(key) && nonOrderData.push(column)
-  //     )
   if (withKey) {
     return Object.keys(obj).map((key) => [key, obj[key]]);
   } else return Object.keys(obj).map((key) => obj[key]);

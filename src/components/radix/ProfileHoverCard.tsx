@@ -6,28 +6,19 @@ import UserCard from "@ui/UserCard";
 import { getNameInitials } from "../../utils/string";
 import useAuth from "../../hooks/useAuth";
 import Link from "next/link";
+import { User } from "@/types/user";
 
-interface Props {
-  profile: string;
-  alt: string;
-  name: string;
-  username: string;
-  bio?: string;
-  following?: string;
-  followers?: string;
-}
-
-const ProfileHoverCard = ({
-  profile,
-  alt,
-  name,
-  username,
-  bio,
-  following,
-  followers,
-}: Props) => {
-  const initials = getNameInitials(name ?? "");
-  const { user } = useAuth();
+const ProfileHoverCard = ({ user }: { user: User }) => {
+  const {
+    name,
+    username,
+    bio,
+    profile,
+    count: { followers, following },
+    subscription,
+  } = user;
+  const initials = getNameInitials(user?.name ?? "");
+  const { user: CurrentUser } = useAuth();
   const onProfileClick = (e) => e.stopPropagation();
 
   return (
@@ -36,9 +27,9 @@ const ProfileHoverCard = ({
         <Link
           onClick={onProfileClick}
           className="ImageTrigger inline-flex h-12 w-12 items-center justify-center rounded-full overflow-hidden bg-white"
-          href={`/${username}`}
+          href={`/${user.username}`}
         >
-          <Avatar src={profile} alt={alt} initials={initials} />
+          <Avatar src={user.profile} alt={name} initials={initials} />
         </Link>
       </HoverCardPrimitive.Trigger>
       <HoverCardPrimitive.Portal>
@@ -54,7 +45,7 @@ const ProfileHoverCard = ({
         >
           <div className="w-full flex flex-col gap-y-2">
             <div className="flex justify-between items-start">
-              <Avatar src={profile} alt={alt} initials={initials} />
+              <Avatar src={profile} alt={name} initials={initials} />
               {user?.username !== username && (
                 <div>
                   <Button intent="outline" size="default">
@@ -66,9 +57,10 @@ const ProfileHoverCard = ({
             <UserCard
               name={name}
               username={username}
-              description={bio}
+              bio={bio}
               following={following}
               followers={followers}
+              subscription={subscription}
             />
           </div>
         </HoverCardPrimitive.Content>

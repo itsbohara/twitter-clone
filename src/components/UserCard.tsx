@@ -1,9 +1,10 @@
 const UserCard = ({
-	name,
-	username,
-	description,
-	following,
-	followers,
+  name,
+  username,
+  bio,
+  following,
+  followers,
+  subscription,
 }: {
 	name: string;
 	username: string;

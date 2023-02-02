@@ -21,27 +21,17 @@ import { timeAgo } from "../utils/date";
 import { useRouter } from "next/router";
 import { relativeCDNUrl } from "@/utils/url";
 import { setInfoNotice } from "@/redux/slices/notice";
-import { AccountSubscription } from "../types/account";
+import ReTweetDropdownMenu from "@/sections/tweet/ReTweetMenu";
+import { AccountSubscription, User } from "../types/user";
 import TwitterBlueCheck from "./TwitterBlueCheck";
-
-interface PostOwner {
-  name: string;
-  username: string;
-  profile: string;
-  count: {
-    followers: string;
-    following: string;
-  };
-  bio: string;
-  subscription?: AccountSubscription;
-}
+import Link from "next/link";
 
 interface Props {
   id: string;
   content: string;
   attachments?: any[];
   date: string;
-  user: PostOwner;
+  user: User;
   children?: ReactNode;
   [key: string]: any;
 }
@@ -56,11 +46,14 @@ const Post = ({
   ...props
 }: Props) => {
   const router = useRouter();
+  const isRetweet = props?.tweetType === "RETWEET";
+  const tweetProps = isRetweet ? props?.parentTweet : props;
+
   const [postVisible, postRef] = useOnScreen();
   const { user: CurrentUser, isAuthenticated } = useAuth();
   const dispatch = useAppDispatch();
-  const [likedByMe, setLikedByMe] = useState(props.liked ?? false);
-  const [likeCount, setLikeCount] = useState(props.likes ?? 0);
+  const [likedByMe, setLikedByMe] = useState(tweetProps.liked ?? false);
+  const [likeCount, setLikeCount] = useState(tweetProps.likes ?? 0);
 
   const handleLikeClick = async () => {
     if (!isAuthenticated)
@@ -77,13 +70,15 @@ const Post = ({
     if (!isAuthenticated) return;
     // tweet view count by seen time
     if (postVisible && id) {
-      dispatch(
-        updateTweet(
-          id,
-          { viewCount: (props?.views ?? 0) + 1 },
-          { silent: true }
-        )
-      );
+      console.log("isRetweet ?? ", isRetweet);
+
+      // dispatch(
+      //   updateTweet(
+      //     isRetweet ? props?.parentTweet?.id : id,
+      //     { viewCount: (tweetProps?.views ?? 0) + 1 },
+      //     { silent: true }
+      //   )
+      // );
     }
   }, [postVisible]);
 
@@ -105,25 +100,21 @@ const Post = ({
     >
       <div className="flex flex-1 gap-x-4" ref={postRef}>
         <div className="flex-shrink-0">
-          <ProfileHoverCard
-            profile={profile}
-            alt={name}
-            name={name}
-            username={username}
-            following={following}
-            followers={followers}
-          />
+          <ProfileHoverCard user={user} />
         </div>
         <div className="flex flex-col flex-1">
           <div className="flex flex-1">
             <div className="flex flex-1 gap-x-1 text-sm">
-              <span className="flex text-slate-900 font-bold truncate">
+              <Link
+                href={`/${username}`}
+                className="flex hover:underline text-slate-900 font-bold truncate"
+              >
                 {name}
                 <TwitterBlueCheck
                   subscription={subscription}
                   className="!mr-0 !h-[18px] !w-[18px]"
                 />
-              </span>
+              </Link>
               <span className="text-slate-600 font-medium truncate">
                 @{username}
               </span>
@@ -160,7 +151,7 @@ const Post = ({
               <li>
                 {/* <HiOutlineChartBarSquare className="w-5 h-5" /> */}
                 <RiBarChartLine className="w-5 h-5" />
-                {props?.views ?? 0}
+                {tweetProps?.views ?? 0}
               </li>
               <li>
                 <div className=" hover:text-[#1d9bf0] cursor-pointer">
@@ -170,11 +161,14 @@ const Post = ({
                     <HiOutlineChatBubbleOvalLeft className="w-5 h-5" />
                   </div>
                 </div>
-                {props?.replyCount ?? 0}
+                {tweetProps?.replyCount ?? 0}
               </li>
               <li>
-                <HiOutlineArrowPath className="w-5 h-5" />
-                {props?.retweetCount ?? 0}
+                <ReTweetDropdownMenu
+                  tweetID={id}
+                  count={tweetProps?.retweetCount ?? 0}
+                />
+                {/* <HiOutlineArrowPath className="w-5 h-5" /> */}
               </li>
               <li
                 onClick={(e) => {

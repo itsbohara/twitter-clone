@@ -274,14 +274,7 @@ function TweetOwner({ owner, tweetID }) {
   return (
     <div className="flex items-center">
       <div className="flex mr-3">
-        <ProfileHoverCard
-          profile={profile}
-          alt={name}
-          name={name}
-          username={username}
-          following={following}
-          followers={followers}
-        />
+        <ProfileHoverCard user={owner} />
       </div>
       <div className="flex flex-col flex-1">
         <p className="flex items-center text-base font-semibold truncate">

@@ -8,6 +8,7 @@ const UserCard = ({ user }: { user: User & { follows?: boolean } }) => {
     bio,
     account,
     count: { followers, following },
+    follows,
   } = user;
   const bioAvailable = bio && bio?.trim() !== "";
   return (
@@ -20,7 +21,14 @@ const UserCard = ({ user }: { user: User & { follows?: boolean } }) => {
           <span>{name}</span>
           <TwitterBlueCheck account={account} />
         </Link>
-        <div className="text-sm text-slate-500 font-medium">@{username}</div>
+        <div className="text-sm text-slate-500 font-medium">
+          <span>@{username}</span>
+          {follows && (
+            <span className="ml-1 rounded bg-slate-200 px-1 py-0.25 text-xs">
+              Follows you
+            </span>
+          )}
+        </div>
       </div>
       {bioAvailable && <div className="text-sm mb-2">{bio}</div>}
       <div className="flex gap-x-4">

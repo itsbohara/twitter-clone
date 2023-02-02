@@ -10,6 +10,7 @@ const ProfileUserInfo = ({ user }) => {
     count: { following, followers },
     createdAt,
     location,
+    follows,
   } = user;
 
   const _joined = new Date(createdAt);
@@ -37,9 +38,16 @@ const ProfileUserInfo = ({ user }) => {
       <div className="my-2">
         <div className="flex text-[20px] font-[800] leading-none">
           <span>{name}</span>
-          <TwitterBlueCheck subscription={user?.subscription} />
+          <TwitterBlueCheck account={user?.account} />
         </div>
-        <div className="text-sm text-slate-500 font-[400]">@{username}</div>
+        <div className="flex items-center text-sm text-slate-500 font-[400]">
+          <span>@{username}</span>
+          {follows && (
+            <span className="ml-1 rounded bg-slate-200 px-1 py-0.25 text-xs">
+              Follows you
+            </span>
+          )}
+        </div>
       </div>
       <p className="text-sm leading-tight">{user?.bio}</p>
       <div className="flex gap-x-3 text-slate-500">

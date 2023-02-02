@@ -8,6 +8,7 @@ import { useState } from "react";
 import http from "@/client/axios";
 import useAuth from "../../hooks/useAuth";
 import { relativeCDNUrl } from "../../utils/url";
+import TwitterBlueCheck from "../../components/TwitterBlueCheck";
 import {
   HiArrowUpTray,
   HiHeart,
@@ -25,13 +26,7 @@ export default function TweetReply({ tweet }) {
   const [likedByMe, setLikedByMe] = useState(tweet.liked ?? false);
   const [likeCount, setLikeCount] = useState(tweet.likeCount ?? 0);
 
-  const {
-    name,
-    username,
-    profile,
-    bio,
-    count: { followers, following },
-  } = tweet.owner;
+  const { name, username } = tweet.owner;
 
   const handleLikeClick = async () => {
     if (!isAuthenticated)
@@ -46,19 +41,18 @@ export default function TweetReply({ tweet }) {
   return (
     <div className="flex items-start px-4 py-2 hover:bg-[#00000008] cursor-pointer border-t border-slate-200">
       <div className="flex mr-3">
-        <ProfileHoverCard
-          profile={profile}
-          alt={name}
-          name={name}
-          username={username}
-          following={following}
-          followers={followers}
-        />
+        <ProfileHoverCard user={tweet.owner} />
       </div>
       <div className="flex flex-col flex-1">
         <div className="flex flex-1">
           <div className="flex flex-1 gap-x-1 text-sm">
-            <span className="text-slate-900 font-bold">{name}</span>
+            <span className="flex items-center text-slate-900 font-bold">
+              <span>{name}</span>
+              <TwitterBlueCheck
+                subscription={tweet.owner?.subscription}
+                className="!mr-0 !h-[18px] !w-[18px]"
+              />
+            </span>
             <span className="text-slate-600 font-medium">@{username}</span>·
             <span className="text-slate-600 font-medium">
               {timeAgo(tweet?.createdAt)}

@@ -9,6 +9,19 @@ module.exports = {
         default: ["var(--font-mona-sans)", ...fontFamily.sans],
         sans: ["var(--font-mona-sans)", ...fontFamily.sans],
       },
+      keyframes: {
+        splash: {
+          "0%": {
+            opacity: 0.4,
+          },
+          "50%": {
+            opacity: 0.7,
+          },
+          "100%": {
+            opacity: 0.5,
+          },
+        },
+      },
     },
   },
   corePlugins: {

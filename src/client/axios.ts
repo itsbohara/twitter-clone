@@ -1,12 +1,11 @@
 import axios, { AxiosError } from "axios";
 
 // ----------------------------------------------------------------------
+export const SERVER =
+  process.env.NODE_ENV === "development"
+    ? process.env.NEXT_PUBLIC_DEV_API_SERVER
+    : process.env.NEXT_PUBLIC_API_SERVER;
 
-export const SERVER = "https://twitter-clone-api.itsbohara.com";
-// export const SERVER = process.env.API_SERVER;
-// export const SERVER = process.env.DEV_API_SERVER;
-// const SERVER =
-//   process.env.NODE_ENV === "development" ? "" : process.env.API_SERVER;
 const http = axios.create({
   baseURL: `${SERVER}/api`,
 });

@@ -15,6 +15,8 @@ import {
   HiOutlineBookmark,
   HiOutlineUser,
 } from "react-icons/hi2";
+import { GoVerified } from "react-icons/go";
+import GetVerified from "./GetVerified";
 
 interface NavLinkItem {
   href: string;
@@ -104,6 +106,7 @@ const Nav = () => {
           })}
           {isAuthenticated && (
             <>
+              {!user?.subscription?.verified && <GetVerified />}
               <NavItem
                 href={`/${user?.username ?? "profile"}`}
                 width="inline"
@@ -112,7 +115,7 @@ const Nav = () => {
                 <HiOutlineUser className="w-6 h-6" />
                 <div
                   className={`hidden xl:inline-flex flex-none text-lg font-medium ${
-                    asPath.includes(user?.username)
+                    asPath.includes(user!.username)
                       ? "font-bold"
                       : "font-medium"
                   }`}

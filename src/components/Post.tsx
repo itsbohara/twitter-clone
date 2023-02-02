@@ -82,6 +82,11 @@ const Post = ({
     }
   }, [postVisible]);
 
+  const noFeature = (e) => {
+    e.stopPropagation();
+    dispatch(setInfoNotice({ message: "Not available!" }));
+  };
+
   const {
     name,
     username,
@@ -189,7 +194,17 @@ const Post = ({
               </li>
 
               <li>
-                <HiArrowUpTray className="w-5 h-5" />
+                <div
+                  role="button"
+                  onClick={noFeature}
+                  className=" hover:text-[#1d9bf0] cursor-pointer"
+                >
+                  <div className="relative">
+                    <div className="absolute rounded-full m-[-8px] hover:bg-[#18a6f920] top-0 bottom-0 left-0 right-0"></div>
+
+                    <HiArrowUpTray className="w-5 h-5" />
+                  </div>
+                </div>
               </li>
             </ul>
           </div>

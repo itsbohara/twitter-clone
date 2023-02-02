@@ -81,8 +81,8 @@ const TweetForm = ({ width }: { width: "default" | "full" }) => {
       {loading && <IndeterminateProgressBar />}
       <div className={TweetFormStyles({ width })}>
         <Avatar
-          src={user?.profile}
-          alt={user?.name}
+          src={user!.profile}
+          alt={user!.name}
           initials={getNameInitials(user!.name)}
         />
         <div className="flex flex-col flex-1 gap-y-4">

@@ -1,7 +1,7 @@
 import * as AvatarPrimitive from "@radix-ui/react-avatar";
 import { relativeCDNUrl } from "../../utils/url";
 
-const AvatarDemo = ({
+const Avatar = ({
   src,
   alt,
   initials,
@@ -25,4 +25,4 @@ const AvatarDemo = ({
   </AvatarPrimitive.Root>
 );
 
-export default AvatarDemo;
+export default Avatar;

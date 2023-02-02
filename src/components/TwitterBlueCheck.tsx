@@ -1,9 +1,9 @@
 import React from "react";
-import { AccountSubscription } from "../types/account";
 import TwitterBusinessBadge from "./badges/TwitterBusiness";
 import TwitterBlueBadge from "./badges/TwitterBlue";
 import cx from "classnames";
 import TwitterGovernmentBadge from "./badges/TwitterGovernment";
+import { AccountSubscription } from "../types/user";
 
 export default function TwitterBlueCheck({
   subscription,

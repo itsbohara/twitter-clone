@@ -16,8 +16,6 @@ const ProfileUserInfo = ({ user }) => {
   const _joined = new Date(createdAt);
   const joinedMonth = _joined.toLocaleString("default", { month: "short" });
 
-  console.log();
-
   const getBioUrl = () => {
     const defaultURL = "https://twitter.com/itsbohara";
     let bioUrl = user.url;

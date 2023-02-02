@@ -3,6 +3,7 @@ import { HiOutlineXMark, HiOutlinePencil } from "react-icons/hi2";
 import Button from "@ui/Button";
 import { useState } from "react";
 import Image from "next/image";
+import { relativeCDNUrl } from "../../utils/url";
 
 const ImageViewer = ({
   image,
@@ -18,7 +19,6 @@ const ImageViewer = ({
     setOpen(open);
     if (!open) onViewerClose?.();
   };
-  console.log(image);
 
   return (
     <Dialog.Root open={open} onOpenChange={handleOpenChange}>
@@ -28,10 +28,10 @@ const ImageViewer = ({
           {/* <Dialog.Title className="DialogTitle font-semibold flex items-center"></Dialog.Title> */}
           <Dialog.Close
             asChild
-            className="top-10 -left-10 items-center absolute"
+            className="z-[1] -top-1 max-sm:left-[90%] max-sm:top-1 -left-10 items-center absolute"
           >
             <button
-              className="IconButton bg-slate-400 p-2 hover:bg-slate-200 rounded-full"
+              className="bg-slate-400 p-2 hover:bg-slate-200 rounded-full"
               aria-label="Close"
             >
               <HiOutlineXMark className="h-5 w-5" />
@@ -42,7 +42,7 @@ const ImageViewer = ({
               fill={true}
               style={{ objectFit: "contain" }}
               alt=""
-              src={image}
+              src={relativeCDNUrl(image)}
             />
           </div>
         </Dialog.Content>

@@ -10,7 +10,7 @@ Twitter clone web app using Next.Js / React.Js / Tailwind & Radix UI.
 - ✅ user profile, update profile
 - ✅ follow, tweet like/reply notification
 - ✅ twitter blue
-- 🚧 cover upload, profile/cover/tweet-image zoom view
+- ✅ cover upload, profile/cover/tweet-image zoom view
 
 ## TODO
 

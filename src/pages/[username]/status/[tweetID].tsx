@@ -28,6 +28,7 @@ import TweetReply from "@/sections/tweet/TweetReply";
 import { relativeCDNUrl } from "../../../utils/url";
 import AppLoading from "@ui/AppLoading";
 import TwitterBlueCheck from "../../../components/TwitterBlueCheck";
+import ImagePreview from "@/sections/tweet/ImagePreview";
 export default function TweetPage({ data, resType }) {
   const dispatch = useAppDispatch();
   const { isAuthenticated, isInitialized } = useAuth();
@@ -137,17 +138,11 @@ export default function TweetPage({ data, resType }) {
                     </span>
                     {/* attachment */}
                     {tweet?.attachments?.length > 0 && (
-                      <div className="w-full relative -z-10 h-80 mb-4 my-2">
-                        {tweet?.attachments.map((item, i) => (
-                          <Image
-                            key={`attachment-${i}-${item?.id}`}
-                            fill={true}
-                            style={{ objectFit: "cover" }}
-                            className="rounded-3xl"
-                            src={relativeCDNUrl(item?.path)}
-                            alt="Tweet attachment"
-                          />
-                        ))}
+                      <div className="h-full relative mb-4 my-2">
+                        <ImagePreview
+                          images={tweet?.attachments}
+                          isSingleTweet
+                        />
                       </div>
                     )}
                   </div>
@@ -279,7 +274,8 @@ function TweetOwner({ owner, tweetID }) {
       <div className="flex flex-col flex-1">
         <p className="flex items-center text-base font-semibold truncate">
           <span>{name}</span>
-          <TwitterBlueCheck account={owner?.account}
+          <TwitterBlueCheck
+            account={owner?.account}
             className="!mr-0 !h-[18px] !w-[18px]"
           />
         </p>

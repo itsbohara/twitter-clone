@@ -25,6 +25,7 @@ import { setInfoNotice } from "@/redux/slices/notice";
 import { AccountSubscription, User } from "../types/user";
 import TwitterBlueCheck from "./TwitterBlueCheck";
 import Link from "next/link";
+import ImagePreview from "@/sections/tweet/ImagePreview";
 
 interface Props {
   id: string;
@@ -138,17 +139,8 @@ const Post = ({
           </div>
           <div className="text-sm text-slate-900">{content}</div>
           {attachments.length > 0 && (
-            <div className="w-full relative -z-10 h-80 my-2">
-              {attachments.map((item, i) => (
-                <Image
-                  key={`attachment-${i}-${item?.id}`}
-                  fill={true}
-                  style={{ objectFit: "cover" }}
-                  className="rounded-3xl"
-                  src={relativeCDNUrl(item?.path)}
-                  alt="Tweet attachment"
-                />
-              ))}
+            <div className="w-full relative -z-10 my-2">
+              <ImagePreview images={attachments} />
             </div>
           )}
           <div>

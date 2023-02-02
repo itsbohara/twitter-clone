@@ -80,7 +80,7 @@ const Nav = () => {
       <div className="flex flex-1 xl:w-60 flex-col fixed h-full">
         <div className="flex flex-col flex-1 max-xl:items-center">
           <NavItem href="/" width="inline" size="default">
-            <SiTwitter className="w-6 h-6 text-[#1da1f2]" />
+            <SiTwitter className="w-8 h-8 text-[#1da1f2]" />
           </NavItem>
           {items.map(({ href, text, icon, guest }, i) => {
             if (!guest && !isAuthenticated) return;

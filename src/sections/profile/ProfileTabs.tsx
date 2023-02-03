@@ -4,6 +4,7 @@ import TweetForm from "@ui/TweetForm";
 import Feed from "@ui/Feed";
 import UserTweets from "./UserTweets";
 import UserLikedTweets from "./UserLikedTweets";
+import MediaTweets from "./MediaTweets";
 
 const ProfileTabs = ({ username }) => (
   <TabsPrimitive.Root className="TabsRoot" defaultValue="tab1">
@@ -19,7 +20,7 @@ const ProfileTabs = ({ username }) => (
         )}
       >
         <div className="py-4 relative h-full ">
-          <div>Tweets</div>
+          <h6 className="text-sm">Tweets</h6>
           <span className="h-1 w-full bg-transparent absolute left-0 bottom-0 rounded-full"></span>
         </div>
       </TabsPrimitive.Trigger>
@@ -34,7 +35,7 @@ const ProfileTabs = ({ username }) => (
         )}
       >
         <div className="py-4 relative h-full ">
-          <div>Tweets & replies</div>
+          <h6 className="text-sm">Tweets & replies</h6>
           <span className="h-1 w-full bg-transparent absolute left-0 bottom-0 rounded-full"></span>
         </div>
       </TabsPrimitive.Trigger>
@@ -49,7 +50,7 @@ const ProfileTabs = ({ username }) => (
         )}
       >
         <div className="py-4 relative h-full ">
-          <div>Media</div>
+          <h6 className="text-sm">Media</h6>
           <span className="h-1 w-full bg-transparent absolute left-0 bottom-0 rounded-full"></span>
         </div>
       </TabsPrimitive.Trigger>
@@ -64,21 +65,21 @@ const ProfileTabs = ({ username }) => (
         )}
       >
         <div className="py-4 relative h-full ">
-          <div>Likes</div>
+          <h6 className="text-sm">Likes</h6>
           <span className="h-1 w-full bg-transparent absolute left-0 bottom-0 rounded-full"></span>
         </div>
       </TabsPrimitive.Trigger>
     </TabsPrimitive.List>
-    <TabsPrimitive.Content value="tab1" className="TabsContent ">
+    <TabsPrimitive.Content value="tab1">
       <UserTweets username={username} />
     </TabsPrimitive.Content>
-    <TabsPrimitive.Content value="tab2" className="TabsContent ">
-      tweets & replies tab
+    <TabsPrimitive.Content value="tab2">
+      Not available
     </TabsPrimitive.Content>
-    <TabsPrimitive.Content value="media" className="TabsContent ">
-      media tab
+    <TabsPrimitive.Content value="media">
+      <MediaTweets />
     </TabsPrimitive.Content>
-    <TabsPrimitive.Content value="likesTab" className="TabsContent ">
+    <TabsPrimitive.Content value="likesTab">
       <UserLikedTweets />
     </TabsPrimitive.Content>
   </TabsPrimitive.Root>

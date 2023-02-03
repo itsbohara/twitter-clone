@@ -5,6 +5,7 @@ import { HiOutlineXMark } from "react-icons/hi2";
 import { SiTwitter } from "react-icons/si";
 import AuthBoardingModal from "@ui/auth/Boarding";
 import Loading from "@ui/Loading";
+import GetVerified from "./GetVerified";
 
 const ManagedModal: React.FC = () => {
   const { isOpen, view, loading } = useModalState();
@@ -38,6 +39,7 @@ const ManagedModal: React.FC = () => {
 
           <Suspense fallback={<Loading />}>
             {view === "AUTH_BOARDING" && <AuthBoardingModal />}
+            {view === "GET_VERIFIED" && <GetVerified />}
           </Suspense>
         </Dialog.Content>
       </Dialog.Portal>

@@ -16,7 +16,8 @@ import {
   HiOutlineUser,
 } from "react-icons/hi2";
 import { GoVerified } from "react-icons/go";
-import GetVerified from "./GetVerified";
+import GetVerified from "./modals/GetVerified";
+import { useModalAction } from "@/contexts/ModalContext";
 
 interface NavLinkItem {
   href: string;
@@ -69,13 +70,16 @@ const items: NavLinkItem[] = [
 const Nav = () => {
   const { isAuthenticated, user } = useAuth();
   const { asPath, pathname } = useRouter();
+  const { openModal } = useModalAction()
 
   const isPathActive = (path: String) => pathname === path;
+  function openVerifyModal() {
+    openModal('GET_VERIFIED')
+  }
   return (
     <header
-      className={`hidden sm:flex w-24 xl:col-span-2 ${
-        !isAuthenticated ? "max-lg:justify-end" : ""
-      }`}
+      className={`hidden sm:flex w-24 xl:col-span-2 ${!isAuthenticated ? "max-lg:justify-end" : ""
+        }`}
     >
       <div className="flex flex-1 xl:w-60 flex-col fixed h-full">
         <div className="flex flex-col flex-1 max-xl:items-center">
@@ -94,9 +98,8 @@ const Nav = () => {
                 <NavItem href={href} width="inline" size="default">
                   {icon}
                   <div
-                    className={`hidden xl:inline-flex flex-none text-lg ${
-                      navActive ? "font-bold" : "font-medium"
-                    }`}
+                    className={`hidden xl:inline-flex flex-none text-lg ${navActive ? "font-bold" : "font-medium"
+                      }`}
                   >
                     {text}
                   </div>
@@ -106,7 +109,16 @@ const Nav = () => {
           })}
           {isAuthenticated && (
             <>
-              {!user?.subscription?.verified && <GetVerified />}
+              {!user?.subscription?.verified &&
+                <NavItem button width="inline" onClick={openVerifyModal}>
+                  <GoVerified className="w-6 h-6" />
+                  <div
+                    className={"hidden xl:inline-flex flex-none text-lg font-medium"}
+                  >
+                    Get Verified
+                  </div>
+                </NavItem>
+              }
               <NavItem
                 href={`/${user?.username ?? "profile"}`}
                 width="inline"
@@ -114,11 +126,10 @@ const Nav = () => {
               >
                 <HiOutlineUser className="w-6 h-6" />
                 <div
-                  className={`hidden xl:inline-flex flex-none text-lg font-medium ${
-                    asPath.includes(user!.username)
-                      ? "font-bold"
-                      : "font-medium"
-                  }`}
+                  className={`hidden xl:inline-flex flex-none text-lg font-medium ${asPath.includes(user!.username)
+                    ? "font-bold"
+                    : "font-medium"
+                    }`}
                 >
                   Profile
                 </div>

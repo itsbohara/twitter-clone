@@ -5,10 +5,10 @@ import { ReactNode } from "react";
 interface Props {
   href?: string;
   width: "full" | "inline" | "mobile";
-  size: "default" | "small" | "large";
+  size?: "default" | "small" | "large";
   children: ReactNode;
   button?: boolean;
-  onClick?: void;
+  onClick?: () => void;
   variant?: "danger" | "info";
 }
 
@@ -39,7 +39,7 @@ const NavItem = ({
   href,
   children,
   width,
-  size,
+  size = 'default',
   button,
   onClick,
   variant,
@@ -47,12 +47,12 @@ const NavItem = ({
   if (button) {
     return (
       <div className={NavItemStyles({ width, size, variant })}>
-        <div
-          className="flex items-center flex-row gap-x-4 px-4 py-3 hover:bg-slate-100 cursor-pointer"
+        <button
+          className="flex rounded-full items-center flex-row gap-x-4 px-4 py-3 hover:bg-slate-100 cursor-pointer"
           onClick={onClick!}
         >
           {children}
-        </div>
+        </button>
       </div>
     );
   }

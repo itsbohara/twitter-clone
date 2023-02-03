@@ -16,8 +16,10 @@ import AuthGuard from "../guards/AuthGuard";
 import useAuth from "../hooks/useAuth";
 import { SiTwitter } from "react-icons/si";
 import UsernameChooseDialog from "../components/modals/UsernameChooseDialog";
-import Loader from "../components/Loader";
+import Loader from "../components/Loading";
 import AppLoading from "../components/AppLoading";
+import { ModalProvider } from "@/contexts/ModalContext";
+import ManagedModal from "@ui/modals/ManagedModal";
 
 const myFont = localFont({
   src: "../../fonts/Mona-Sans.woff2",
@@ -27,14 +29,17 @@ const myFont = localFont({
 export default function App({ Component, pageProps }: AppProps) {
   return (
     <Toast.Provider swipeDirection="right">
-      <AuthProvider>
-        <ReduxProvider store={store}>
-          <main className={`${myFont.variable} font-sans min-h-screen`}>
-            <TwitterCloneAppBoot Component={Component} pageProps={pageProps} />
-            <ToastContainer />
-          </main>
-        </ReduxProvider>
-      </AuthProvider>
+      <ModalProvider>
+        <AuthProvider>
+          <ReduxProvider store={store}>
+            <main className={`${myFont.variable} font-sans min-h-screen`}>
+              <TwitterCloneAppBoot Component={Component} pageProps={pageProps} />
+              <ToastContainer />
+            </main>
+            <ManagedModal />
+          </ReduxProvider>
+        </AuthProvider>
+      </ModalProvider>
     </Toast.Provider>
   );
 }

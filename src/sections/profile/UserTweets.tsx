@@ -3,7 +3,7 @@ import Post from "@ui/Post";
 import { ReactNode, useState, useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "../../hooks/useApp";
 import { getProfileTweets } from "@/redux/slices/profile.slice";
-import Loader from "../../components/Loader";
+import Loader from "../../components/Loading";
 import { useRouter } from "next/router";
 
 const UserTweets = ({ username }) => {

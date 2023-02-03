@@ -7,7 +7,8 @@ import { useAppSelector } from "../hooks/useApp";
 import { getTweets } from "../redux/slices/tweet.slice";
 import { getNameInitials } from "../utils/string";
 import { getProfileTweets } from "../redux/slices/profile.slice";
-import Loader from "./Loader";
+import Loader from "./Loading";
+import { Error } from "./Error";
 
 interface PostItem {
   name: string;
@@ -25,7 +26,7 @@ interface PostItem {
 const Feed = () => {
   const dispatch = useAppDispatch();
   const [loading, setLoading] = useState(true);
-  const { tweets } = useAppSelector((state) => state.tweet);
+  const { tweets, error } = useAppSelector((state) => state.tweet);
   //
   useEffect(() => {
     const fetchTweets = async () => {
@@ -36,6 +37,9 @@ const Feed = () => {
   }, []);
 
   if (loading) return <Loader />;
+
+
+  if (error) return <Error message={error} />
 
   return (
     <ul className="[&_p:last-child]:text-slate-500 [&_p:first-child]:text-lg divide-y divide-slate-200">

@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { BiCalendar, BiLinkAlt } from "react-icons/bi";
 import { IoLocationOutline } from "react-icons/io5";
-import TwitterBlueCheck from "../TwitterBlueCheck";
+import TwitterBlueCheck from "../../components/TwitterBlueCheck";
 
 const ProfileUserInfo = ({ user }) => {
   const {

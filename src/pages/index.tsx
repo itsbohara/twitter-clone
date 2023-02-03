@@ -6,12 +6,10 @@ import PanelItem from "@ui/PanelItem";
 import Panel from "@ui/Panel";
 import PanelItemTrends from "@ui/PanelItemTrends";
 import Footer from "@ui/Footer";
-import Tabs from "@rd/Tabs";
 import useAuth from "@/hooks/useAuth";
-import Button from "@ui/Button";
-import Link from "next/link";
-import GuestHome from "@/sections/guestHome";
+import GuestHome from "@sections/guestHome";
 import AppLoading from "@ui/AppLoading";
+import HomeTabs from "@sections/home/HomeTabs";
 
 export default function Home() {
   const { isAuthenticated, isInitialized } = useAuth();
@@ -35,7 +33,7 @@ export default function Home() {
             <>
               <main className="col-span-5 w-full border-x border-slate-200">
                 <Header title="Home" />
-                <Tabs />
+                <HomeTabs />
               </main>
               <aside className="col-span-3 hidden xl:flex flex-col w-[350px]">
                 <div className="sticky top-0">

@@ -21,11 +21,11 @@ import { timeAgo } from "../utils/date";
 import { useRouter } from "next/router";
 import { relativeCDNUrl } from "@/utils/url";
 import { setInfoNotice } from "@/redux/slices/notice";
-// import ReTweetDropdownMenu from "@/sections/tweet/ReTweetMenu";
+// import ReTweetDropdownMenu from "@sections/tweet/ReTweetMenu";
 import { AccountSubscription, User } from "../types/user";
 import TwitterBlueCheck from "./TwitterBlueCheck";
 import Link from "next/link";
-import ImagePreview from "@/sections/tweet/ImagePreview";
+import ImagePreview from "@sections/tweet/ImagePreview";
 
 interface Props {
   id: string;

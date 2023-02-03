@@ -22,13 +22,13 @@ import { setInfoNotice } from "@/redux/slices/notice";
 import { useAppDispatch, useAppSelector } from "../../../hooks/useApp";
 import TweetDropdownMenu from "@ui/radix/DropdownMenu";
 import Image from "next/image";
-import TweetReplyForm from "@/sections/tweet/TweetReplyForm";
+import TweetReplyForm from "@sections/tweet/TweetReplyForm";
 import { getTweetReplies } from "../../../redux/slices/tweet.slice";
-import TweetReply from "@/sections/tweet/TweetReply";
+import TweetReply from "@sections/tweet/TweetReply";
 import { relativeCDNUrl } from "../../../utils/url";
 import AppLoading from "@ui/AppLoading";
 import TwitterBlueCheck from "../../../components/TwitterBlueCheck";
-import ImagePreview from "@/sections/tweet/ImagePreview";
+import ImagePreview from "@sections/tweet/ImagePreview";
 export default function TweetPage({ data, resType }) {
   const dispatch = useAppDispatch();
   const { isAuthenticated, isInitialized } = useAuth();

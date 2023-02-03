@@ -1,7 +1,7 @@
 import useScreenWidth from "../hooks/useScreenWidth";
 import useAuth from "../hooks/useAuth";
 import { getNameInitials } from "../utils/string";
-import HeaderProfileAvatar from "@/sections/header/HeaderProfileAvatar";
+import HeaderProfileAvatar from "@sections/header/HeaderProfileAvatar";
 import { Text } from "./Text";
 import { AiOutlineLogout } from "react-icons/ai";
 import { useRouter } from "next/router";

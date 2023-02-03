@@ -1,4 +1,4 @@
-import SearchResultTabs from "@/sections/search/SearchTabs";
+import SearchResultTabs from "@sections/search/SearchTabs";
 import Nav from "@ui/Nav";
 import Search from "@ui/Search";
 import Head from "next/head";

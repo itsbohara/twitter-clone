@@ -1,6 +1,6 @@
 import Button from "@ui/Button";
 import useAuth from "@/hooks/useAuth";
-import ProfileUserInfo from "@ui/profile/ProfileUserInfo";
+import ProfileUserInfo from "@sections/profile/ProfileUserInfo";
 import { useEffect, useState } from "react";
 import http from "../../client/axios";
 import EditProfileDialog from "../../components/modals/EditProfileDialog";

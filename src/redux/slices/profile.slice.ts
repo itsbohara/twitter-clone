@@ -67,6 +67,12 @@ const slice = createSlice({
       state.tweetReplies.allIds = Object.keys(state.tweetReplies.byId);
     },
 
+    // GET USER MEDIA TWEETS
+    getMediaTweetsSuccess(state, action) {
+      const tweets = action.payload;
+      state.media.byId = objFromArray(tweets);
+      state.media.allIds = Object.keys(state.media.byId);
+    },
     // GET USER LIKED TWEETS
     getLikedTweetsSuccess(state, action) {
       const tweets = action.payload;
@@ -122,6 +128,9 @@ export function getProfileTweets(username, props?: ProfileTweetProps) {
       if (props?.liked) {
         response = await axios.get(`/tweets/u/${username}/liked`);
         dispatch(slice.actions.getLikedTweetsSuccess(response.data));
+      } else if (props?.media) {
+        response = await axios.get(`/tweets/u/${username}/media`);
+        dispatch(slice.actions.getMediaTweetsSuccess(response.data));
       } else {
         response = await axios.get(`/tweets/u/${username}`);
         dispatch(slice.actions.getTweetsSuccess(response.data));

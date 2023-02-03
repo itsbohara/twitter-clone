@@ -3,6 +3,7 @@ import PropTypes, { InferProps } from "prop-types";
 
 type MODAL_VIEWS =
   | "AUTH_BOARDING"
+  | "GET_VERIFIED"
   | "IMAGE_VIEWER" // notAvailable
   | "DELETE_TWEET" // notAvailable
   | "TWEET" //notAvailable
@@ -103,7 +104,7 @@ export function useModalAction() {
     closeModal() {
       dispatch({ type: "close" });
     },
-    setLoading(loading) {
+    setLoading(loading: boolean) {
       dispatch({ type: "loading", loading });
     },
   };

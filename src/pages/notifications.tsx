@@ -6,7 +6,7 @@ import PanelItem from "@ui/PanelItem";
 import Panel from "@ui/Panel";
 import PanelItemTrends from "@ui/PanelItemTrends";
 import Footer from "@ui/Footer";
-import NotificationTabs from "@rd/NotificationTabs";
+import NotificationTabs from "@sections/notifications/NotificationTabs";
 
 export default function Notifications() {
   return (

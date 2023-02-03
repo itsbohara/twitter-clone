@@ -1,4 +1,4 @@
-export default function Loader() {
+export default function Loading() {
   return (
     <div className="flex flex-col p-4 items-center ">
       <div role="status">

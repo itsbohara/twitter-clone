@@ -3,9 +3,9 @@ import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import http from "@/client/axios";
 import { getProfileTweets } from "../../redux/slices/profile.slice";
-import Loader from "../../components/Loader";
 import Post from "@ui/Post";
 import useAuth from "@/hooks/useAuth";
+import Loading from "@ui/Loading";
 
 export default function UserLikedTweets() {
   const dispatch = useAppDispatch();
@@ -24,7 +24,8 @@ export default function UserLikedTweets() {
     getLikedTweets();
     return () => setLoading(true);
   }, []);
-  if (loading) return <Loader />;
+
+  if (loading) return <Loading />;
 
   return (
     <ul className="[&_p:last-child]:text-slate-500 [&_p:first-child]:text-lg divide-y divide-slate-200">

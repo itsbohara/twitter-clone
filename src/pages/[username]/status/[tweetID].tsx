@@ -5,7 +5,7 @@ import Head from "next/head";
 import Nav from "@ui/Nav";
 import Link from "next/link";
 import { IoMdArrowBack } from "react-icons/io";
-import Loader from "@ui/Loader";
+import Loader from "@ui/Loading";
 import ProfileHoverCard from "@ui/radix/ProfileHoverCard";
 import useAuth from "../../../hooks/useAuth";
 import { Text } from "@ui/Text";

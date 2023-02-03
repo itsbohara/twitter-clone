@@ -11,7 +11,7 @@ import { delay } from "../utils/delay";
 import http from "../client/axios";
 import { IoMdArrowBack } from "react-icons/io";
 import Link from "next/link";
-import Loader from "@ui/Loader";
+import Loader from "@ui/Loading";
 import AppLoading from "@ui/AppLoading";
 import { withIronSessionSsr } from "iron-session/next";
 import { sessionOptions } from "@/lib/session";

@@ -1,5 +1,5 @@
 import { SiTwitter } from "react-icons/si";
-import Loader from "./Loader";
+import Loader from "./Loading";
 
 export default function AppLoading() {
   return (

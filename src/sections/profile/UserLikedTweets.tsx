@@ -5,18 +5,25 @@ import http from "@/client/axios";
 import { getProfileTweets } from "../../redux/slices/profile.slice";
 import Post from "@ui/Post";
 import useAuth from "@/hooks/useAuth";
+import { useModalAction } from "@/contexts/ModalContext";
 import Loading from "@ui/Loading";
 
 export default function UserLikedTweets() {
+  const { openModal } = useModalAction()
   const dispatch = useAppDispatch();
   const { user } = useAuth();
   const [loading, setLoading] = useState(true);
   const { likes: tweets } = useAppSelector((state) => state.profile);
+
   const {
     query: { username },
   } = useRouter();
 
   useEffect(() => {
+    if (!user) {
+      openModal('AUTH_BOARDING')
+      return;
+    }
     const getLikedTweets = async () => {
       dispatch(getProfileTweets(username, { liked: true }));
       setLoading(false);

@@ -1,34 +1,28 @@
 import Button from "@ui/Button";
 import useAuth from "@/hooks/useAuth";
-import cx from "classnames";
-import Avatar from "@rd/Avatar";
 import ProfileUserInfo from "@ui/profile/ProfileUserInfo";
 import { useEffect, useState } from "react";
-import { getNameInitials } from "../../utils/string";
 import http from "../../client/axios";
 import EditProfileDialog from "../../components/modals/EditProfileDialog";
-import { useAppDispatch } from "../../hooks/useApp";
-import { setInfoNotice } from "@/redux/slices/notice";
 import UserProfileAvatar from "./UserProfileAvatar";
-import { relativeCDNUrl } from "../../utils/url";
 import UserProfileCover from "./UserProfileCover";
+import { useModalAction } from "@/contexts/ModalContext";
 
-export default function AccountInfo({ user, refreshProfile }) {
+export default function ProfileAccountInfo({ user, refreshProfile }) {
   const { user: currentUser, isAuthenticated } = useAuth();
   const isMe = user?.username === currentUser?.username;
 
-  const { following, followers } = user?.count;
   const [isFollowing, setIsFollowing] = useState(
     user?.following ? true : false
   );
 
-  const dispatch = useAppDispatch();
+  const { openModal } = useModalAction()
 
   async function toggleFollowing() {
-    if (!isAuthenticated)
-      return dispatch(
-        setInfoNotice({ message: "Login/Sign Up to Like Tweet" })
-      );
+    if (!isAuthenticated) {
+      openModal('AUTH_BOARDING', { title: `Follow ${user?.name} to see what they share on Twitter.`, desc: 'Sign up so you never miss their Tweets.' })
+      return;
+    }
     if (isFollowing) {
       // unfollow
       await http.delete(`/follow/${user?.id}`);
@@ -39,7 +33,7 @@ export default function AccountInfo({ user, refreshProfile }) {
     }
     refreshProfile();
   }
-  function handleEditProfile() {}
+  function handleEditProfile() { }
 
   return (
     <>

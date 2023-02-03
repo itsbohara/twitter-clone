@@ -38,6 +38,8 @@ const ManagedModal: React.FC = () => {
                     <Suspense
                         fallback={<Loading />}
                     >
+                        {view === "AUTH_BOARDING" && <AuthBoardingModal />}
+
                     </Suspense>
                 </Dialog.Content>
             </Dialog.Portal>

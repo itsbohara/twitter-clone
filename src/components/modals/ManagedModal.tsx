@@ -10,7 +10,8 @@ const ManagedModal: React.FC = () => {
   const { isOpen, view, loading } = useModalState();
   const { closeModal } = useModalAction();
 
-  if (view === "IMAGE_VIEWER") return <>Image Viewer ??</>;
+  // TOOD :
+  // if (view === "IMAGE_VIEWER") return <ImageViewer />;
 
   const handleClose = () => {
     if (!loading) closeModal();

@@ -36,7 +36,7 @@ const Post = ({ tweet }: { tweet?: Tweet }) => {
   const { openModal } = useModalAction()
   const dispatch = useAppDispatch();
   const [likedByMe, setLikedByMe] = useState(tweetProps?.liked ?? false);
-  const [likeCount, setLikeCount] = useState(tweetProps?.count.likes ?? 0);
+  const [likeCount, setLikeCount] = useState(tweetProps?.count?.likes ?? 0);
 
   const handleLikeClick = async () => {
     if (!isAuthenticated) {
@@ -72,6 +72,9 @@ const Post = ({ tweet }: { tweet?: Tweet }) => {
     e.stopPropagation();
     dispatch(setInfoNotice({ message: "Not available!" }));
   };
+
+  // !Ignore retweet for no tweet data
+  if (isRetweet && !tweetProps?.owner) return <></>
 
   const {
     name,

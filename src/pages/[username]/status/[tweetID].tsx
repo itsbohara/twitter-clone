@@ -26,6 +26,7 @@ import TweetReply from "@sections/tweet/TweetReply";
 import AppLoading from "@ui/AppLoading";
 import TwitterBlueCheck from "@ui/TwitterBlueCheck";
 import ImagePreview from "@sections/tweet/ImagePreview";
+import ReTweetDropdownMenu from "@ui/popovers/ReTweetMenu";
 export default function TweetPage({ data, resType }) {
   const dispatch = useAppDispatch();
   const { isAuthenticated, isInitialized } = useAuth();
@@ -182,15 +183,14 @@ export default function TweetPage({ data, resType }) {
                         <HiOutlineChatBubbleOvalLeft className="w-6 h-6" />
                       </div>
                     </div>
-                    <div
-                      className=" hover:text-[#1d9bf0] cursor-pointer"
-                      onClick={noFeature}
-                    >
-                      <div className="relative">
-                        <div className="absolute rounded-full m-[-8px] hover:bg-[#18a6f920] top-0 bottom-0 left-0 right-0"></div>
-                        <HiOutlineArrowPath className="w-6 h-6" />
-                      </div>
-                    </div>
+                    <ReTweetDropdownMenu
+                      menuIconStyle="!w-6 !h-6"
+                      tweetID={tweet?.id}
+                      retTweetID={tweet?.id}
+                      // retweetByMe={isRetweet && tweetByMe}
+                      count={tweet?.retweetCount ?? 0}
+                      showCount={false}
+                    />
                     <div
                       className=" hover:text-[#f91880] cursor-pointer"
                       onClick={handleLikeClick}

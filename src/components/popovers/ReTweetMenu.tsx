@@ -1,7 +1,7 @@
 import * as PopoverPrimitive from "@radix-ui/react-popover";
 
 import cx from "classnames";
-import { ReactNode, useState } from "react";
+import { useState } from "react";
 import NavItem from "@ui/NavItem";
 
 import { HiOutlineArrowPath } from "react-icons/hi2";
@@ -13,18 +13,22 @@ import classNames from "classnames";
 import { MenuItem } from "@/types/menuItem";
 
 
-export default function ReTweetMenu({
+export default function ReTweetDropdownMenu({
   tweetID,
   retweetByMe = false,
   retTweetID,
   count,
+  showCount = true,
+  menuIconStyle
 }:
   {
     retweetByMe?: boolean;
+    showCount?: boolean;
     tweetID?: string;
     retTweetID?: string;
     count?: number;
     postDeleteFunc?: () => void;
+    menuIconStyle?: string
   }) {
   const [open, setOpen] = useState(false);
   const dispatch = useAppDispatch();
@@ -65,9 +69,9 @@ export default function ReTweetMenu({
           retweetByMe ? 'text-green-600' : '')}>
           <div className="relative">
             <div className="absolute rounded-full m-[-8px] hover:bg-[#18a6f920] top-0 bottom-0 left-0 right-0"></div>
-            <HiOutlineArrowPath className="w-5 h-5" />
+            <HiOutlineArrowPath className={classNames("w-5 h-5", menuIconStyle)} />
           </div>
-          <span className="ml-1">{count}</span>
+          {showCount && <span className="ml-1">{count}</span>}
         </div>
       </PopoverPrimitive.Trigger>
 

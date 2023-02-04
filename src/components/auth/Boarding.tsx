@@ -13,8 +13,10 @@ export default function AuthBoardingModal({ }) {
 
     const authRoute = (route) => {
         closeModal();
-        push(`auth/${route}`)
+        push(`/auth/${route}`)
     }
+
+    const ICON = data?.icon ?? <SiTwitter className="w-12 h-12 text-[#1da1f2]" />;
 
     const title = data?.title ?? `Don't miss what's happening`
     const desc = data?.desc ?? 'People on Twitter are the first to know.'
@@ -22,7 +24,7 @@ export default function AuthBoardingModal({ }) {
     return (
         <div className='p-4 md:p-14 flex flex-col gap-8'>
             <div className="flex justify-center">
-                <SiTwitter className="w-12 h-12 text-[#1da1f2]" />
+                {ICON}
             </div>
             <div>
                 <h1 className="text-2xl font-extrabold">

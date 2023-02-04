@@ -37,33 +37,12 @@ export default function UserLikedTweets() {
   return (
     <ul className="[&_p:last-child]:text-slate-500 [&_p:first-child]:text-lg divide-y divide-slate-200">
       {tweets.allIds.map((tweetID, i) => {
-        const {
-          id,
-          content,
-          attachments,
-          owner,
-          createdAt: date,
-          viewCount: views,
-          likeCount: likes,
-          replyCount,
-          retweetCount,
-          liked,
-        } = tweets.byId[tweetID];
+
+        const tweet = tweets.byId[tweetID];
 
         return (
-          <li key={`tweet-${id}`}>
-            <Post
-              id={id}
-              user={owner}
-              content={content}
-              attachments={attachments}
-              date={date}
-              liked={(username === user?.username || liked) ?? false}
-              likes={likes}
-              views={views}
-              retweetCount={retweetCount}
-              replyCount={replyCount}
-            />
+          <li key={`tweet-${tweet?.id}`}>
+            <Post tweet={tweet} />
           </li>
         );
       })}

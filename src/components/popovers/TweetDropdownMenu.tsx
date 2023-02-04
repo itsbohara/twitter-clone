@@ -19,16 +19,7 @@ import { useAppDispatch } from "@hook/useApp";
 import { deleteTweet } from "@redux/slices/tweet.slice";
 import { setInfoNotice } from "@redux/slices/notice";
 import { useState } from "react";
-
-interface AccordionItem {
-  href: string;
-  text: string;
-  width: "full" | "inline" | "mobile";
-  size: "small" | "default" | "large";
-  icon?: ReactNode;
-  click?: void;
-  variant?: "danger" | "info";
-}
+import { MenuItem } from "@/types/menuItem";
 
 export default function TweetDropdownMenu({
   username,
@@ -61,7 +52,7 @@ export default function TweetDropdownMenu({
 
   }
 
-  const items: AccordionItem[] | any = [
+  const items: MenuItem[] | any = [
     ...(tweetByOwner
       ? [
         {

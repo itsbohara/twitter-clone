@@ -1,5 +1,5 @@
 // hooks
-import useAuth from "../hooks/useAuth";
+import useAuth from "@hook/useAuth";
 import { useRouter } from "next/router";
 
 // ----------------------------------------------------------------------

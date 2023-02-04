@@ -132,7 +132,7 @@ const Post = ({ tweet }: { tweet?: Tweet }) => {
             <ul className="flex items-stretch mt-4 gap-x-10 xl:gap-x-14 text-xs text-slate-700 [&_li]:flex [&_li]:items-center [&_li]:gap-x-2 [&_li:xl]:gap-x-3 ">
               <li className="!hidden lg:!flex">
                 <RiBarChartLine className="w-5 h-5" />
-                {tweet?.count.views ?? 0}
+                {tweetProps?.count.views ?? 0}
               </li>
               <li>
                 <div className=" hover:text-[#1d9bf0] cursor-pointer">

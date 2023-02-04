@@ -3,22 +3,22 @@ import * as Toast from "@radix-ui/react-toast";
 import "../styles/styles.css";
 import "../styles/toast.css";
 
-import { AuthProvider } from "@/contexts/JWTContext";
+import { AuthProvider } from "@ctx/JWTContext";
 import { Provider as ReduxProvider } from "react-redux";
 
 import type { AppProps } from "next/app";
 import localFont from "@next/font/local";
-import { store } from "../redux/store";
+import { store } from "@redux/store";
 import ToastContainer from "@ui/ToastContainer";
 import { useRouter } from "next/router";
 import GuestGuard from "../guards/GuestGuard";
 import AuthGuard from "../guards/AuthGuard";
-import useAuth from "../hooks/useAuth";
+import useAuth from "@hook/useAuth";
 import { SiTwitter } from "react-icons/si";
 import UsernameChooseDialog from "../components/modals/UsernameChooseDialog";
 import Loader from "../components/Loading";
 import AppLoading from "../components/AppLoading";
-import { ModalProvider } from "@/contexts/ModalContext";
+import { ModalProvider } from "@ctx/ModalContext";
 import ManagedModal from "@ui/modals/ManagedModal";
 
 const myFont = localFont({

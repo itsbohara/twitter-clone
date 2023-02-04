@@ -6,10 +6,10 @@ import cx from "classnames";
 import { useState } from "react";
 
 import http from "@/client/axios";
-import { useAppDispatch } from "../../hooks/useApp";
-import { setErrorNotice, setNotice } from "@/redux/slices/notice";
-import useAuth from "@/hooks/useAuth";
-import { useModalAction, useModalState } from "@/contexts/ModalContext";
+import { useAppDispatch } from "@hook/useApp";
+import { setErrorNotice, setNotice } from "@redux/slices/notice";
+import useAuth from "@hook/useAuth";
+import { useModalAction, useModalState } from "@ctx/ModalContext";
 import Loading from "@ui/Loading";
 
 const accountTypeOptions = [

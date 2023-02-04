@@ -6,7 +6,7 @@ import PanelItem from "@ui/PanelItem";
 import Panel from "@ui/Panel";
 import PanelItemTrends from "@ui/PanelItemTrends";
 import Footer from "@ui/Footer";
-import useAuth from "@/hooks/useAuth";
+import useAuth from "@hook/useAuth";
 import GuestHome from "@sections/guestHome";
 import AppLoading from "@ui/AppLoading";
 import HomeTabs from "@sections/home/HomeTabs";

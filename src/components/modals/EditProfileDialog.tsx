@@ -2,15 +2,15 @@ import * as Dialog from "@radix-ui/react-dialog";
 import { HiOutlineXMark, HiOutlinePencil } from "react-icons/hi2";
 import Button from "@ui/Button";
 import { useRef, useState } from "react";
-import useAuth from "../../hooks/useAuth";
+import useAuth from "@hook/useAuth";
 import http from "@/client/axios";
-import { useAppDispatch } from "../../hooks/useApp";
-import { setNotice } from "@/redux/slices/notice";
+import { useAppDispatch } from "@hook/useApp";
+import { setNotice } from "@redux/slices/notice";
 import ProfileAvatar from "@ui/radix/ProfileAvatar";
-import { getNameInitials } from "@/utils/string";
+import { getNameInitials } from "@util/string";
 import { BsCamera } from "react-icons/bs";
 import Image from "next/image";
-import { relativeCDNUrl } from "../../utils/url";
+import { relativeCDNUrl } from "@util/url";
 
 const EditProfileDialog = () => {
   const [open, setOpen] = useState(false);

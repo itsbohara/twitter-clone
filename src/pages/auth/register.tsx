@@ -4,11 +4,11 @@ import Link from "next/link";
 import { useState } from "react";
 
 import { SiTwitter } from "react-icons/si";
-import Button from "../../components/Button";
-import useAuth from "../../hooks/useAuth";
+import Button from "@ui/Button";
+import useAuth from "@hook/useAuth";
 import { useRouter } from "next/router";
-import { useAppDispatch } from "../../hooks/useApp";
-import { setErrorNotice, setNotice } from "@/redux/slices/notice";
+import { useAppDispatch } from "@hook/useApp";
+import { setErrorNotice, setNotice } from "@redux/slices/notice";
 
 export default function Register() {
   const dispatch = useAppDispatch();

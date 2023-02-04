@@ -1,7 +1,7 @@
 import PropTypes from "prop-types";
 import { useState } from "react";
 // hooks
-import useAuth from "@/hooks/useAuth";
+import useAuth from "@hook/useAuth";
 // pages
 import Login from "@/pages/auth/login";
 

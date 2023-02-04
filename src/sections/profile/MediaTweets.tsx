@@ -1,7 +1,7 @@
-import { useModalAction } from '@/contexts/ModalContext';
-import { useAppDispatch } from '@/hooks/useApp';
-import useAuth from '@/hooks/useAuth';
-import { getProfileTweets } from '@/redux/slices/profile.slice';
+import { useModalAction } from '@ctx/ModalContext';
+import { useAppDispatch } from '@hook/useApp';
+import useAuth from '@hook/useAuth';
+import { getProfileTweets } from '@redux/slices/profile.slice';
 import Loading from '@ui/Loading';
 import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react'

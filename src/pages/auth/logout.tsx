@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import useAuth from "../../hooks/useAuth";
+import useAuth from "@hook/useAuth";
 import { useRouter } from "next/router";
 import AppLoading from "@ui/AppLoading";
 

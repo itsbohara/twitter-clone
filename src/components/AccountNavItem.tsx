@@ -4,8 +4,8 @@ import * as SeparatorPrimitive from "@radix-ui/react-separator";
 
 import Link from "next/link";
 
-import useAuth from "@/hooks/useAuth";
-import { getNameInitials } from "@/utils/string";
+import useAuth from "@hook/useAuth";
+import { getNameInitials } from "@util/string";
 import NavItem from "@ui/NavItem";
 
 import { ReactNode } from "react";

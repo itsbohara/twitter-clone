@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 // utils
 import axios from "@/client/axios";
 //
-import { objFromArray } from "@/utils/object";
+import { objFromArray } from "@util/object";
 import { omit, pull } from "lodash";
 import { setNotice } from "./notice";
 

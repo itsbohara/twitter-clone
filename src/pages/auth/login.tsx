@@ -4,10 +4,10 @@ import Link from "next/link";
 import { useState } from "react";
 
 import { SiTwitter } from "react-icons/si";
-import Button from "../../components/Button";
-import useAuth from "@/hooks/useAuth";
-import { useAppDispatch } from "@/hooks/useApp";
-import { setErrorNotice, setInfoNotice } from "@/redux/slices/notice";
+import Button from "@ui/Button";
+import useAuth from "@hook/useAuth";
+import { useAppDispatch } from "@hook/useApp";
+import { setErrorNotice, setInfoNotice } from "@redux/slices/notice";
 import { useRouter } from "next/router";
 import LoginWithGoogleButton from "@ui/auth/LoginWithGoogle";
 

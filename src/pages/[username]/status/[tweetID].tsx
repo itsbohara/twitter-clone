@@ -6,11 +6,11 @@ import Nav from "@ui/Nav";
 import Link from "next/link";
 import { IoMdArrowBack } from "react-icons/io";
 import Loader from "@ui/Loading";
-import ProfileHoverCard from "@ui/radix/ProfileHoverCard";
-import useAuth from "../../../hooks/useAuth";
+import ProfileHoverCard from "@ui/popovers/ProfileHoverCard";
+import useAuth from "@hook/useAuth";
 import { Text } from "@ui/Text";
-import { timeAgo } from "../../../utils/date";
-import PageNotFound from "../../../components/NotFound";
+import { timeAgo } from "@util/date";
+import PageNotFound from "@ui/NotFound";
 import {
   HiArrowUpTray,
   HiHeart,
@@ -18,16 +18,17 @@ import {
   HiOutlineChatBubbleOvalLeft,
   HiOutlineHeart,
 } from "react-icons/hi2";
-import { setInfoNotice } from "@/redux/slices/notice";
-import { useAppDispatch, useAppSelector } from "../../../hooks/useApp";
-import TweetDropdownMenu from "@ui/radix/DropdownMenu";
+
+// todo : redux import - renaming - - right now after bhaat lagayaign 🤣🤣🤣🤣🤣
+import { setInfoNotice } from "@redux/slices/notice";
+import { useAppDispatch, useAppSelector } from "@hook/useApp";
+import TweetDropdownMenu from "@ui/popovers/DropdownMenu";
 import Image from "next/image";
 import TweetReplyForm from "@sections/tweet/TweetReplyForm";
-import { getTweetReplies } from "../../../redux/slices/tweet.slice";
+import { getTweetReplies } from "@redux/slices/tweet.slice";
 import TweetReply from "@sections/tweet/TweetReply";
-import { relativeCDNUrl } from "../../../utils/url";
 import AppLoading from "@ui/AppLoading";
-import TwitterBlueCheck from "../../../components/TwitterBlueCheck";
+import TwitterBlueCheck from "@ui/TwitterBlueCheck";
 import ImagePreview from "@sections/tweet/ImagePreview";
 export default function TweetPage({ data, resType }) {
   const dispatch = useAppDispatch();

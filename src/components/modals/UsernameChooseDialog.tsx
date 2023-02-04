@@ -2,7 +2,7 @@ import * as Dialog from "@radix-ui/react-dialog";
 import { HiOutlineXMark, HiOutlinePencil } from "react-icons/hi2";
 import Button from "@ui/Button";
 import { useState } from "react";
-import useAuth from "../../hooks/useAuth";
+import useAuth from "@hook/useAuth";
 import axios from "@/client/axios";
 
 const UsernameChooseDialog = ({ open: ShouldOpen }) => {

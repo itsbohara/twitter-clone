@@ -11,11 +11,11 @@ import {
 
 import { cva } from "class-variance-authority";
 import { useState, useRef } from "react";
-import { getNameInitials } from "../utils/string";
-import useAuth from "@/hooks/useAuth";
-import { useAppDispatch } from "../hooks/useApp";
-import { newTweet } from "../redux/slices/tweet.slice";
-import { setInfoNotice } from "@/redux/slices/notice";
+import { getNameInitials } from "@util/string";
+import useAuth from "@hook/useAuth";
+import { useAppDispatch } from "@hook/useApp";
+import { newTweet } from "@redux/slices/tweet.slice";
+import { setInfoNotice } from "@redux/slices/notice";
 import Image from "next/image";
 import { MdOutlineCancel } from "react-icons/md";
 import http from "../client/axios";

@@ -3,7 +3,7 @@ import React from 'react'
 import Button from "@ui/Button";
 import { SiTwitter } from 'react-icons/si';
 import { useRouter } from 'next/router';
-import { useModalAction, useModalState } from '@/contexts/ModalContext';
+import { useModalAction, useModalState } from '@ctx/ModalContext';
 
 
 export default function AuthBoardingModal({ }) {

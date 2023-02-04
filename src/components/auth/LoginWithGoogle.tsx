@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import useAuth from "../../hooks/useAuth";
+import useAuth from "@hook/useAuth";
 
 const GOOGLE_CLIENT_ID = process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID;
 declare global {

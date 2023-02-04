@@ -1,14 +1,14 @@
-import { useAppDispatch } from "@/hooks/useApp";
-import { setInfoNotice } from "@/redux/slices/notice";
-import { timeAgo } from "@/utils/date";
-import TweetDropdownMenu from "@ui/radix/DropdownMenu";
-import ProfileHoverCard from "@ui/radix/ProfileHoverCard";
+import { useAppDispatch } from "@hook/useApp";
+import { setInfoNotice } from "@redux/slices/notice";
+import { timeAgo } from "@util/date";
+import TweetDropdownMenu from "@ui/popovers/DropdownMenu";
+import ProfileHoverCard from "@ui/popovers/ProfileHoverCard";
 import Image from "next/image";
 import { useState } from "react";
 import http from "@/client/axios";
-import useAuth from "../../hooks/useAuth";
-import { relativeCDNUrl } from "../../utils/url";
-import TwitterBlueCheck from "../../components/TwitterBlueCheck";
+import useAuth from "@hook/useAuth";
+import { relativeCDNUrl } from "@util/url";
+import TwitterBlueCheck from "@ui/TwitterBlueCheck";
 import {
   HiArrowUpTray,
   HiHeart,

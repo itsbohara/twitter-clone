@@ -3,8 +3,8 @@ import cx from "classnames";
 import Button from "@ui/Button";
 import Avatar from "@rd/Avatar";
 import UserCard from "@ui/UserCard";
-import { getNameInitials } from "../../utils/string";
-import useAuth from "../../hooks/useAuth";
+import { getNameInitials } from "@util/string";
+import useAuth from "@hook/useAuth";
 import Link from "next/link";
 import { User } from "@/types/user";
 

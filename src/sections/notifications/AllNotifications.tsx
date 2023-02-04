@@ -7,7 +7,7 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import http from "@/client/axios";
 import Loader from "@ui/Loading";
-import useAuth from "../../hooks/useAuth";
+import useAuth from "@hook/useAuth";
 import NotificationItem from "./NotificationItem";
 
 export default function AllNotifications() {

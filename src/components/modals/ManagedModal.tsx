@@ -1,5 +1,5 @@
 import React, { Suspense } from "react";
-import { useModalAction, useModalState } from "@/contexts/ModalContext";
+import { useModalAction, useModalState } from "@ctx/ModalContext";
 import * as Dialog from "@radix-ui/react-dialog";
 import { HiOutlineXMark } from "react-icons/hi2";
 import { SiTwitter } from "react-icons/si";

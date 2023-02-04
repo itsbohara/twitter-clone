@@ -1,11 +1,11 @@
 import { ReactNode } from "react";
 import TweetDialog from "@ui/radix/TweetDialog";
-import MoreNavPopoverMenu from "@rd/MoreNavPopoverMenu";
+import MoreNavPopoverMenu from "@ui/popovers/MoreNavPopoverMenu";
 import NavItem from "@ui/NavItem";
 import AccountNavItem from "@ui/AccountNavItem";
 
 import { SiTwitter } from "react-icons/si";
-import useAuth from "../hooks/useAuth";
+import useAuth from "@hook/useAuth";
 import { useRouter } from "next/router";
 import {
   HiOutlineHome,
@@ -17,7 +17,7 @@ import {
 } from "react-icons/hi2";
 import { GoVerified } from "react-icons/go";
 import GetVerified from "./modals/GetVerified";
-import { useModalAction } from "@/contexts/ModalContext";
+import { useModalAction } from "@ctx/ModalContext";
 
 interface NavLinkItem {
   href: string;

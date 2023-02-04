@@ -1,7 +1,7 @@
 import Image from "next/image";
 import React, { useState } from "react";
-import { relativeCDNUrl } from "../../utils/url";
-import { useModal } from "../../hooks/useModal";
+import { relativeCDNUrl } from "@util/url";
+import { useModal } from "@hook/useModal";
 import ImageViewer from "@ui/modals/ImageViewer";
 import classNames from "classnames";
 

@@ -2,7 +2,7 @@ import { createContext, useEffect, useReducer, useState } from "react";
 import PropTypes from "prop-types";
 // utils
 import http from "@/client/axios";
-import { isValidToken, setSession } from "@/utils/jwt";
+import { isValidToken, setSession } from "@util/jwt";
 import axios, { AxiosError } from "axios";
 import { SessionUser } from "../types/user";
 

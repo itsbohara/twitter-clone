@@ -25,7 +25,10 @@
 			"@ui/*": ["./src/components/*"],
 			"@rd/*": ["./src/components/radix/*"],
 			"@sections/*": ["./src/sections/*"],
-			"@components/*": ["components/*"],
+			"@ctx/*": ["./src/contexts/*"],
+			"@hook/*": ["./src/hooks/*"],
+			"@redux/*": ["./src/redux/*"],
+			"@util/*": ["./src/utils/*"],
       "@/*": ["./src/*"]
     }
   },

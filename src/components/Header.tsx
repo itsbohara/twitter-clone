@@ -1,6 +1,6 @@
-import useScreenWidth from "../hooks/useScreenWidth";
-import useAuth from "../hooks/useAuth";
-import { getNameInitials } from "../utils/string";
+import useScreenWidth from "@hook/useScreenWidth";
+import useAuth from "@hook/useAuth";
+import { getNameInitials } from "@util/string";
 import HeaderProfileAvatar from "@sections/header/HeaderProfileAvatar";
 import { Text } from "./Text";
 import { AiOutlineLogout } from "react-icons/ai";

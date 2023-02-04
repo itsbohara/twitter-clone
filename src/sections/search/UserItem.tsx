@@ -2,9 +2,9 @@ import Avatar from "@rd/Avatar";
 import Button from "@ui/Button";
 import Link from "next/link";
 import { useState } from "react";
-import { getNameInitials } from "../../utils/string";
+import { getNameInitials } from "@util/string";
 import http from "../../client/axios";
-import useAuth from "@/hooks/useAuth";
+import useAuth from "@hook/useAuth";
 import { useRouter } from "next/router";
 
 interface Props {

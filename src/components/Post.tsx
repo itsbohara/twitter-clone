@@ -1,9 +1,9 @@
 import { ReactNode, useEffect, useState } from "react";
-import TweetDropdownMenu from "@rd/DropdownMenu";
-import ProfileHoverCard from "@rd/ProfileHoverCard";
-import useAuth from "../hooks/useAuth";
-import { useAppDispatch } from "../hooks/useApp";
-import { toggleTweetLike, updateTweet } from "../redux/slices/tweet.slice";
+import TweetDropdownMenu from "@ui/popovers/DropdownMenu";
+import ProfileHoverCard from "@ui/popovers/ProfileHoverCard";
+import useAuth from "@hook/useAuth";
+import { useAppDispatch } from "@hook/useApp";
+import { toggleTweetLike, updateTweet } from "@redux/slices/tweet.slice";
 
 import {
   HiOutlineHeart,
@@ -14,13 +14,13 @@ import {
   HiOutlineChartBarSquare,
 } from "react-icons/hi2";
 import axios from "@/client/axios";
-import useOnScreen from "@/hooks/useOnScreen";
+import useOnScreen from "@hook/useOnScreen";
 import { RiBarChartLine } from "react-icons/ri";
 import Image from "next/image";
-import { timeAgo } from "../utils/date";
+import { timeAgo } from "@util/date";
 import { useRouter } from "next/router";
-import { relativeCDNUrl } from "@/utils/url";
-import { setInfoNotice } from "@/redux/slices/notice";
+import { relativeCDNUrl } from "@util/url";
+import { setInfoNotice } from "@redux/slices/notice";
 // import ReTweetDropdownMenu from "@sections/tweet/ReTweetMenu";
 import { AccountSubscription, User } from "../types/user";
 import TwitterBlueCheck from "./TwitterBlueCheck";

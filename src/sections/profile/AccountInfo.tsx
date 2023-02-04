@@ -1,12 +1,12 @@
 import Button from "@ui/Button";
-import useAuth from "@/hooks/useAuth";
+import useAuth from "@hook/useAuth";
 import ProfileUserInfo from "@sections/profile/ProfileUserInfo";
 import { useEffect, useState } from "react";
 import http from "../../client/axios";
-import EditProfileDialog from "../../components/modals/EditProfileDialog";
+import EditProfileDialog from "@ui/modals/EditProfileDialog";
 import UserProfileAvatar from "./UserProfileAvatar";
 import UserProfileCover from "./UserProfileCover";
-import { useModalAction } from "@/contexts/ModalContext";
+import { useModalAction } from "@ctx/ModalContext";
 
 export default function ProfileAccountInfo({ user, refreshProfile }) {
   const { user: currentUser, isAuthenticated } = useAuth();

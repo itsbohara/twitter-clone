@@ -2,11 +2,11 @@ import Image from "next/image";
 import Post from "@ui/Post";
 import { ReactNode, useEffect, useState } from "react";
 import { Suspense } from "react";
-import { useAppDispatch } from "@/hooks/useApp";
-import { useAppSelector } from "../hooks/useApp";
-import { getTweets } from "../redux/slices/tweet.slice";
-import { getNameInitials } from "../utils/string";
-import { getProfileTweets } from "../redux/slices/profile.slice";
+import { useAppDispatch } from "@hook/useApp";
+import { useAppSelector } from "@hook/useApp";
+import { getTweets } from "@redux/slices/tweet.slice";
+import { getNameInitials } from "@util/string";
+import { getProfileTweets } from "@redux/slices/profile.slice";
 import Loader from "./Loading";
 import { Error } from "./Error";
 
@@ -55,6 +55,8 @@ const Feed = () => {
           replyCount,
           retweetCount,
           liked,
+          type,
+          parentTweet,
         } = tweets.byId[tweetID];
 
         return (
@@ -71,6 +73,8 @@ const Feed = () => {
               views={views}
               retweetCount={retweetCount}
               replyCount={replyCount}
+              tweetType={type}
+              parentTweet={parentTweet}
             />
           </li>
         );

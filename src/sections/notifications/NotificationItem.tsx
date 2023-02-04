@@ -1,10 +1,10 @@
-import useAuth from "@/hooks/useAuth";
+import useAuth from "@hook/useAuth";
 import Link from "next/link";
 import Avatar from "@rd/Avatar";
 import { HiHeart, HiOutlineChatBubbleOvalLeft } from "react-icons/hi2";
 import { RiDeleteBinLine, RiUser3Fill } from "react-icons/ri";
 import http from "@/client/axios";
-import { getNameInitials } from "../../utils/string";
+import { getNameInitials } from "@util/string";
 
 export default function NotificationItem({
   notification,

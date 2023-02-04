@@ -1,9 +1,9 @@
 import Image from "next/image";
 import Post from "@ui/Post";
 import { ReactNode, useState, useEffect } from "react";
-import { useAppDispatch, useAppSelector } from "../../hooks/useApp";
-import { getProfileTweets } from "@/redux/slices/profile.slice";
-import Loader from "../../components/Loading";
+import { useAppDispatch, useAppSelector } from "@hook/useApp";
+import { getProfileTweets } from "@redux/slices/profile.slice";
+import Loader from "@ui/Loading";
 import { useRouter } from "next/router";
 
 const UserTweets = ({ username }) => {

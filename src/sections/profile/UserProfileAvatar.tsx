@@ -1,7 +1,7 @@
 import ProfileAvatar from "@ui/radix/ProfileAvatar";
 import React from "react";
-import { getNameInitials } from "../../utils/string";
-import { useModal } from "../../hooks/useModal";
+import { getNameInitials } from "@util/string";
+import { useModal } from "@hook/useModal";
 import ImageViewer from "@ui/modals/ImageViewer";
 
 export default function UserProfileAvatar({ user }) {

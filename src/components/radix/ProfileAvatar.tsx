@@ -1,5 +1,5 @@
 import * as AvatarPrimitive from "@radix-ui/react-avatar";
-import { relativeCDNUrl } from "../../utils/url";
+import { relativeCDNUrl } from "@util/url";
 
 const ProfileAvatar = ({
   src,

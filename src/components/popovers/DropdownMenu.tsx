@@ -15,8 +15,8 @@ import {
   HiOutlineFlag,
 } from "react-icons/hi2";
 import { RiDeleteBinLine } from "react-icons/ri";
-import { useAppDispatch } from "../../hooks/useApp";
-import { deleteTweet } from "@/redux/slices/tweet.slice";
+import { useAppDispatch } from "@hook/useApp";
+import { deleteTweet } from "@redux/slices/tweet.slice";
 
 interface AccordionItem {
   href: string;

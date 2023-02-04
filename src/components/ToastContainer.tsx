@@ -1,12 +1,12 @@
-import { useAppDispatch, useAppSelector } from "@/hooks/useApp";
-import { clearNotice } from "@/redux/slices/notice";
+import { useAppDispatch, useAppSelector } from "@hook/useApp";
+import { clearNotice } from "@redux/slices/notice";
 import { useEffect, useRef, useState } from "react";
 import * as Toast from "@radix-ui/react-toast";
-import { capitalize } from "../utils/string";
+import { capitalize } from "@util/string";
 
 import { FaTimes } from "react-icons/fa";
-import uuidv4 from "../utils/uuid";
-import useIsMountedRef from "../hooks/useIsMountedRef";
+import uuidv4 from "@util/uuid";
+import useIsMountedRef from "@hook/useIsMountedRef";
 
 export default function ToastContainer() {
   const dispatch = useAppDispatch();

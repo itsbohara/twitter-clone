@@ -3,7 +3,7 @@ import { HiOutlineXMark, HiOutlinePencil } from "react-icons/hi2";
 import Button from "@ui/Button";
 import { useState } from "react";
 import Image from "next/image";
-import { relativeCDNUrl } from "../../utils/url";
+import { relativeCDNUrl } from "@util/url";
 
 const ImageViewer = ({
   image,

@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import useAuth from "../../hooks/useAuth";
 import { useRouter } from "next/router";
+import AppLoading from "@ui/AppLoading";
 
 export default function Logout() {
   const { logout } = useAuth();
@@ -10,5 +11,5 @@ export default function Logout() {
     router.push("/auth/login");
   }, []);
 
-  return <p>Processing...</p>;
+  return <AppLoading />;
 }

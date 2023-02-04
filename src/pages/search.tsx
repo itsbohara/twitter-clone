@@ -16,7 +16,7 @@ export default function SearchPage() {
         <title>{query["q"]} | Search / Twitter Clone</title>
       </Head>
 
-      <div className="min-h-screen flex max-w-7xl mx-auto xl:grid xl:grid-cols-10 gap-5">
+      <div className="min-h-screen flex max-w-7xl mx-auto xl:grid xl:grid-cols-10 gap-5 max-sm:pb-4">
         <Nav />
 
         <main className="col-span-5 w-full border-x border-slate-200">

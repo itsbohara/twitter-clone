@@ -92,7 +92,7 @@ export default function ProfilePage({ data, resType }) {
 
       {!isInitialized && <AppLoading />}
       {isInitialized && (
-        <div className="min-h-screen flex max-w-7xl mx-auto xl:grid xl:grid-cols-10 gap-5">
+        <div className="min-h-screen flex max-w-7xl mx-auto xl:grid xl:grid-cols-10 gap-5 max-sm:pb-16">
           <Nav />
           <main className="col-span-5 border-x border-slate-200 flex-1 w-full flex-col">
             {/* Profile Nav Header */}

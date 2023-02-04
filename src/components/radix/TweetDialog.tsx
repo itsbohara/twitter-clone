@@ -3,14 +3,18 @@ import { HiOutlineXMark, HiOutlinePencil } from "react-icons/hi2";
 import TweetForm from "../TweetForm";
 import Button from "@ui/Button";
 import { useState } from "react";
+import useScreenWidth from "@hook/useScreenWidth";
+import classNames from "classnames";
 
 const TweetDialog = () => {
   const [open, setOpen] = useState(false);
+  const { isMobile } = useScreenWidth()
   return (
     <DialogPrimitive.Root open={open} onOpenChange={setOpen}>
       <DialogPrimitive.Trigger asChild>
-        <div className="w-full flex justify-center xl:justify-start mt-5 appearance-none">
-          <Button size="large">
+        <div className={classNames("sm:w-full flex justify-center xl:justify-start mt-5 appearance-none",
+          isMobile ? '!absolute -top-20 right-1' : '')}>
+          <Button size="large" className="!bg-[#1d9bf0]">
             <HiOutlinePencil className="w-6 h-6 xl:hidden" />
             <span className="hidden xl:flex">Tweet</span>
           </Button>

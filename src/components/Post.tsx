@@ -55,7 +55,7 @@ const Post = ({ tweet }: { tweet?: Tweet }) => {
   };
 
   useEffect(() => {
-    // if (!isAuthenticated) return; // TODO - track view log by ip/account
+    if (!isAuthenticated) return; // TODO - track view log by ip/account
     // tweet view count by seen time
     if (postVisible && tweet?.id) {
       dispatch(

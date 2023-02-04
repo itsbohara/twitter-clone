@@ -27,7 +27,7 @@ export default function Home() {
       </Head>
       {!isInitialized && <AppLoading />}
       {isInitialized && (
-        <div className="min-h-screen flex max-w-7xl mx-auto xl:grid xl:grid-cols-10 gap-5">
+        <div className="min-h-screen flex max-w-7xl mx-auto xl:grid xl:grid-cols-10 gap-5 max-sm:pb-4">
           <Nav />
           {isAuthenticated && (
             <>

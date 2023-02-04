@@ -104,7 +104,7 @@ export default function TweetPage({ data, resType }) {
 
   // count tweet view
   useEffect(() => {
-    if (!tweet) return;
+    if (!tweet || !isAuthenticated) return;
     dispatch(updateTweet(
       tweet?.id,
       { viewCount: (tweet?.views ?? 0) + 1 },
@@ -126,7 +126,7 @@ export default function TweetPage({ data, resType }) {
 
       {!isInitialized && <AppLoading />}
       {isInitialized && (
-        <div className="min-h-screen flex max-w-7xl mx-auto xl:grid xl:grid-cols-10 gap-5">
+        <div className="min-h-screen flex max-w-7xl mx-auto xl:grid xl:grid-cols-10 gap-5 max-sm:pb-16">
           <Nav />
           <main className="col-span-5 border-x border-slate-200 flex-1 w-full flex-col">
             <div className="sticky bg-white/75 z-10 backdrop-blur-md top-0">

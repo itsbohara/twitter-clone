@@ -18,12 +18,16 @@ import {
 import { GoVerified } from "react-icons/go";
 import GetVerified from "./modals/GetVerified";
 import { useModalAction } from "@ctx/ModalContext";
+import useScreenWidth from "@hook/useScreenWidth";
+import classNames from "classnames";
 
 interface NavLinkItem {
   href: string;
   text: string;
   icon?: ReactNode;
+  activeIcon?: ReactNode;
   guest?: boolean;
+  mobile?: boolean;
 }
 
 const items: NavLinkItem[] = [
@@ -32,6 +36,7 @@ const items: NavLinkItem[] = [
     text: "Home",
     icon: <HiOutlineHome className="w-6 h-6" />,
     guest: true,
+    mobile: true,
   },
   {
     href: "/explore",
@@ -43,6 +48,7 @@ const items: NavLinkItem[] = [
     href: "/notifications",
     text: "Notifications",
     icon: <HiOutlineBell className="w-6 h-6" />,
+    mobile: true
     //  TODO : notifications count badge
     // icon: (
     //   <>
@@ -72,22 +78,25 @@ const Nav = () => {
   const { asPath, pathname } = useRouter();
   const { openModal } = useModalAction()
 
+  const { isMobile } = useScreenWidth();
+
   const isPathActive = (path: String) => pathname === path;
   function openVerifyModal() {
     openModal('GET_VERIFIED')
   }
   return (
     <header
-      className={`hidden sm:flex w-24 xl:col-span-2 ${!isAuthenticated ? "max-lg:justify-end" : ""
-        }`}
+      className={classNames(`sm:flex sm:w-24 xl:col-span-2 ${!isAuthenticated ? "max-lg:justify-end" : ""
+        }`, 'max-sm:absolute max-sm:z-[11]')}
     >
-      <div className="flex flex-1 xl:w-60 flex-col fixed h-full">
-        <div className="flex flex-col flex-1 max-xl:items-center">
-          <NavItem href="/" width="inline" size="default">
+      <div className="flex flex-1 xl:w-60 flex-col fixed sm:h-full max-sm:bottom-0 max-sm:w-full max-sm:bg-white max-sm:border-t">
+        <div className="flex sm:flex-col flex-1 max-xl:items-center max-sm:justify-around">
+          {!isMobile && <NavItem href="/" width="inline" size="default">
             <SiTwitter className="w-8 h-8 text-[#1da1f2]" />
-          </NavItem>
-          {items.map(({ href, text, icon, guest }, i) => {
+          </NavItem>}
+          {items.map(({ href, text, icon, guest, mobile }, i) => {
             if (!guest && !isAuthenticated) return;
+            if (isMobile && !mobile) return;
             const navActive = isPathActive(href);
             return (
               <div
@@ -134,13 +143,13 @@ const Nav = () => {
                   Profile
                 </div>
               </NavItem>
-              <MoreNavPopoverMenu />
+              {!isMobile && <MoreNavPopoverMenu />}
               <TweetDialog />
             </>
           )}
         </div>
 
-        {isAuthenticated && (
+        {isAuthenticated && !isMobile && (
           <div>
             <AccountNavItem />
           </div>

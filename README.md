@@ -8,7 +8,7 @@ Full-Stack Twitter clone web app built with Next.Js / React.Js / Tailwind & Radi
 
 ## Features
 
-- 🚧 google/twitter login
+- 🚧 google/twitter login - (✅ Google Login)
 - ✅ Text/Image tweet - [!only-1-image]
 - ✅ like/reply to tweet, retweet
 - ✅ search/follow/unfollow users
@@ -22,7 +22,7 @@ Full-Stack Twitter clone web app built with Next.Js / React.Js / Tailwind & Radi
 - [ ] tweet notification
 - [ ] quote retweet
 - [ ] tweet tags
-- Full screen image viewer
+- [ ] Fix - Full screen Image viewer
 
 ## Getting Started ⚡️
 

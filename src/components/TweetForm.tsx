@@ -50,8 +50,8 @@ const TweetForm = ({
   async function handleTweetSubmit(e) {
     e.preventDefault();
     if (loading) return;
-    setLoading(true);
     if (content.trim() === "" && images.length < 1) return;
+    setLoading(true);
 
     let attachments: string[] = [];
     // check for image & upload

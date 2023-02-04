@@ -3,12 +3,10 @@ import { useEffect, useState } from "react";
 import http from "@/client/axios";
 import Head from "next/head";
 import Nav from "@ui/Nav";
-import Link from "next/link";
 import { IoMdArrowBack } from "react-icons/io";
 import Loader from "@ui/Loading";
 import ProfileHoverCard from "@ui/popovers/ProfileHoverCard";
 import useAuth from "@hook/useAuth";
-import { Text } from "@ui/Text";
 import { timeAgo } from "@util/date";
 import PageNotFound from "@ui/NotFound";
 import {
@@ -19,11 +17,9 @@ import {
   HiOutlineHeart,
 } from "react-icons/hi2";
 
-// todo : redux import - renaming - - right now after bhaat lagayaign 🤣🤣🤣🤣🤣
 import { setInfoNotice } from "@redux/slices/notice";
 import { useAppDispatch, useAppSelector } from "@hook/useApp";
 import TweetDropdownMenu from "@ui/popovers/TweetDropdownMenu";
-import Image from "next/image";
 import TweetReplyForm from "@sections/tweet/TweetReplyForm";
 import { getTweetReplies } from "@redux/slices/tweet.slice";
 import TweetReply from "@sections/tweet/TweetReply";

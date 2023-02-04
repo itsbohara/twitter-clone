@@ -73,7 +73,7 @@ const Post = ({ tweet }: { tweet?: Tweet }) => {
     account,
   } = tweetProps?.owner!;
 
-  const openTweetPage = () => router.push(`/${username}/status/${tweet?.id}`);
+  const openTweetPage = () => router.push(`/${username}/status/${tweetProps?.id}`);
 
   const tweetByMe = tweet?.owner?.username === CurrentUser?.username;
 

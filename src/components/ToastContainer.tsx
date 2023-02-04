@@ -51,26 +51,21 @@ export default function ToastContainer() {
         open={open}
         onOpenChange={setOpen}
       >
-        <Toast.Title className="ToastTitle">
-          {capitalize(toastType)} : {toastTitle}
-        </Toast.Title>
+        <Toast.Title className="ToastTitle">{toastTitle}</Toast.Title>
         {/* <Toast.Description asChild>
           <time
             className="ToastDescription"
             // dateTime={eventDateRef.current.toISOString()}
-          > 
-          {message}
-          </time>
+          > {time} </time>
         </Toast.Description> */}
         <Toast.Action
           className="ToastAction"
           asChild
           altText="Toast Action btn"
         >
-          <button className="Button small p-1.5 hover:bg-[#18a6f950]">
+          <button title="Close" className="Button small p-1.5 hover:bg-[#18a6f950]">
             <FaTimes />
           </button>
-          {/* <button className="Button small green">Undo</button> */}
         </Toast.Action>
       </Toast.Root>
       <Toast.Viewport className="ToastViewport" />

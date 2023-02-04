@@ -1,5 +1,5 @@
 import { ReactNode, useEffect, useState } from "react";
-import TweetDropdownMenu from "@ui/popovers/DropdownMenu";
+import TweetDropdownMenu from "@ui/popovers/TweetDropdownMenu";
 import ProfileHoverCard from "@ui/popovers/ProfileHoverCard";
 import useAuth from "@hook/useAuth";
 import { useAppDispatch } from "@hook/useApp";

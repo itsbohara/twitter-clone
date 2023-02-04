@@ -1,4 +1,4 @@
-import * as DropdownMenuPrimitive from "@radix-ui/react-dropdown-menu";
+import * as DropdownMenu from "@radix-ui/react-dropdown-menu";
 
 import cx from "classnames";
 import { ReactNode } from "react";
@@ -17,6 +17,8 @@ import {
 import { RiDeleteBinLine } from "react-icons/ri";
 import { useAppDispatch } from "@hook/useApp";
 import { deleteTweet } from "@redux/slices/tweet.slice";
+import { setInfoNotice } from "@redux/slices/notice";
+import { useState } from "react";
 
 interface AccordionItem {
   href: string;
@@ -28,7 +30,7 @@ interface AccordionItem {
   variant?: "danger" | "info";
 }
 
-const TweetDropdownMenu = ({
+export default function TweetDropdownMenu({
   username,
   tweetID,
   tweetByOwner,
@@ -38,65 +40,79 @@ const TweetDropdownMenu = ({
   isReply?: boolean;
   postDeleteFunc?: Function;
   [key: string]: any;
-}) => {
-  const dispath = useAppDispatch();
+}) {
+  const [open, setOpen] = useState(false)
+  const dispatch = useAppDispatch();
   const handleTweetDelete = async (e) => {
     e?.stopPropagation();
-    await dispath(deleteTweet(tweetID, { reply: isReply }));
+    await dispatch(deleteTweet(tweetID, { reply: isReply }));
     postDeleteFunc?.();
   };
+
+  const noFeature = (e) => {
+    e.stopPropagation();
+    setOpen(false)
+    dispatch(setInfoNotice({ message: "Not available!" }));
+  };
+
+  const followToggle = (e) => {
+    e.stopPropagation();
+    setOpen(false)
+
+  }
+
   const items: AccordionItem[] | any = [
     ...(tweetByOwner
       ? [
-          {
-            click: handleTweetDelete,
-            text: "Delete",
-            width: "full",
-            size: "small",
-            icon: <RiDeleteBinLine className="w-4 h-4" />,
-            variant: "danger",
-          },
-        ]
+        {
+          click: handleTweetDelete,
+          text: "Delete",
+          width: "full",
+          size: "small",
+          icon: <RiDeleteBinLine className="w-4 h-4" />,
+          variant: "danger",
+        },
+      ]
       : [
-          {
-            href: "/",
-            text: "This Tweet's not helpful",
-            width: "full",
-            size: "small",
-            icon: <HiOutlineFaceFrown className="w-4 h-4" />,
-          },
-          {
-            href: "/",
-            text: `Follow @${username}`,
-            width: "full",
-            size: "small",
-            icon: <HiOutlineUserPlus className="w-4 h-4" />,
-          },
-          {
-            href: "/",
-            text: `Add/remove @${username} from Lists`,
-            width: "full",
-            size: "small",
-            icon: <HiOutlineQueueList className="w-4 h-4" />,
-          },
-          {
-            href: "/",
-            text: `Mute @${username}`,
-            width: "full",
-            size: "small",
-            icon: <HiOutlineSpeakerXMark className="w-4 h-4" />,
-          },
-          {
-            href: "/",
-            text: `Block @${username}`,
-            width: "full",
-            size: "small",
-            icon: <HiOutlineNoSymbol className="w-4 h-4" />,
-          },
-        ]),
+        {
+          click: noFeature,
+          text: "This Tweet's not helpful",
+          width: "full",
+          size: "small",
+          icon: <HiOutlineFaceFrown className="w-4 h-4" />,
+        },
+        {
+          click: followToggle,
+          text: `Follow @${username}`,
+          width: "full",
+          size: "small",
+          icon: <HiOutlineUserPlus className="w-4 h-4" />,
+        },
+        {
+          click: noFeature,
+          text: `Add/remove @${username} from Lists`,
+          width: "full",
+          size: "small",
+          icon: <HiOutlineQueueList className="w-4 h-4" />,
+        },
+        {
+          click: noFeature,
+          text: `Mute @${username}`,
+          width: "full",
+          size: "small",
+          icon: <HiOutlineSpeakerXMark className="w-4 h-4" />,
+        },
+        {
+          click: noFeature,
+          text: `Block @${username}`,
+          width: "full",
+          size: "small",
+          icon: <HiOutlineNoSymbol className="w-4 h-4" />,
+        },
+      ]),
 
     {
-      href: "/",
+      click: noFeature,
       text: "Embed Tweet",
       width: "full",
       size: "small",
@@ -105,28 +121,28 @@ const TweetDropdownMenu = ({
     ...(tweetByOwner
       ? []
       : [
-          {
-            href: "/",
-            text: "Report Tweet",
-            width: "full",
-            size: "small",
-            icon: <HiOutlineFlag className="w-4 h-4" />,
-          },
-        ]),
+        {
+          click: noFeature,
+          text: "Report Tweet",
+          width: "full",
+          size: "small",
+          icon: <HiOutlineFlag className="w-4 h-4" />,
+        },
+      ]),
   ];
   return (
-    <DropdownMenuPrimitive.Root>
-      <DropdownMenuPrimitive.Trigger asChild>
+    <DropdownMenu.Root open={open} onOpenChange={setOpen}>
+      <DropdownMenu.Trigger asChild>
         <button
           className="IconButton hover:bg-slate-200 rounded-full"
           aria-label="Customize options"
         >
           <HiOutlineEllipsisHorizontal className="h-6 w-6" />
         </button>
-      </DropdownMenuPrimitive.Trigger>
+      </DropdownMenu.Trigger>
 
-      <DropdownMenuPrimitive.Portal>
-        <DropdownMenuPrimitive.Content
+      <DropdownMenu.Portal>
+        <DropdownMenu.Content
           sideOffset={0}
           alignOffset={0}
           align="end"
@@ -137,14 +153,13 @@ const TweetDropdownMenu = ({
           )}
         >
           {items.map(({ href, text, width, size, icon, click, variant }, i) => (
-            <DropdownMenuPrimitive.Item
+            <DropdownMenu.Item
               key={`header-${i}`}
               // value={`item-${i + 1}`}
               className="focus:outline-none overflow-hidden"
             >
               {click ? (
                 <NavItem
-                  button
                   onClick={click}
                   width={width}
                   size={size}
@@ -168,12 +183,10 @@ const TweetDropdownMenu = ({
                   </div>
                 </NavItem>
               )}
-            </DropdownMenuPrimitive.Item>
+            </DropdownMenu.Item>
           ))}
-        </DropdownMenuPrimitive.Content>
-      </DropdownMenuPrimitive.Portal>
-    </DropdownMenuPrimitive.Root>
+        </DropdownMenu.Content>
+      </DropdownMenu.Portal>
+    </DropdownMenu.Root>
   );
 };
-
-export default TweetDropdownMenu;

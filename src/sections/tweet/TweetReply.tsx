@@ -1,7 +1,7 @@
 import { useAppDispatch } from "@hook/useApp";
 import { setInfoNotice } from "@redux/slices/notice";
 import { timeAgo } from "@util/date";
-import TweetDropdownMenu from "@ui/popovers/DropdownMenu";
+import TweetDropdownMenu from "@ui/popovers/TweetDropdownMenu";
 import ProfileHoverCard from "@ui/popovers/ProfileHoverCard";
 import Image from "next/image";
 import { useState } from "react";

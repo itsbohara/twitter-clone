@@ -22,7 +22,7 @@ import {
 // todo : redux import - renaming - - right now after bhaat lagayaign 🤣🤣🤣🤣🤣
 import { setInfoNotice } from "@redux/slices/notice";
 import { useAppDispatch, useAppSelector } from "@hook/useApp";
-import TweetDropdownMenu from "@ui/popovers/DropdownMenu";
+import TweetDropdownMenu from "@ui/popovers/TweetDropdownMenu";
 import Image from "next/image";
 import TweetReplyForm from "@sections/tweet/TweetReplyForm";
 import { getTweetReplies } from "@redux/slices/tweet.slice";

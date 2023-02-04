@@ -49,7 +49,7 @@ const NavItem = ({
       <div className={NavItemStyles({ width, size, variant })}>
         <button
           className="flex rounded-full items-center flex-row gap-x-4 px-4 py-3 hover:bg-slate-100 cursor-pointer"
-          onClick={onClick!}
+          onClick={onClick}
         >
           {children}
         </button>
@@ -57,7 +57,7 @@ const NavItem = ({
     );
   }
   return (
-    <Link className={NavItemStyles({ width, size, variant })} href={href!}>
+    <Link className={NavItemStyles({ width, size, variant })} href={href ?? '#/'} onClick={onClick}>
       <div className="flex items-center flex-row gap-x-4 px-4 py-3 hover:bg-slate-100">
         {children}
       </div>

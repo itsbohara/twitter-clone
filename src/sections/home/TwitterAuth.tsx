@@ -1,3 +1,4 @@
+import LoginWithGoogleButton from "@ui/auth/LoginWithGoogle";
 import Button from "@ui/Button";
 import Link from "next/link";
 
@@ -9,6 +10,8 @@ export default function TwitterAuth() {
         <Button href="/auth/login" intent="outline" center>
           <span>Login</span>
         </Button>
+
+        <LoginWithGoogleButton />
       </div>
 
       <hr className="mt-4" />

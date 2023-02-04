@@ -21,7 +21,7 @@ import { setInfoNotice } from "@redux/slices/notice";
 import { useAppDispatch, useAppSelector } from "@hook/useApp";
 import TweetDropdownMenu from "@ui/popovers/TweetDropdownMenu";
 import TweetReplyForm from "@sections/tweet/TweetReplyForm";
-import { getTweetReplies } from "@redux/slices/tweet.slice";
+import { getTweetReplies, updateTweet } from "@redux/slices/tweet.slice";
 import TweetReply from "@sections/tweet/TweetReply";
 import AppLoading from "@ui/AppLoading";
 import TwitterBlueCheck from "@ui/TwitterBlueCheck";
@@ -101,6 +101,17 @@ export default function TweetPage({ data, resType }) {
     dispatch(setInfoNotice({ message: "Feature not implemented!" }));
 
   const title = notFound ? "Tweet" : `${data?.owner?.username} on Twitter`;
+
+  // count tweet view
+  useEffect(() => {
+    if (!tweet) return;
+    dispatch(updateTweet(
+      tweet?.id,
+      { viewCount: (tweet?.views ?? 0) + 1 },
+      { silent: true }
+    )
+    )
+  }, [tweet])
   return (
     <>
       <Head>

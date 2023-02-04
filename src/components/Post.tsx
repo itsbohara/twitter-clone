@@ -55,16 +55,16 @@ const Post = ({ tweet }: { tweet?: Tweet }) => {
   };
 
   useEffect(() => {
-    if (!isAuthenticated) return;
+    // if (!isAuthenticated) return; // TODO - track view log by ip/account
     // tweet view count by seen time
     if (postVisible && tweet?.id) {
-      // dispatch(
-      //   updateTweet(
-      //     isRetweet ? tweet?.parentTweet?.id : tweet?.id,
-      //     { viewCount: (tweetProps?.count.views ?? 0) + 1 },
-      //     { silent: true }
-      //   )
-      // );
+      dispatch(
+        updateTweet(
+          isRetweet ? tweet?.parentTweet?.id : tweet?.id,
+          { viewCount: (tweetProps?.count.views ?? 0) + 1 },
+          { silent: true }
+        )
+      );
     }
   }, [postVisible]);
 

@@ -6,16 +6,16 @@ import UserCard from "@ui/UserCard";
 import { getNameInitials } from "@util/string";
 import useAuth from "@hook/useAuth";
 import Link from "next/link";
-import { User } from "@/types/user";
+import { TweetUser } from "@/types/tweet";
 
-const ProfileHoverCard = ({ user }: { user: User }) => {
+const ProfileHoverCard = ({ user }: { user?: TweetUser }) => {
   const {
     name,
     username,
     bio,
     profile,
     count: { followers, following },
-  } = user;
+  } = user!;
   const initials = getNameInitials(user?.name ?? "");
   const { user: CurrentUser } = useAuth();
   const onProfileClick = (e) => e.stopPropagation();
@@ -26,9 +26,9 @@ const ProfileHoverCard = ({ user }: { user: User }) => {
         <Link
           onClick={onProfileClick}
           className="ImageTrigger inline-flex h-12 w-12 items-center justify-center rounded-full overflow-hidden bg-white"
-          href={`/${user.username}`}
+          href={`/${user?.username}`}
         >
-          <Avatar src={user.profile} alt={name} initials={initials} />
+          <Avatar src={user?.profile} alt={name} initials={initials} />
         </Link>
       </HoverCardPrimitive.Trigger>
       <HoverCardPrimitive.Portal>

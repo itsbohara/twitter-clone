@@ -1,7 +1,7 @@
 import TwitterBlueCheck from "./TwitterBlueCheck";
-import { User } from "../types/user";
 import Link from "next/link";
-const UserCard = ({ user }: { user: User & { follows?: boolean } }) => {
+import { TweetUser } from "@/types/tweet";
+const UserCard = ({ user }: { user?: TweetUser & { follows?: boolean } }) => {
   const {
     name,
     username,
@@ -9,7 +9,7 @@ const UserCard = ({ user }: { user: User & { follows?: boolean } }) => {
     account,
     count: { followers, following },
     follows,
-  } = user;
+  } = user!;
   const bioAvailable = bio && bio?.trim() !== "";
   return (
     <>

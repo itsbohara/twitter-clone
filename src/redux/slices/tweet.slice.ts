@@ -35,6 +35,7 @@ const slice = createSlice({
     // START LOADING
     startLoading(state) {
       state.isLoading = true;
+      state.error = null;
     },
 
     // START LOADING

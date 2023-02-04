@@ -1,5 +1,5 @@
 import Post from "@ui/Post";
-import { ReactNode, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useAppDispatch } from "@hook/useApp";
 import { useAppSelector } from "@hook/useApp";
 import { getTweets } from "@redux/slices/tweet.slice";
@@ -27,37 +27,11 @@ const Feed = () => {
   return (
     <ul className="[&_p:last-child]:text-slate-500 [&_p:first-child]:text-lg divide-y divide-slate-200">
       {tweets.allIds.map((tweetID, i) => {
-        const {
-          id,
-          content,
-          attachments,
-          owner,
-          createdAt: date,
-          viewCount: views,
-          likeCount: likes,
-          replyCount,
-          retweetCount,
-          liked,
-          type,
-          parentTweet,
-        } = tweets.byId[tweetID];
+        const tweet = tweets.byId[tweetID];
 
         return (
-          <li key={`tweet-${id}`}>
-            <Post
-              id={id}
-              content={content}
-              attachments={attachments}
-              date={date}
-              user={owner}
-              likes={likes}
-              liked={liked ?? false}
-              views={views}
-              retweetCount={retweetCount}
-              replyCount={replyCount}
-              tweetType={type}
-              parentTweet={parentTweet}
-            />
+          <li key={`tweet-${tweet?.id}`}>
+            <Post tweet={tweet} />
           </li>
         );
       })}

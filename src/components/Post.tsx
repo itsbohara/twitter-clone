@@ -1,5 +1,4 @@
 import { ReactNode, useEffect, useState } from "react";
-import TweetDropdownMenu from "@ui/popovers/TweetDropdownMenu";
 import ProfileHoverCard from "@ui/popovers/ProfileHoverCard";
 import useAuth from "@hook/useAuth";
 import { useAppDispatch } from "@hook/useApp";
@@ -11,72 +10,52 @@ import {
   HiArrowUpTray,
   HiOutlineChatBubbleOvalLeft,
   HiOutlineArrowPath,
-  HiOutlineChartBarSquare,
 } from "react-icons/hi2";
 import axios from "@/client/axios";
 import useOnScreen from "@hook/useOnScreen";
 import { RiBarChartLine } from "react-icons/ri";
-import Image from "next/image";
 import { timeAgo } from "@util/date";
 import { useRouter } from "next/router";
-import { relativeCDNUrl } from "@util/url";
 import { setInfoNotice } from "@redux/slices/notice";
-// import ReTweetDropdownMenu from "@sections/tweet/ReTweetMenu";
-import { AccountSubscription, User } from "../types/user";
 import TwitterBlueCheck from "./TwitterBlueCheck";
 import Link from "next/link";
 import ImagePreview from "@sections/tweet/ImagePreview";
+import TweetDropdownMenu from "@ui/popovers/TweetDropdownMenu";
+import ReTweetDropdownMenu from "@ui/popovers/ReTweetMenu";
+import { Tweet } from "@/types/tweet";
 
-interface Props {
-  id: string;
-  content: string;
-  attachments?: any[];
-  date: string;
-  user: User;
-  children?: ReactNode;
-  [key: string]: any;
-}
 
-const Post = ({
-  id,
-  content,
-  attachments = [],
-  date,
-  user,
-  children,
-  ...props
-}: Props) => {
+const Post = ({ tweet }: { tweet?: Tweet }) => {
   const router = useRouter();
-  const isRetweet = props?.tweetType === "RETWEET";
-  const tweetProps = isRetweet ? props?.parentTweet : props;
+  const isRetweet = tweet?.type === "RETWEET";
+  const tweetProps = isRetweet ? tweet?.parentTweet : tweet;
 
   const [postVisible, postRef] = useOnScreen();
   const { user: CurrentUser, isAuthenticated } = useAuth();
   const dispatch = useAppDispatch();
-  const [likedByMe, setLikedByMe] = useState(tweetProps.liked ?? false);
-  const [likeCount, setLikeCount] = useState(tweetProps.likes ?? 0);
+  const [likedByMe, setLikedByMe] = useState(tweetProps?.liked ?? false);
+  const [likeCount, setLikeCount] = useState(tweetProps?.count.likes ?? 0);
 
   const handleLikeClick = async () => {
     if (!isAuthenticated)
       return dispatch(
         setInfoNotice({ message: "Login/Sign Up to Like a Tweet" })
       );
+    // TODO: redux - like/unlike
     // var a = await dispatch(toggleTweetLike(id));
     setLikedByMe(!likedByMe);
-    const res = await axios.patch(`/tweet/${id}/like`);
+    const res = await axios.patch(`/tweet/${tweetProps?.id}/like`);
     setLikeCount(res.data?.likes ?? 0);
   };
 
   useEffect(() => {
     if (!isAuthenticated) return;
     // tweet view count by seen time
-    if (postVisible && id) {
-      console.log("isRetweet ?? ", isRetweet);
-
+    if (postVisible && tweet?.id) {
       // dispatch(
       //   updateTweet(
-      //     isRetweet ? props?.parentTweet?.id : id,
-      //     { viewCount: (tweetProps?.views ?? 0) + 1 },
+      //     isRetweet ? tweet?.parentTweet?.id : tweet?.id,
+      //     { viewCount: (tweetProps?.count.views ?? 0) + 1 },
       //     { silent: true }
       //   )
       // );
@@ -91,22 +70,21 @@ const Post = ({
   const {
     name,
     username,
-    profile,
-    bio,
-    count: { followers, following },
     account,
-  } = user;
+  } = tweetProps?.owner!;
 
-  const openTweetPage = () => router.push(`/${username}/status/${id}`);
+  const openTweetPage = () => router.push(`/${username}/status/${tweet?.id}`);
+
+  const tweetByMe = tweet?.owner?.username === CurrentUser?.username;
 
   return (
     <div
-      className="p-4 hover:bg-[#00000008] cursor-pointer"
+      className="p-4 relative hover:bg-[#00000008] cursor-pointer"
       onClick={openTweetPage}
     >
       <div className="flex flex-1 gap-x-4" ref={postRef}>
         <div className="flex-shrink-0">
-          <ProfileHoverCard user={user} />
+          <ProfileHoverCard user={tweetProps?.owner} />
         </div>
         <div className="flex flex-col flex-1">
           <div className="flex flex-1">
@@ -126,35 +104,33 @@ const Post = ({
               </span>
               ·
               <span className="text-slate-600 font-medium">
-                {timeAgo(date)}
+                {timeAgo(tweetProps?.createdAt)}
               </span>
             </div>
             <div className="">
               <TweetDropdownMenu
                 username={username}
-                tweetID={id}
-                tweetByOwner={CurrentUser?.username === username}
+                tweetID={tweet?.id}
+                tweetByOwner={CurrentUser?.username === tweetProps?.owner.username}
               />
             </div>
           </div>
-          <div className="text-sm text-slate-900">{content}</div>
-          {attachments.length > 0 && (
+          <div className="text-sm text-slate-900">{tweetProps?.content}</div>
+          {tweetProps!.attachments.length > 0 && (
             <div className="w-full relative -z-10 my-2">
-              <ImagePreview images={attachments} />
+              <ImagePreview images={tweetProps?.attachments} />
             </div>
           )}
           <div>
-            <ul className="flex items-stretch mt-4 gap-x-10 xl:gap-x-14 text-xs text-slate-700 [&_li:first-child]:hidden [&_li:first-child]:lg:flex [&_li]:flex [&_li]:items-center [&_li]:gap-x-2 [&_li:xl]:gap-x-3 ">
-              <li>
-                {/* <HiOutlineChartBarSquare className="w-5 h-5" /> */}
+            <ul className="flex items-stretch mt-4 gap-x-10 xl:gap-x-14 text-xs text-slate-700 [&_li]:flex [&_li]:items-center [&_li]:gap-x-2 [&_li:xl]:gap-x-3 ">
+              <li className="!hidden lg:!flex">
                 <RiBarChartLine className="w-5 h-5" />
-                {tweetProps?.views ?? 0}
+                {tweet?.count.views ?? 0}
               </li>
               <li>
                 <div className=" hover:text-[#1d9bf0] cursor-pointer">
                   <div className="relative">
                     <div className="absolute rounded-full m-[-8px] hover:bg-[#18a6f920] top-0 bottom-0 left-0 right-0"></div>
-
                     <HiOutlineChatBubbleOvalLeft className="w-5 h-5" />
                   </div>
                 </div>

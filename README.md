@@ -14,7 +14,7 @@ Full-Stack Twitter clone web app built with Next.Js / React.Js / Tailwind & Radi
 - ✅ search/follow/unfollow users
 - ✅ user profile, update profile
 - ✅ Notifications for follow, tweet like/reply
-- ✅ Twitter blue <img src="./public/twitter-blue.svg" height="15"> verification
+- ✅ Twitter blue <img src="./public/twitter-blue.svg" height="15"> Badge
 - ✅ profile cover upload, profile/cover/tweet-image zoom-imageViewer
 
 ## TODO

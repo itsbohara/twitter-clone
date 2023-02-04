@@ -2,7 +2,7 @@ import { useAppDispatch, useAppSelector } from "@hook/useApp";
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import http from "@/client/axios";
-import { getProfileTweets } from "../@redux/slices/profile.slice";
+import { getProfileTweets } from "@redux/slices/profile.slice";
 import Post from "@ui/Post";
 import useAuth from "@hook/useAuth";
 import { useModalAction } from "@ctx/ModalContext";

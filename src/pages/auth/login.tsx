@@ -7,7 +7,7 @@ import { SiTwitter } from "react-icons/si";
 import Button from "../../components/Button";
 import useAuth from "@/hooks/useAuth";
 import { useAppDispatch } from "@/hooks/useApp";
-import { setErrorNotice } from "@/redux/slices/notice";
+import { setErrorNotice, setInfoNotice } from "@/redux/slices/notice";
 import { useRouter } from "next/router";
 import LoginWithGoogleButton from "@ui/auth/LoginWithGoogle";
 
@@ -30,6 +30,9 @@ export default function Login() {
     }
     setLoading(false);
   }
+  const noFeature = (e) => {
+    dispatch(setInfoNotice({ message: "Not available!" }));
+  };
   return (
     <>
       <Head>
@@ -88,7 +91,7 @@ export default function Login() {
                 </div>
               </Button>
             </div>
-            <Button href="/auth/reset-password" intent="outline" center>
+            <Button type="button" onClick={noFeature} intent="outline" center>
               <span>Forgot password?</span>
             </Button>
             <div className="h-2"></div>

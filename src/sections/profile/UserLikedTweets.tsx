@@ -7,6 +7,7 @@ import Post from "@ui/Post";
 import useAuth from "@hook/useAuth";
 import { useModalAction } from "@ctx/ModalContext";
 import Loading from "@ui/Loading";
+import EmptyTweet from "@ui/EmptyTweet";
 
 export default function UserLikedTweets() {
   const { openModal } = useModalAction()
@@ -36,13 +37,16 @@ export default function UserLikedTweets() {
 
   return (
     <ul className="[&_p:last-child]:text-slate-500 [&_p:first-child]:text-lg divide-y divide-slate-200">
+      {tweets.allIds.length === 0 &&
+        <EmptyTweet title={`@${username} hasn't liked any Tweets`}
+          desc="When they do, those Tweets will show up here."
+        />
+      }
       {tweets.allIds.map((tweetID, i) => {
-
         const tweet = tweets.byId[tweetID];
-
         return (
           <li key={`tweet-${tweet?.id}`}>
-            <Post tweet={tweet} />
+            <Post tweet={{ ...tweet, liked: true }} />
           </li>
         );
       })}

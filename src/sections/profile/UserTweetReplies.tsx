@@ -7,13 +7,13 @@ import Loader from "@ui/Loading";
 import { useRouter } from "next/router";
 import EmptyTweet from "@ui/EmptyTweet";
 
-const UserTweets = ({ username }) => {
+export default function UserTweetReplies({ username }) {
   const dispatch = useAppDispatch();
   const [loading, setLoading] = useState(true);
-  const { tweets } = useAppSelector((state) => state.profile);
+  const { tweetReplies: tweets } = useAppSelector((state) => state.profile);
   useEffect(() => {
     const getTweets = async () => {
-      dispatch(getProfileTweets(username));
+      // dispatch(getProfileTweets(username, { replies: true }));
       setLoading(false);
     };
     getTweets();
@@ -27,12 +27,9 @@ const UserTweets = ({ username }) => {
         <EmptyTweet title={`@${username} hasn’t Tweeted`} />
       }
       {tweets.allIds.map((tweetID, i) => {
-
         const tweet = tweets.byId[tweetID];
         return (
           <li key={`tweet-${tweet?.id}`}>
-
-
             <Post tweet={tweet} />
           </li>
         );
@@ -40,5 +37,3 @@ const UserTweets = ({ username }) => {
     </ul>
   );
 };
-
-export default UserTweets;

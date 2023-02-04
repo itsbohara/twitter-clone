@@ -5,6 +5,7 @@ import Feed from "@ui/Feed";
 import UserTweets from "./UserTweets";
 import UserLikedTweets from "./UserLikedTweets";
 import MediaTweets from "./MediaTweets";
+import UserTweetReplies from "./UserTweetReplies";
 
 const ProfileTabs = ({ username }) => (
   <TabsPrimitive.Root className="TabsRoot" defaultValue="tab1">
@@ -74,7 +75,7 @@ const ProfileTabs = ({ username }) => (
       <UserTweets username={username} />
     </TabsPrimitive.Content>
     <TabsPrimitive.Content value="tab2">
-      Not available
+      <UserTweetReplies username={username} />
     </TabsPrimitive.Content>
     <TabsPrimitive.Content value="media">
       <MediaTweets />

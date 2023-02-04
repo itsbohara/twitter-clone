@@ -82,6 +82,13 @@ const Post = ({ tweet }: { tweet?: Tweet }) => {
       className="p-4 relative hover:bg-[#00000008] cursor-pointer"
       onClick={openTweetPage}
     >
+      {isRetweet && <div>
+        <div className="absolute flex gap-x-3 top-1 left-12">
+          <HiOutlineArrowPath className="w-5 h-5" />
+          <span className="text-xs text-slate-600 font-semibold">{tweetByMe ? 'You' : tweet?.owner.name} Retweeted</span>
+        </div>
+        <div className="h-3"></div>
+      </div>}
       <div className="flex flex-1 gap-x-4" ref={postRef}>
         <div className="flex-shrink-0">
           <ProfileHoverCard user={tweetProps?.owner} />
@@ -137,11 +144,12 @@ const Post = ({ tweet }: { tweet?: Tweet }) => {
                 {tweetProps?.replyCount ?? 0}
               </li>
               <li>
-                {/* <ReTweetDropdownMenu
-                  tweetID={id}
+                <ReTweetDropdownMenu
+                  tweetID={tweetProps?.id}
+                  retTweetID={tweet?.id}
+                  retweetByMe={isRetweet && tweetByMe}
                   count={tweetProps?.retweetCount ?? 0}
-                /> */}
-                <HiOutlineArrowPath className="w-5 h-5" />
+                />
               </li>
               <li
                 onClick={(e) => {

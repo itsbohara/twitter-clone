@@ -19,6 +19,7 @@ Full-Stack Twitter clone web app built with Next.Js / React.Js / Tailwind & Radi
 
 ## TODO
 
+- [ ] Basic Framer Motion animation -(tweet/like/reply)
 - [ ] tweet notification
 - [ ] quote retweet
 - [ ] tweet tags

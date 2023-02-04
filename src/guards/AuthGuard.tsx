@@ -30,7 +30,7 @@ export default function AuthGuard({ children }) {
   }
 
   if (requestedLocation && pathname !== requestedLocation) {
-    console.warn("push ");
+    // console.warn("push ");
 
     // setRequestedLocation(null);
     // push(requestedLocation);

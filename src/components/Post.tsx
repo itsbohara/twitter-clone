@@ -23,6 +23,7 @@ import ImagePreview from "@sections/tweet/ImagePreview";
 import TweetDropdownMenu from "@ui/popovers/TweetDropdownMenu";
 import ReTweetDropdownMenu from "@ui/popovers/ReTweetMenu";
 import { Tweet } from "@/types/tweet";
+import { useModalAction } from "@ctx/ModalContext";
 
 
 const Post = ({ tweet }: { tweet?: Tweet }) => {
@@ -32,15 +33,20 @@ const Post = ({ tweet }: { tweet?: Tweet }) => {
 
   const [postVisible, postRef] = useOnScreen();
   const { user: CurrentUser, isAuthenticated } = useAuth();
+  const { openModal } = useModalAction()
   const dispatch = useAppDispatch();
   const [likedByMe, setLikedByMe] = useState(tweetProps?.liked ?? false);
   const [likeCount, setLikeCount] = useState(tweetProps?.count.likes ?? 0);
 
   const handleLikeClick = async () => {
-    if (!isAuthenticated)
-      return dispatch(
-        setInfoNotice({ message: "Login/Sign Up to Like a Tweet" })
-      );
+    if (!isAuthenticated) {
+      openModal('AUTH_BOARDING', {
+        icon: <HiHeart className="w-12 h-12 text-red-500" />,
+        title: 'Like a Tweet to share the love.',
+        desc: `Join Twitter now to let ${tweetProps?.owner.name} know you like their Tweet.`
+      })
+      return;
+    }
     // TODO: redux - like/unlike
     // var a = await dispatch(toggleTweetLike(id));
     setLikedByMe(!likedByMe);
@@ -146,6 +152,7 @@ const Post = ({ tweet }: { tweet?: Tweet }) => {
               <li>
                 <ReTweetDropdownMenu
                   tweetID={tweetProps?.id}
+                  tweetUserName={tweetProps?.owner.name}
                   retTweetID={tweet?.id}
                   retweetByMe={isRetweet && tweetByMe}
                   count={tweetProps?.retweetCount ?? 0}

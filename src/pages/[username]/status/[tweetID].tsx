@@ -27,9 +27,11 @@ import AppLoading from "@ui/AppLoading";
 import TwitterBlueCheck from "@ui/TwitterBlueCheck";
 import ImagePreview from "@sections/tweet/ImagePreview";
 import ReTweetDropdownMenu from "@ui/popovers/ReTweetMenu";
+import { useModalAction } from "@ctx/ModalContext";
 export default function TweetPage({ data, resType }) {
   const dispatch = useAppDispatch();
   const { isAuthenticated, isInitialized } = useAuth();
+  const { openModal } = useModalAction()
   const { pathname, query, back } = useRouter();
   const { tweetID, username } = query;
   const [loading, setLoading] = useState(true);
@@ -81,10 +83,14 @@ export default function TweetPage({ data, resType }) {
   const handleBackClick = () => back();
 
   const handleLikeClick = async () => {
-    if (!isAuthenticated)
-      return dispatch(
-        setInfoNotice({ message: "Login/Sign Up to Like a Tweet" })
-      );
+    if (!isAuthenticated) {
+      openModal('AUTH_BOARDING', {
+        icon: <HiHeart className="w-12 h-12 text-red-500" />,
+        title: 'Like a Tweet to share the love.',
+        desc: `Join Twitter now to let ${tweet?.owner.name} know you like their Tweet.`
+      })
+      return;
+    }
 
     setLikedByMe(!likedByMe);
     const res = await http.patch(`/tweet/${tweet?.id}/like`);
@@ -184,9 +190,10 @@ export default function TweetPage({ data, resType }) {
                       </div>
                     </div>
                     <ReTweetDropdownMenu
-                      menuIconStyle="!w-6 !h-6"
                       tweetID={tweet?.id}
+                      tweetUserName={tweet?.owner.name}
                       retTweetID={tweet?.id}
+                      menuIconStyle="!w-6 !h-6"
                       // retweetByMe={isRetweet && tweetByMe}
                       count={tweet?.retweetCount ?? 0}
                       showCount={false}

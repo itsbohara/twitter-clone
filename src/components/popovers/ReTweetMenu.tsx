@@ -11,10 +11,13 @@ import { AiOutlineEdit } from "react-icons/ai";
 import http from "@/client/axios";
 import classNames from "classnames";
 import { MenuItem } from "@/types/menuItem";
+import useAuth from "@hook/useAuth";
+import { useModalAction } from "@ctx/ModalContext";
 
 
 export default function ReTweetDropdownMenu({
   tweetID,
+  tweetUserName,
   retweetByMe = false,
   retTweetID,
   count,
@@ -23,6 +26,7 @@ export default function ReTweetDropdownMenu({
 }:
   {
     retweetByMe?: boolean;
+    tweetUserName?: string;
     showCount?: boolean;
     tweetID?: string;
     retTweetID?: string;
@@ -30,11 +34,23 @@ export default function ReTweetDropdownMenu({
     postDeleteFunc?: () => void;
     menuIconStyle?: string
   }) {
+  const { isAuthenticated } = useAuth()
+  const { openModal } = useModalAction()
   const [open, setOpen] = useState(false);
   const dispatch = useAppDispatch();
   const handleTweetReTweet = async (e) => {
     e?.stopPropagation();
     setOpen(false);
+    if (!isAuthenticated) {
+      openModal("AUTH_BOARDING", {
+        icon: <HiOutlineArrowPath className="w-12 h-12 text-green-600" />,
+        title: 'Retweet to spread the word.',
+        desc: `When you join Twitter, you can share ${tweetUserName}’s Tweet with your followers.`
+      })
+      return;
+    }
+
+
     const res = await http.post(`/tweet/${tweetID}/retweet`);
     if (res.status === 204) dispatch(onDeleteTweet(retTweetID))
   };

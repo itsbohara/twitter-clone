@@ -1,13 +1,24 @@
 import { useRouter } from "next/router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { HiMagnifyingGlass } from "react-icons/hi2";
 
 const Search = () => {
-  const { query } = useRouter();
-  const [searchQuery, setSearchQuery] = useState(query["q"]);
+  const { query, push } = useRouter();
+  const [searchQuery, setSearchQuery] = useState("");
+  useEffect(() => {
+    setSearchQuery(query["q"]?.toString() ?? "");
+  }, [query]);
+  function handleSearch(e) {
+    e.preventDefault();
+    push(`/search?q=${searchQuery}`);
+  }
   return (
     <div className="sticky top-0 bg-white py-2 mb-3">
-      <form className="flex flex-col flex-1 gap-y-4" action="/search">
+      <form
+        className="flex flex-col flex-1 gap-y-4"
+        action="/search"
+        onSubmit={handleSearch}
+      >
         <div className="flex flex-1 relative">
           <HiMagnifyingGlass className="w-5 h-5 left-2.5 top-2 absolute flex items-center" />
           <input

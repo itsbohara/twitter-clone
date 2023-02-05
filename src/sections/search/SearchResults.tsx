@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import http from "@/client/axios";
 import SearchNotFound from "./NotFound";
 import SearchUserItem from "./UserItem";
+import Loading from "@ui/Loading";
 export default function SearchResults({ tabKey, query }) {
   const [loading, setLoading] = useState(true);
   const [result, setResult] = useState<any>([]);
@@ -14,9 +15,9 @@ export default function SearchResults({ tabKey, query }) {
       setLoading(false);
     };
     if (tabKey === "people") searchByQuery();
-  }, []);
+  }, [query]);
   if (tabKey !== "people") return <p>Search logic not implemented!</p>;
-  if (loading) return <p>Loading…</p>;
+  if (loading) return <Loading />;
 
   const isNotFound = result.length === 0;
   return (

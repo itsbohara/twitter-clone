@@ -4,16 +4,22 @@ import Search from "@ui/Search";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
+import useAuth from "@hook/useAuth";
+import Loading from "@ui/Loading";
 export default function SearchPage() {
-  const { query, push } = useRouter();
+  const { query, push, isReady } = useRouter();
+  const { isInitialized } = useAuth();
+  const searchTerm = query["q"];
   useEffect(() => {
-    if (!query["q"]) push("/explore");
+    if (!isReady) return;
+    if (!searchTerm) push("/explore");
   }, []);
-
+  const readyForSearching = isReady && isInitialized;
+  const title = `${isReady ? `${searchTerm} -` : ""} Search / Twitter Clone`;
   return (
     <>
       <Head>
-        <title>{query["q"]} | Search / Twitter Clone</title>
+        <title>{title}</title>
       </Head>
 
       <div className="min-h-screen flex max-w-7xl mx-auto xl:grid xl:grid-cols-10 gap-5 max-sm:pb-4">
@@ -27,7 +33,8 @@ export default function SearchPage() {
           </div>
           {/* <div className="sticky px-2"></div> */}
           {/* <Header title="Home" /> */}
-          <SearchResultTabs query={query["q"]} />
+          {!readyForSearching && <Loading />}
+          {readyForSearching && <SearchResultTabs query={searchTerm} />}
         </main>
       </div>
     </>

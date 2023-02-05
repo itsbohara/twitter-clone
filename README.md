@@ -71,7 +71,7 @@ Twitter clone will be live on `localhost:3000` and start experimenting the funct
 
 I have used Node/Mongo/Express for backend server implementation.
 
-- Repo Link - https://github.com/mblearningprojects/twitter-clone-server
+- Repo Link - https://github.com/mahisprojects/twitter-clone-server
 
 ### Special Thanks
 

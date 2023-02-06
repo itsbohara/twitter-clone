@@ -36,6 +36,7 @@ export default function TweetDropdownMenu({
   const dispatch = useAppDispatch();
   const handleTweetDelete = async (e) => {
     e?.stopPropagation();
+    setOpen(false)
     await dispatch(deleteTweet(tweetID, { reply: isReply }));
     postDeleteFunc?.();
   };

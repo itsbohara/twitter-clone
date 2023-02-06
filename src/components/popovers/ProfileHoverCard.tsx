@@ -12,13 +12,13 @@ const ProfileHoverCard = ({ user }: { user?: TweetUser }) => {
   const {
     name,
     username,
-    bio,
     profile,
-    count: { followers, following },
   } = user!;
   const initials = getNameInitials(user?.name ?? "");
   const { user: CurrentUser } = useAuth();
   const onProfileClick = (e) => e.stopPropagation();
+
+  const isFollowing = false
 
   return (
     <HoverCardPrimitive.Root>
@@ -47,8 +47,8 @@ const ProfileHoverCard = ({ user }: { user?: TweetUser }) => {
               <Avatar src={profile} alt={name} initials={initials} />
               {CurrentUser?.username !== username && (
                 <div>
-                  <Button intent="outline" size="default">
-                    Following
+                  <Button intent={isFollowing ? "outline" : 'primary'} size="default">
+                    {isFollowing ? 'Following' : 'Follow'}
                   </Button>
                 </div>
               )}

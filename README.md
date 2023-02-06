@@ -19,7 +19,6 @@ Full-Stack Twitter clone web app built with Next.Js / React.Js / Tailwind & Radi
 
 ## TODO
 
-- [ ] Basic Framer Motion animation -(tweet/like/reply)
 - [ ] tweet notification
 - [ ] quote retweet
 - [ ] tweet tags
@@ -82,7 +81,6 @@ I would like to give special thanks to [royquilor](https://github.com/royquilor)
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
-
 
 ## Connect
 

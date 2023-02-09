@@ -23,6 +23,7 @@ Full-Stack Twitter clone web app built with Next.Js / React.Js / Tailwind & Radi
 - [ ] quote retweet
 - [ ] tweet tags
 - [ ] Fix - Full screen Image viewer
+- [ ] Testing cypress/jest
 
 ## Getting Started ⚡️
 
